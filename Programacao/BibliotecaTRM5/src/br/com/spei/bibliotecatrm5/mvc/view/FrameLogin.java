@@ -1,26 +1,25 @@
 package br.com.spei.bibliotecatrm5.mvc.view;
 
+import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.beans.PropertyVetoException;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JPasswordField;
-import javax.swing.SpringLayout;
+import javax.swing.*;
 
-public class FrameLogin extends JFrame {
+public class FrameLogin extends JInternalFrame {
 
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 6663349763588316139L;
+	
+	private JFrame pai;
+	
 	private JLabel lblUsuario = new JLabel("Usuário:");
 	private JLabel lblSenha = new JLabel("Senha:");
 	private JPasswordField pwdSenha = new JPasswordField(10);
@@ -33,8 +32,9 @@ public class FrameLogin extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public FrameLogin() {
+	public FrameLogin(JFrame pai) {
 		super();
+		this.pai = pai;
 		initialize();
 		
 		SpringLayout springLayout = new SpringLayout();
@@ -81,8 +81,12 @@ public class FrameLogin extends JFrame {
 	
 	private void initialize() {
 		this.setTitle("Log in");
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(320, 142);
-		this.setLocationRelativeTo(null);
+		
+		
+//		Dimension desktopSize = pai.getSize();
+//		Dimension frameLoginSize = this.getSize();
+//		setLocation((desktopSize.width - frameLoginSize.width)/2,
+//		    (desktopSize.height- frameLoginSize.height)/2);
 	}
 }
