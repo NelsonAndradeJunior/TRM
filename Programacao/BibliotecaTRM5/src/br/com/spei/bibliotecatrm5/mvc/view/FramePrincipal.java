@@ -1,10 +1,13 @@
 package br.com.spei.bibliotecatrm5.mvc.view;
 
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 import javax.swing.*;
+
+import br.com.spei.bibliotecatrm5.mvc.control.TipoObraControl;
 
 public class FramePrincipal extends JFrame {
 
@@ -18,6 +21,7 @@ public class FramePrincipal extends JFrame {
 	private JMenu menuCadastro;
 	private JMenuItem itemMenuCadObra;
 	private JMenuItem itemMenuCadTipoObra;
+	private FrameTipoObra frameTipoObra;
 
 	/**
 	 * Create the frame.
@@ -38,6 +42,13 @@ public class FramePrincipal extends JFrame {
 		setContentPane(desktopPane);
 
 		setJMenuBar(getBarraMenu());
+		desktopPane.add(getFrameTipoObra());
+	}
+
+	private FrameTipoObra getFrameTipoObra() {
+		frameTipoObra = new FrameTipoObra();
+		
+		return frameTipoObra;
 	}
 
 	private JMenuBar getBarraMenu() {
@@ -73,15 +84,18 @@ public class FramePrincipal extends JFrame {
 	private JMenuItem getItemMenuCadastroTipoObra() {
 		itemMenuCadTipoObra = new JMenuItem("Tipo Obra", KeyEvent.VK_T);
 		
-		itemMenuCadTipoObra.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO Implementar chamada do form de cadastro de obras
-				
-			}
-		});
+		itemMenuCadTipoObra.setActionCommand("MenuCadastroTipoObra");
 		
 		return itemMenuCadTipoObra;
+	}
+
+	public void configuraOuvinte(ActionListener actionListener) {
+		itemMenuCadObra.addActionListener(actionListener);
+		itemMenuCadTipoObra.addActionListener(actionListener);
+	}
+	
+	public void mostraFormCadastroTipoObra() {	
+		TipoObraControl controladorTipoObra = new TipoObraControl(frameTipoObra);
+		controladorTipoObra.inicia();
 	}
 }
