@@ -3,7 +3,6 @@ package br.com.spei.bibliotecatrm5.mvc.view;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
-import java.beans.PropertyVetoException;
 import java.io.File;
 import java.io.IOException;
 
@@ -16,7 +15,7 @@ public class FrameLogin extends JInternalFrame {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 6663349763588316139L;
+	private static final long serialVersionUID = 1l;
 	
 	private JFrame pai;
 	
@@ -81,12 +80,12 @@ public class FrameLogin extends JInternalFrame {
 	
 	private void initialize() {
 		this.setTitle("Log in");
-		this.setSize(320, 142);
+		this.setSize(640, 400);
+		//this.setSize(320, 142);
 		
 		
-//		Dimension desktopSize = pai.getSize();
-//		Dimension frameLoginSize = this.getSize();
-//		setLocation((desktopSize.width - frameLoginSize.width)/2,
-//		    (desktopSize.height- frameLoginSize.height)/2);
+		Dimension desktopSize = pai.getSize();
+		Dimension frameLoginSize = this.getSize();
+		this.setLocation((desktopSize.width- frameLoginSize.width)/2, (desktopSize.height - frameLoginSize.height)/2 - 50);
 	}
 }
