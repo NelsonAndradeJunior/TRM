@@ -1,6 +1,7 @@
 package br.com.spei.bibliotecatrm5.principal;
 
 import br.com.spei.bibliotecatrm5.mvc.control.PrincipalControl;
+import br.com.spei.bibliotecatrm5.mvc.dao.Conexao;
 import br.com.spei.bibliotecatrm5.mvc.view.FramePrincipal;
 
 public class Principal {
