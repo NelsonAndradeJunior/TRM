@@ -1,7 +1,13 @@
 package br.com.spei.bibliotecatrm5.mvc.view;
 
 import java.awt.*;
+import java.awt.event.ActionListener;
+import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class FrameTipoObra extends JInternalFrame {
@@ -11,54 +17,107 @@ public class FrameTipoObra extends JInternalFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private JLabel lblCodigoTipoObra;
-	private JTextField txtCodigoTipoObra;
 	private JLabel lblDescricaoTipoObra;
 	private JTextField txtDescricaoTipoObra;
-
+	private JButton btnGravar;
+	private JButton btnCancelar;
+	private JButton btnPesquisa;
+	private BufferedImage picLupa;
+	
 	public FrameTipoObra() {
 		super("", false, true, false, true);
 		inicializa();
 	}
 
 	private void inicializa() {
-		this.setSize(200, 150);
+		this.setBounds(50, 50, 250, 120);
 		this.setTitle("Cadastro de Tipos de Obra");
+		this.setDefaultCloseOperation(JInternalFrame.HIDE_ON_CLOSE);
 		
-		this.setLayout(getLayoutManager());
+		SpringLayout layoutManager = getLayoutManager();
+				
+		lblDescricaoTipoObra = getLabelDescTipoObra();
+		txtDescricaoTipoObra = getTextDescTipoObra();
+		btnGravar = getButtonGravar();
+		btnCancelar = getButtonCancelar();
+		btnPesquisa = getButtonPesquisa();
 		
-		this.getContentPane().add(getLabelCodTipoObra());
-		this.getContentPane().add(getTextCodTipoObra());
-		this.getContentPane().add(getLabelDescTipoObra());
-		this.getContentPane().add(getTextlDescTipoObra());
+		layoutManager.putConstraint(SpringLayout.NORTH, lblDescricaoTipoObra, 20, SpringLayout.NORTH, getContentPane());
+		layoutManager.putConstraint(SpringLayout.WEST, lblDescricaoTipoObra, 30, SpringLayout.WEST, getContentPane());
+		
+		layoutManager.putConstraint(SpringLayout.SOUTH, txtDescricaoTipoObra, 0, SpringLayout.SOUTH, lblDescricaoTipoObra);
+		layoutManager.putConstraint(SpringLayout.WEST, txtDescricaoTipoObra, 10, SpringLayout.EAST, lblDescricaoTipoObra);
+		
+		layoutManager.putConstraint(SpringLayout.NORTH, btnCancelar, 10, SpringLayout.SOUTH, lblDescricaoTipoObra);
+		layoutManager.putConstraint(SpringLayout.EAST, btnCancelar, 0, SpringLayout.EAST, txtDescricaoTipoObra);
+		
+		layoutManager.putConstraint(SpringLayout.NORTH, btnGravar, 0, SpringLayout.NORTH, btnCancelar);
+		layoutManager.putConstraint(SpringLayout.WEST, btnGravar, 0, SpringLayout.WEST, lblDescricaoTipoObra);
+		layoutManager.putConstraint(SpringLayout.EAST, btnGravar, -10, SpringLayout.WEST, btnCancelar);
+		
+		this.setLayout(layoutManager);
+		
+		this.getContentPane().add(lblDescricaoTipoObra);
+		this.getContentPane().add(txtDescricaoTipoObra);
+		this.getContentPane().add(btnGravar);
+		this.getContentPane().add(btnCancelar);
 	}
 
-	private Component getTextlDescTipoObra() {
-		txtDescricaoTipoObra = new JTextField(10);
+	private JButton getButtonPesquisa() {
+		picLupa = getPictureLupa();
 		
-		return txtDescricaoTipoObra;
+		JButton botao = new JButton(new ImageIcon(picLupa.getScaledInstance(9, 9, BufferedImage.SCALE_SMOOTH)));
+		botao.setName("btnPesquisa");
+		return botao;
 	}
 
-	private Component getLabelDescTipoObra() {
-		lblDescricaoTipoObra = new JLabel("Descrição:");
+	private BufferedImage getPictureLupa() {
+		BufferedImage imagem = null;
 		
+		try {
+			imagem = ImageIO.read(new File("C:\\Users\\Alan\\Documents\\GitHub\\TRM\\Programacao\\BibliotecaTRM5\\recursos\\Magnifier-icon.png"));
+		} catch (IOException e) {
+			// TODO Tratar
+			e.printStackTrace();
+		}
 		
-		return lblDescricaoTipoObra;
+		return imagem;
+	}
+	
+	private JButton getButtonCancelar() {
+		JButton botao = new JButton("Cancelar");
+		botao.setName("btnCancelar");
+		botao.setActionCommand("cancelar");
+		return botao;
 	}
 
-	private JTextField getTextCodTipoObra() {
-		txtCodigoTipoObra = new JTextField(10);
-		
-		return txtCodigoTipoObra;
+	private JButton getButtonGravar() {
+		JButton botao = new JButton("Gravar");
+		botao.setName("btnGravar");
+		return botao;
 	}
 
-	private JLabel getLabelCodTipoObra() {
-		lblCodigoTipoObra = new JLabel("Código:");
-		
-		return lblCodigoTipoObra;
+	private JTextField getTextDescTipoObra() {
+		JTextField campoTexto = new JTextField(10);
+		campoTexto.setName("txtDescTipoObra");
+		return campoTexto;
 	}
 
-	private LayoutManager getLayoutManager() {
-		return new FlowLayout();
+	private JLabel getLabelDescTipoObra() {
+		JLabel label = new JLabel("Descrição:");
+		label.setName("lblDescTipoObra");
+		return label;
 	}
+
+	private SpringLayout getLayoutManager() {
+		return new SpringLayout();
+	}
+
+	public void configuraOuvinteAcao(ActionListener actionListener) {
+		btnCancelar.addActionListener(actionListener);
+	}
+
+//	public void configuraOuvinteFoco(FocusListener focusListener) {
+//		txtCodigoTipoObra.addFocusListener(focusListener);
+//	}
 }
