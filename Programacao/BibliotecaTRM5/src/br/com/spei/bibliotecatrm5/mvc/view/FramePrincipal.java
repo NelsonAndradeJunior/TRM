@@ -1,9 +1,7 @@
 package br.com.spei.bibliotecatrm5.mvc.view;
 
-import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
+import java.awt.*;
+import java.awt.event.*;
 
 import javax.swing.*;
 
@@ -34,8 +32,7 @@ public class FramePrincipal extends JFrame {
 	private void inicializa() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		setSize(800, 600);
-		
+		setBounds(GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds());
 		setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
 
 		desktopPane = new JDesktopPane();
