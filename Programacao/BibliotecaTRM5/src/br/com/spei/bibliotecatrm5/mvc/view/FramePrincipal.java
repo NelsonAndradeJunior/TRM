@@ -1,10 +1,16 @@
 package br.com.spei.bibliotecatrm5.mvc.view;
 
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.GraphicsEnvironment;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 
-import javax.swing.*;
+import javax.swing.JDesktopPane;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 
+import br.com.spei.bibliotecatrm5.mvc.control.ObraControl;
 import br.com.spei.bibliotecatrm5.mvc.control.TipoObraControl;
 
 public class FramePrincipal extends JFrame {
@@ -20,6 +26,7 @@ public class FramePrincipal extends JFrame {
 	private JMenuItem itemMenuCadObra;
 	private JMenuItem itemMenuCadTipoObra;
 	private FrameTipoObra frameTipoObra;
+	private FrameObra frameObra;
 
 	/**
 	 * Create the frame.
@@ -40,12 +47,19 @@ public class FramePrincipal extends JFrame {
 
 		setJMenuBar(getBarraMenu());
 		desktopPane.add(getFrameTipoObra());
+		desktopPane.add(getFrameObra());
 	}
 
 	private FrameTipoObra getFrameTipoObra() {
 		frameTipoObra = new FrameTipoObra();
 		
 		return frameTipoObra;
+	}
+	
+	private FrameObra getFrameObra(){
+		frameObra = new FrameObra();
+		
+		return frameObra;
 	}
 
 	private JMenuBar getBarraMenu() {
@@ -67,13 +81,7 @@ public class FramePrincipal extends JFrame {
 	private JMenuItem getItemMenuCadastroObra() {
 		itemMenuCadObra = new JMenuItem("Obra", KeyEvent.VK_O);
 		
-		itemMenuCadObra.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO Implementar chamada do form de cadastro de obras
-			}
-		});
+		itemMenuCadObra.setActionCommand("MenuCadastroObra");
 		
 		return itemMenuCadObra;
 	}
@@ -94,5 +102,10 @@ public class FramePrincipal extends JFrame {
 	public void mostraFormCadastroTipoObra() {	
 		TipoObraControl controladorTipoObra = new TipoObraControl(frameTipoObra);
 		controladorTipoObra.inicia();
+	}
+	
+	public void mostraFormCadastroObra() {	
+		ObraControl controladorObra = new ObraControl(frameObra);
+		controladorObra.inicia();
 	}
 }

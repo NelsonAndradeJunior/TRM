@@ -24,6 +24,8 @@ public class PrincipalControl implements ActionListener {
 		case "MenuCadastroTipoObra":
 			framePrincipal.mostraFormCadastroTipoObra();
 			break;
+		case "MenuCadastroObra":
+			framePrincipal.mostraFormCadastroObra();
 		default:
 			break;
 		}
