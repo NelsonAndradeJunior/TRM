@@ -3,7 +3,7 @@ package br.com.spei.bibliotecatrm5.mvc.model;
 public class TipoObra {
 
 	private int codObra;
-	private String descricaoObra;
+	private String descricaoTipoObra;
 	
 	public int getCodObra() {
 		return codObra;
@@ -11,10 +11,10 @@ public class TipoObra {
 	public void setCodObra(int codObra) {
 		this.codObra = codObra;
 	}
-	public String getDescricaoObra() {
-		return descricaoObra;
+	public String getDescricaoTipoObra() {
+		return descricaoTipoObra;
 	}
-	public void setDescricaoObra(String descricaoObra) {
-		this.descricaoObra = descricaoObra;
+	public void setDescricaoTipoObra(String descricaoTipoObra) {
+		this.descricaoTipoObra = descricaoTipoObra;
 	}
 }

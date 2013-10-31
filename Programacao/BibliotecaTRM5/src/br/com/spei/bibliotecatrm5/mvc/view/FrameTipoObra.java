@@ -71,7 +71,8 @@ public class FrameTipoObra extends JInternalFrame {
 	private JButton getButtonPesquisa() {
 		picLupa = getPictureLupa();
 		JButton botao = new JButton(new ImageIcon(picLupa.getScaledInstance(8, 8, BufferedImage.SCALE_SMOOTH)));
-		botao.setName("btnPesquisa");
+		botao.setName("btnPesquisar");
+		botao.setActionCommand("pesquisar");
 		return botao;
 	}
 
