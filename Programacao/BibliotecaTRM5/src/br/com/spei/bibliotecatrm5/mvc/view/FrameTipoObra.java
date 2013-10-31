@@ -21,7 +21,7 @@ public class FrameTipoObra extends JInternalFrame {
 	private JTextField txtDescricaoTipoObra;
 	private JButton btnGravar;
 	private JButton btnCancelar;
-	private JButton btnPesquisa;
+	private JButton btnPesquisar;
 	private BufferedImage picLupa;
 	
 	public FrameTipoObra() {
@@ -30,7 +30,7 @@ public class FrameTipoObra extends JInternalFrame {
 	}
 
 	private void inicializa() {
-		this.setBounds(50, 50, 250, 120);
+		this.setBounds(50, 50, 260, 120);
 		this.setTitle("Cadastro de Tipos de Obra");
 		this.setDefaultCloseOperation(JInternalFrame.HIDE_ON_CLOSE);
 		
@@ -40,20 +40,24 @@ public class FrameTipoObra extends JInternalFrame {
 		txtDescricaoTipoObra = getTextDescTipoObra();
 		btnGravar = getButtonGravar();
 		btnCancelar = getButtonCancelar();
-		btnPesquisa = getButtonPesquisa();
+		btnPesquisar = getButtonPesquisa();
 		
 		layoutManager.putConstraint(SpringLayout.NORTH, lblDescricaoTipoObra, 20, SpringLayout.NORTH, getContentPane());
-		layoutManager.putConstraint(SpringLayout.WEST, lblDescricaoTipoObra, 30, SpringLayout.WEST, getContentPane());
+		layoutManager.putConstraint(SpringLayout.WEST, lblDescricaoTipoObra, 10, SpringLayout.WEST, getContentPane());
 		
 		layoutManager.putConstraint(SpringLayout.SOUTH, txtDescricaoTipoObra, 0, SpringLayout.SOUTH, lblDescricaoTipoObra);
 		layoutManager.putConstraint(SpringLayout.WEST, txtDescricaoTipoObra, 10, SpringLayout.EAST, lblDescricaoTipoObra);
 		
-		layoutManager.putConstraint(SpringLayout.NORTH, btnCancelar, 10, SpringLayout.SOUTH, lblDescricaoTipoObra);
+		layoutManager.putConstraint(SpringLayout.NORTH, btnCancelar, 10, SpringLayout.SOUTH, txtDescricaoTipoObra);
 		layoutManager.putConstraint(SpringLayout.EAST, btnCancelar, 0, SpringLayout.EAST, txtDescricaoTipoObra);
 		
 		layoutManager.putConstraint(SpringLayout.NORTH, btnGravar, 0, SpringLayout.NORTH, btnCancelar);
 		layoutManager.putConstraint(SpringLayout.WEST, btnGravar, 0, SpringLayout.WEST, lblDescricaoTipoObra);
 		layoutManager.putConstraint(SpringLayout.EAST, btnGravar, -10, SpringLayout.WEST, btnCancelar);
+		
+		layoutManager.putConstraint(SpringLayout.SOUTH, btnPesquisar, 0, SpringLayout.SOUTH, txtDescricaoTipoObra);
+		layoutManager.putConstraint(SpringLayout.NORTH, btnPesquisar, 0, SpringLayout.NORTH, txtDescricaoTipoObra);
+		layoutManager.putConstraint(SpringLayout.WEST, btnPesquisar, 5, SpringLayout.EAST, txtDescricaoTipoObra);		
 		
 		this.setLayout(layoutManager);
 		
@@ -61,12 +65,13 @@ public class FrameTipoObra extends JInternalFrame {
 		this.getContentPane().add(txtDescricaoTipoObra);
 		this.getContentPane().add(btnGravar);
 		this.getContentPane().add(btnCancelar);
+		this.getContentPane().add(btnPesquisar);
 	}
 
 	private JButton getButtonPesquisa() {
 		picLupa = getPictureLupa();
 		
-		JButton botao = new JButton(new ImageIcon(picLupa.getScaledInstance(9, 9, BufferedImage.SCALE_SMOOTH)));
+		JButton botao = new JButton(new ImageIcon(picLupa.getScaledInstance(8, 8, BufferedImage.SCALE_SMOOTH)));
 		botao.setName("btnPesquisa");
 		return botao;
 	}
@@ -75,7 +80,7 @@ public class FrameTipoObra extends JInternalFrame {
 		BufferedImage imagem = null;
 		
 		try {
-			imagem = ImageIO.read(new File("C:\\Users\\Alan\\Documents\\GitHub\\TRM\\Programacao\\BibliotecaTRM5\\recursos\\Magnifier-icon.png"));
+			imagem = ImageIO.read(new File("recursos\\Magnifier-icon.png"));
 		} catch (IOException e) {
 			// TODO Tratar
 			e.printStackTrace();
@@ -94,6 +99,7 @@ public class FrameTipoObra extends JInternalFrame {
 	private JButton getButtonGravar() {
 		JButton botao = new JButton("Gravar");
 		botao.setName("btnGravar");
+		botao.setActionCommand("gravar");
 		return botao;
 	}
 
@@ -115,6 +121,8 @@ public class FrameTipoObra extends JInternalFrame {
 
 	public void configuraOuvinteAcao(ActionListener actionListener) {
 		btnCancelar.addActionListener(actionListener);
+		btnGravar.addActionListener(actionListener);
+		btnPesquisar.addActionListener(actionListener);
 	}
 
 //	public void configuraOuvinteFoco(FocusListener focusListener) {
