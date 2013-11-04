@@ -15,10 +15,10 @@ public class ConfigurationFile {
 	
 	public void geraArquivoDeConfiguracao() {
 		try {
-			properties.setProperty("SERVER", "ZEUS");
-			properties.setProperty("DB", "BANCO_CLIENTE");
-			properties.setProperty("USER", "AulaJava");
-			properties.setProperty("PWD", "123");
+			properties.setProperty("SERVER", "PC\\SQLEXPRESS");
+			properties.setProperty("DB", "BIBLIOTECATRM");
+			properties.setProperty("USER", "THIAGO");
+			properties.setProperty("PWD", "123456");
 			
 			properties.store(new FileOutputStream("dbConfig.properties"), null);
 		} catch (IOException e) {

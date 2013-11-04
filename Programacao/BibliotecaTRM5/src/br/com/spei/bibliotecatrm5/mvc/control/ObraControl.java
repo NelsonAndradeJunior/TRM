@@ -9,7 +9,6 @@ import javax.swing.JOptionPane;
 import br.com.spei.bibliotecatrm5.mvc.dao.ObraDAO;
 import br.com.spei.bibliotecatrm5.mvc.dao.ObraDAOImpl;
 import br.com.spei.bibliotecatrm5.mvc.model.Obra;
-import br.com.spei.bibliotecatrm5.mvc.model.TipoObra;
 import br.com.spei.bibliotecatrm5.mvc.view.FrameObra;
 
 public class ObraControl implements ActionListener {

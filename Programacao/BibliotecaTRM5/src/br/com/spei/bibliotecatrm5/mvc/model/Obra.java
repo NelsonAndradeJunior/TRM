@@ -10,7 +10,6 @@ public class Obra {
 	private String editora;
 	
 	
-	
 	public int getIdObra() {
 		return idObra;
 	}

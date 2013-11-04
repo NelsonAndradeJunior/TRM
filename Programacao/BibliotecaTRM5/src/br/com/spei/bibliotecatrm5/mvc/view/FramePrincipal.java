@@ -10,6 +10,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
+import br.com.spei.bibliotecatrm5.mvc.control.EmprestimoControl;
 import br.com.spei.bibliotecatrm5.mvc.control.ObraControl;
 import br.com.spei.bibliotecatrm5.mvc.control.TipoObraControl;
 
@@ -25,8 +26,10 @@ public class FramePrincipal extends JFrame {
 	private JMenu menuCadastro;
 	private JMenuItem itemMenuCadObra;
 	private JMenuItem itemMenuCadTipoObra;
+	private JMenuItem itemMenuCadEmprestimo;
 	private FrameTipoObra frameTipoObra;
 	private FrameObra frameObra;
+	private FrameEmprestimo frameEmprestimo;
 
 	/**
 	 * Create the frame.
@@ -48,6 +51,7 @@ public class FramePrincipal extends JFrame {
 		setJMenuBar(getBarraMenu());
 		desktopPane.add(getFrameTipoObra());
 		desktopPane.add(getFrameObra());
+		desktopPane.add(getFrameEmprestimo());
 	}
 
 	private FrameTipoObra getFrameTipoObra() {
@@ -60,6 +64,12 @@ public class FramePrincipal extends JFrame {
 		frameObra = new FrameObra();
 		
 		return frameObra;
+	}
+	
+	private FrameEmprestimo getFrameEmprestimo(){
+		frameEmprestimo = new FrameEmprestimo();
+		
+		return frameEmprestimo;
 	}
 
 	private JMenuBar getBarraMenu() {
@@ -74,6 +84,7 @@ public class FramePrincipal extends JFrame {
 		menuCadastro.setMnemonic(KeyEvent.VK_C);		
 		menuCadastro.add(getItemMenuCadastroObra());
 		menuCadastro.add(getItemMenuCadastroTipoObra());
+		menuCadastro.add(getItemMenuCadastroEmprestimo());
 		
 		return menuCadastro;
 	}
@@ -93,10 +104,19 @@ public class FramePrincipal extends JFrame {
 		
 		return itemMenuCadTipoObra;
 	}
+	
+	private JMenuItem getItemMenuCadastroEmprestimo() {
+		itemMenuCadEmprestimo = new JMenuItem("Emprestimo", KeyEvent.VK_T);
+		
+		itemMenuCadEmprestimo.setActionCommand("MenuCadastroEmprestimo");
+		
+		return itemMenuCadEmprestimo;
+	}
 
 	public void configuraOuvinte(ActionListener actionListener) {
 		itemMenuCadObra.addActionListener(actionListener);
 		itemMenuCadTipoObra.addActionListener(actionListener);
+		itemMenuCadEmprestimo.addActionListener(actionListener);
 	}
 	
 	public void mostraFormCadastroTipoObra() {	
@@ -107,5 +127,10 @@ public class FramePrincipal extends JFrame {
 	public void mostraFormCadastroObra() {	
 		ObraControl controladorObra = new ObraControl(frameObra);
 		controladorObra.inicia();
+	}
+	
+	public void mostraFormCadastroEmprestimo() {	
+		EmprestimoControl controladorEmprestimo = new EmprestimoControl(frameEmprestimo);
+		controladorEmprestimo.inicia();
 	}
 }
