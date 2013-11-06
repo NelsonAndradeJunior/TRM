@@ -6,17 +6,18 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
-import br.com.spei.bibliotecatrm5.mvc.dao.EmprestimoDAO;
-import br.com.spei.bibliotecatrm5.mvc.dao.EmprestimoDAOImpl;
-import br.com.spei.bibliotecatrm5.mvc.model.Emprestimo;
-import br.com.spei.bibliotecatrm5.mvc.view.FrameEmprestimo;
+import br.com.spei.bibliotecatrm5.mvc.dao.ReservaDAO;
+import br.com.spei.bibliotecatrm5.mvc.dao.ReservaDAOImpl;
+import br.com.spei.bibliotecatrm5.mvc.model.Reserva;
+import br.com.spei.bibliotecatrm5.mvc.view.FrameReserva;
 
-public class EmprestimoControl implements ActionListener {
+public class ReservaControl implements ActionListener{
 	
-	private FrameEmprestimo view;
-	private Emprestimo model;
 	
-	public EmprestimoControl(FrameEmprestimo view) {
+	private FrameReserva view;
+	private Reserva model;
+	
+	public ReservaControl(FrameReserva view){
 		this.view = view;
 		view.configuraOuvinteAcao(this);
 	}
@@ -25,11 +26,11 @@ public class EmprestimoControl implements ActionListener {
 		switch (e.getActionCommand()) {
 		case "gravar":
 			// TODO Teste - Remover
-			EmprestimoDAO t = new EmprestimoDAOImpl();
-			List<Emprestimo> l = t.listAll();
+			ReservaDAO t = new ReservaDAOImpl();
+			List<Reserva> l = t.listAll();
 			
-			for (Emprestimo emprestimo : l) {
-				JOptionPane.showMessageDialog(null, emprestimo.getNomeUsuario());
+			for (Reserva reserva : l) {
+				JOptionPane.showMessageDialog(null, reserva.getNomeUsuario());
 				
 			}
 			
@@ -49,7 +50,5 @@ public class EmprestimoControl implements ActionListener {
 //		view.configuraOuvinteFoco(this);
 	}
 }
-	
-	
 
 

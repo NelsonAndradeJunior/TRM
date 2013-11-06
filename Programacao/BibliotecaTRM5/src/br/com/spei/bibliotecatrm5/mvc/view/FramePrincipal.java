@@ -12,6 +12,7 @@ import javax.swing.JMenuItem;
 
 import br.com.spei.bibliotecatrm5.mvc.control.EmprestimoControl;
 import br.com.spei.bibliotecatrm5.mvc.control.ObraControl;
+import br.com.spei.bibliotecatrm5.mvc.control.ReservaControl;
 import br.com.spei.bibliotecatrm5.mvc.control.TipoObraControl;
 
 public class FramePrincipal extends JFrame {
@@ -24,12 +25,15 @@ public class FramePrincipal extends JFrame {
 	private JDesktopPane desktopPane;
 	private JMenuBar barraMenu;
 	private JMenu menuCadastro;
+	private JMenu reserva;
+	private JMenuItem itemMenuReservaObra;
 	private JMenuItem itemMenuCadObra;
 	private JMenuItem itemMenuCadTipoObra;
 	private JMenuItem itemMenuCadEmprestimo;
 	private FrameTipoObra frameTipoObra;
 	private FrameObra frameObra;
 	private FrameEmprestimo frameEmprestimo;
+	private FrameReserva frameReserva;
 
 	/**
 	 * Create the frame.
@@ -52,6 +56,7 @@ public class FramePrincipal extends JFrame {
 		desktopPane.add(getFrameTipoObra());
 		desktopPane.add(getFrameObra());
 		desktopPane.add(getFrameEmprestimo());
+		desktopPane.add(getFrameReservaO());
 	}
 
 	private FrameTipoObra getFrameTipoObra() {
@@ -71,10 +76,17 @@ public class FramePrincipal extends JFrame {
 		
 		return frameEmprestimo;
 	}
+	
+	private FrameReserva getFrameReservaO(){
+		frameReserva = new FrameReserva();
+		
+		return frameReserva;
+	}
 
 	private JMenuBar getBarraMenu() {
 		barraMenu = new JMenuBar();
 		barraMenu.add(getMenuCadastro());
+		barraMenu.add(getFrameReserva());
 
 		return barraMenu;
 	}
@@ -88,6 +100,23 @@ public class FramePrincipal extends JFrame {
 		
 		return menuCadastro;
 	}
+	
+	private JMenu getFrameReserva(){
+		reserva = new JMenu("Reserva");
+		reserva.setMnemonic(KeyEvent.VK_C);
+		reserva.add(getItemMenuCadastroReserva());
+		
+		return reserva;
+		
+	}
+	
+	private JMenuItem getItemMenuCadastroReserva(){
+		itemMenuReservaObra = new JMenuItem("Cadastrar Reserva", KeyEvent.VK_0);
+		
+		itemMenuReservaObra.setActionCommand("MenuReservaObra");
+		
+		return itemMenuReservaObra;
+		}
 
 	private JMenuItem getItemMenuCadastroObra() {
 		itemMenuCadObra = new JMenuItem("Obra", KeyEvent.VK_O);
@@ -117,6 +146,7 @@ public class FramePrincipal extends JFrame {
 		itemMenuCadObra.addActionListener(actionListener);
 		itemMenuCadTipoObra.addActionListener(actionListener);
 		itemMenuCadEmprestimo.addActionListener(actionListener);
+		itemMenuReservaObra.addActionListener(actionListener);
 	}
 	
 	public void mostraFormCadastroTipoObra() {	
@@ -132,5 +162,10 @@ public class FramePrincipal extends JFrame {
 	public void mostraFormCadastroEmprestimo() {	
 		EmprestimoControl controladorEmprestimo = new EmprestimoControl(frameEmprestimo);
 		controladorEmprestimo.inicia();
+	}
+	
+	public void mostraFormReserva(){
+		ReservaControl controladorReserva = new ReservaControl(frameReserva);
+		controladorReserva.inicia();
 	}
 }
