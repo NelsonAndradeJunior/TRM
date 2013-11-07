@@ -8,6 +8,7 @@ public class Obra {
 	private String autor;
 	private Date dtFabricacao;
 	private String editora;
+	private String tipoObra;
 	
 	
 	public int getIdObra() {
@@ -34,9 +35,14 @@ public class Obra {
 	public void setEditora(String editora) {
 		this.editora = editora;
 	}
+	public String getTipoObra() {
+		return tipoObra;
+	}
+	public void setTipoObra(String tipoObra) {
+		this.tipoObra = tipoObra;
+	}
 	
-	
-	
+		
 	
 
 }

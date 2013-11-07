@@ -1,14 +1,11 @@
 package br.com.spei.bibliotecatrm5.mvc.model;
 
-public class Emprestimo {
+public class Devolucao {
 	
 	private int idUsuario;
 	private String matUsuario;
-	private String nomeUsuario;
 	private String catUsuario;
-	private String dtEmprestimo;
-	
-	
+	private String dtDevolucao;
 	public int getIdUsuario() {
 		return idUsuario;
 	}
@@ -21,23 +18,17 @@ public class Emprestimo {
 	public void setMatUsuario(String matUsuario) {
 		this.matUsuario = matUsuario;
 	}
-	public String getNomeUsuario() {
-		return nomeUsuario;
-	}
-	public void setNomeUsuario(String nomeUsuario) {
-		this.nomeUsuario = nomeUsuario;
-	}
 	public String getCatUsuario() {
 		return catUsuario;
 	}
 	public void setCatUsuario(String catUsuario) {
 		this.catUsuario = catUsuario;
 	}
-	public String getDtEmprestimo() {
-		return dtEmprestimo;
+	public String getDtDevolucao() {
+		return dtDevolucao;
 	}
-	public void setDtEmprestimo(String dtEmprestimo) {
-		this.dtEmprestimo = dtEmprestimo;
+	public void setDtDevolucao(String dtDevolucao) {
+		this.dtDevolucao = dtDevolucao;
 	}
 	
 	

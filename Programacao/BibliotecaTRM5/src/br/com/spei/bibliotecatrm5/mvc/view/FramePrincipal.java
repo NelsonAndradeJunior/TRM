@@ -10,6 +10,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
+import br.com.spei.bibliotecatrm5.mvc.control.DevolucaoControl;
 import br.com.spei.bibliotecatrm5.mvc.control.EmprestimoControl;
 import br.com.spei.bibliotecatrm5.mvc.control.ObraControl;
 import br.com.spei.bibliotecatrm5.mvc.control.ReservaControl;
@@ -26,14 +27,17 @@ public class FramePrincipal extends JFrame {
 	private JMenuBar barraMenu;
 	private JMenu menuCadastro;
 	private JMenu reserva;
+	private JMenu devolucao;
 	private JMenuItem itemMenuReservaObra;
 	private JMenuItem itemMenuCadObra;
 	private JMenuItem itemMenuCadTipoObra;
 	private JMenuItem itemMenuCadEmprestimo;
+	private JMenuItem itemMenuCadDevolucao;
 	private FrameTipoObra frameTipoObra;
 	private FrameObra frameObra;
 	private FrameEmprestimo frameEmprestimo;
 	private FrameReserva frameReserva;
+	private FrameDevolucao frameDevolucao;
 
 	/**
 	 * Create the frame.
@@ -57,6 +61,7 @@ public class FramePrincipal extends JFrame {
 		desktopPane.add(getFrameObra());
 		desktopPane.add(getFrameEmprestimo());
 		desktopPane.add(getFrameReservaO());
+		desktopPane.add(getFrameDevolucao());
 	}
 
 	private FrameTipoObra getFrameTipoObra() {
@@ -82,11 +87,20 @@ public class FramePrincipal extends JFrame {
 		
 		return frameReserva;
 	}
+	
+	private FrameDevolucao getFrameDevolucao(){
+		frameDevolucao = new FrameDevolucao();
+		
+		return frameDevolucao;
+	}
+	
+	
 
 	private JMenuBar getBarraMenu() {
 		barraMenu = new JMenuBar();
 		barraMenu.add(getMenuCadastro());
 		barraMenu.add(getFrameReserva());
+		barraMenu.add(getFrameDevolucaoObra());
 
 		return barraMenu;
 	}
@@ -110,12 +124,29 @@ public class FramePrincipal extends JFrame {
 		
 	}
 	
+	private JMenu getFrameDevolucaoObra(){
+		devolucao = new JMenu("Devolucao");
+		devolucao.setMnemonic(KeyEvent.VK_C);
+		devolucao.add(getItemMenuCadastroDevolucao());
+		
+		return devolucao;
+		
+	}
+	
 	private JMenuItem getItemMenuCadastroReserva(){
 		itemMenuReservaObra = new JMenuItem("Cadastrar Reserva", KeyEvent.VK_0);
 		
 		itemMenuReservaObra.setActionCommand("MenuReservaObra");
 		
 		return itemMenuReservaObra;
+		}
+	
+	private JMenuItem getItemMenuCadastroDevolucao(){
+		itemMenuCadDevolucao = new JMenuItem("Realizar Devolucao", KeyEvent.VK_0);
+		
+		itemMenuCadDevolucao.setActionCommand("MenuDevolucaoObra");
+		
+		return itemMenuCadDevolucao;
 		}
 
 	private JMenuItem getItemMenuCadastroObra() {
@@ -147,6 +178,7 @@ public class FramePrincipal extends JFrame {
 		itemMenuCadTipoObra.addActionListener(actionListener);
 		itemMenuCadEmprestimo.addActionListener(actionListener);
 		itemMenuReservaObra.addActionListener(actionListener);
+		itemMenuCadDevolucao.addActionListener(actionListener);
 	}
 	
 	public void mostraFormCadastroTipoObra() {	
@@ -167,5 +199,10 @@ public class FramePrincipal extends JFrame {
 	public void mostraFormReserva(){
 		ReservaControl controladorReserva = new ReservaControl(frameReserva);
 		controladorReserva.inicia();
+	}
+	
+	public void mostraFormDevolucao(){
+		DevolucaoControl controladorDevolucao = new DevolucaoControl(frameDevolucao);
+		controladorDevolucao.inicia();
 	}
 }

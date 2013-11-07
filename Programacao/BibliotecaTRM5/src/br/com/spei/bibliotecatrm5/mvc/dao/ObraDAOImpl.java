@@ -32,11 +32,13 @@ public class ObraDAOImpl implements ObraDAO {
 				String autor = rs.getString("AUTOR");
 				Date dtFabricacao = rs.getDate("DT_FABRICACAO");
 				String editora = rs.getString("EDITORA");
+				String tipoObra = rs.getString("ID_TIPO_OBRA");
 				
 				obra.setIdObra(idObra);
 				obra.setAutor(autor);
 				obra.setDtFabricacao((java.sql.Date) dtFabricacao);
 				obra.setEditora(editora);
+				obra.setTipoObra(tipoObra);
 				
 				listaObra.add(obra);
 			}

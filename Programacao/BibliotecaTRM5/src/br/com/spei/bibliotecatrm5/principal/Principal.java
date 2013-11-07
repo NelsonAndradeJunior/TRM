@@ -9,6 +9,7 @@ public class Principal {
 		//FrameLogin frameLogin = new FrameLogin();
 		//LoginControl controladorLogin = new LoginControl(frameLogin);
 		//controladorLogin.inicia();
+
 		FramePrincipal framePrincipal = new FramePrincipal();
 		PrincipalControl controladorPrincipal = new PrincipalControl(framePrincipal);
 		controladorPrincipal.inicia();

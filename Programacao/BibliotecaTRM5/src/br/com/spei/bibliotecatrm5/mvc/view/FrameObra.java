@@ -25,6 +25,8 @@ public class FrameObra extends JInternalFrame{
 	private JTextField txtDtFabricacao;
 	private JLabel lblEditora;
 	private JTextField txtEditora;
+	private JLabel lblTipoObra;
+	private JTextField txtTipoObra;
 	private JButton btnGravar;
 	private JButton btnCancelar;
 	private JButton btnPesquisar;
@@ -50,6 +52,8 @@ public class FrameObra extends JInternalFrame{
 	txtDtFabricacao = getTextDtFabricacao();
 	lblEditora = getLabelEditora();
 	txtEditora = getTextEditora();
+	lblTipoObra = getLabelTipoObra();
+	txtTipoObra = getTextTipoObra();
 	btnGravar = getButtonGravar();
 	btnCancelar = getButtonCancelar();
 	btnPesquisar = getButtonPesquisa();
@@ -72,11 +76,17 @@ public class FrameObra extends JInternalFrame{
 	layoutManager.putConstraint(SpringLayout.SOUTH, txtEditora, 0, SpringLayout.SOUTH, lblEditora);
 	layoutManager.putConstraint(SpringLayout.WEST, txtEditora, 10, SpringLayout.EAST, lblEditora);
 	
-	layoutManager.putConstraint(SpringLayout.NORTH, btnGravar, 10, SpringLayout.SOUTH, lblEditora);
-	layoutManager.putConstraint(SpringLayout.WEST, btnGravar, 0, SpringLayout.WEST, lblEditora);
+	layoutManager.putConstraint(SpringLayout.NORTH, lblTipoObra, 10, SpringLayout.SOUTH, lblEditora);
+	layoutManager.putConstraint(SpringLayout.EAST, lblTipoObra, 0, SpringLayout.EAST, lblEditora);
 	
-	layoutManager.putConstraint(SpringLayout.NORTH, btnCancelar, 10, SpringLayout.SOUTH, txtEditora);
-	layoutManager.putConstraint(SpringLayout.EAST, btnCancelar, 0, SpringLayout.EAST, txtEditora);
+	layoutManager.putConstraint(SpringLayout.SOUTH, txtTipoObra, 0, SpringLayout.SOUTH, lblTipoObra);
+	layoutManager.putConstraint(SpringLayout.WEST, txtTipoObra, 10, SpringLayout.EAST, lblTipoObra);
+	
+	layoutManager.putConstraint(SpringLayout.NORTH, btnGravar, 10, SpringLayout.SOUTH, lblTipoObra);
+	layoutManager.putConstraint(SpringLayout.WEST, btnGravar, 0, SpringLayout.WEST, lblTipoObra);
+	
+	layoutManager.putConstraint(SpringLayout.NORTH, btnCancelar, 10, SpringLayout.SOUTH, txtTipoObra);
+	layoutManager.putConstraint(SpringLayout.EAST, btnCancelar, 0, SpringLayout.EAST, txtTipoObra);
 	
 	layoutManager.putConstraint(SpringLayout.SOUTH, btnPesquisar, 0, SpringLayout.SOUTH, txtAutorObra);
 	layoutManager.putConstraint(SpringLayout.NORTH, btnPesquisar, 0, SpringLayout.NORTH, txtAutorObra);
@@ -91,6 +101,8 @@ public class FrameObra extends JInternalFrame{
 	this.getContentPane().add(txtDtFabricacao);
 	this.getContentPane().add(lblEditora);
 	this.getContentPane().add(txtEditora);
+	this.getContentPane().add(lblTipoObra);
+	this.getContentPane().add(txtTipoObra);
 	this.getContentPane().add(btnGravar);
 	this.getContentPane().add(btnCancelar);
 	this.getContentPane().add(btnPesquisar);
@@ -165,6 +177,18 @@ public class FrameObra extends JInternalFrame{
 	private JLabel getLabelEditora() {
 		JLabel label = new JLabel("Editora:");
 		label.setName("lblEditora");
+		return label;
+	}
+	
+	private JTextField getTextTipoObra() {
+		JTextField campoTexto = new JTextField(10);
+		campoTexto.setName("txtTipoObra");
+		return campoTexto;
+	}
+
+	private JLabel getLabelTipoObra() {
+		JLabel label = new JLabel("Tipo Obra:");
+		label.setName("lblTipoObra");
 		return label;
 	}
 	
