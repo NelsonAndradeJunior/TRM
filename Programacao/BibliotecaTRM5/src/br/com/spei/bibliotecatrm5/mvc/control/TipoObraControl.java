@@ -6,6 +6,8 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.util.List;
 
+import javax.swing.JDesktopPane;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
@@ -13,6 +15,7 @@ import br.com.spei.bibliotecatrm5.mvc.dao.TipoObraDAO;
 import br.com.spei.bibliotecatrm5.mvc.dao.TipoObraDAOImpl;
 import br.com.spei.bibliotecatrm5.mvc.model.TipoObra;
 import br.com.spei.bibliotecatrm5.mvc.view.FrameTipoObra;
+import br.com.spei.bibliotecatrm5.mvc.view.FrameTipoObraPesquisa;
 import br.com.spei.bibliotecatrm5.util.ConfigurationFile;
 
 public class TipoObraControl implements ActionListener {
@@ -42,6 +45,7 @@ public class TipoObraControl implements ActionListener {
 			view.setVisible(false);
 			break;
 		case "pesquisar":
+			view.MostraFormTipoObraPesquisa();		
 			break;
 		default:
 			break;

@@ -1,7 +1,6 @@
 package br.com.spei.bibliotecatrm5.mvc.view;
 
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -9,6 +8,8 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+
+import br.com.spei.bibliotecatrm5.mvc.control.TipoObraPesquisaControl;
 
 public class FrameTipoObra extends JInternalFrame {
 
@@ -23,6 +24,7 @@ public class FrameTipoObra extends JInternalFrame {
 	private JButton btnCancelar;
 	private JButton btnPesquisar;
 	private BufferedImage picLupa;
+	private FrameTipoObraPesquisa frameTipoObraPesquisa;
 	
 	public FrameTipoObra() {
 		super("", false, true, false, true);
@@ -40,7 +42,7 @@ public class FrameTipoObra extends JInternalFrame {
 		txtDescricaoTipoObra = getTextDescTipoObra();
 		btnGravar = getButtonGravar();
 		btnCancelar = getButtonCancelar();
-		btnPesquisar = getButtonPesquisa();
+		btnPesquisar = getButtonPesquisar();
 		
 		layoutManager.putConstraint(SpringLayout.NORTH, lblDescricaoTipoObra, 20, SpringLayout.NORTH, getContentPane());
 		layoutManager.putConstraint(SpringLayout.WEST, lblDescricaoTipoObra, 10, SpringLayout.WEST, getContentPane());
@@ -66,9 +68,17 @@ public class FrameTipoObra extends JInternalFrame {
 		this.getContentPane().add(btnGravar);
 		this.getContentPane().add(btnCancelar);
 		this.getContentPane().add(btnPesquisar);
+		
+		frameTipoObraPesquisa = getFramePesquisa();
 	}
 
-	private JButton getButtonPesquisa() {
+	private FrameTipoObraPesquisa getFramePesquisa() {
+		frameTipoObraPesquisa = new FrameTipoObraPesquisa();
+		
+		return frameTipoObraPesquisa;
+	}
+
+	private JButton getButtonPesquisar() {
 		picLupa = getPictureLupa();
 		JButton botao = new JButton(new ImageIcon(picLupa.getScaledInstance(8, 8, BufferedImage.SCALE_SMOOTH)));
 		botao.setName("btnPesquisar");
@@ -123,6 +133,13 @@ public class FrameTipoObra extends JInternalFrame {
 		btnCancelar.addActionListener(actionListener);
 		btnGravar.addActionListener(actionListener);
 		btnPesquisar.addActionListener(actionListener);
+	}
+
+	public void MostraFormTipoObraPesquisa() {
+		TipoObraPesquisaControl controladorObraPesquisa = new TipoObraPesquisaControl(frameTipoObraPesquisa);
+		
+		((JDesktopPane)this.getParent()).add(frameTipoObraPesquisa);
+		controladorObraPesquisa.inicia();
 	}
 
 //	public void configuraOuvinteFoco(FocusListener focusListener) {
