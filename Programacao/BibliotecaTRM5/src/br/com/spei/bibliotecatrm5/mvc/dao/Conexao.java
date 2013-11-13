@@ -16,7 +16,7 @@ public class Conexao {
 		
 	}
 	
-	public static Conexao getInstance() {
+	public static Conexao getInstance() throws SQLException {
 		if(instance == null)
 		{
 			instance = new Conexao();
@@ -26,7 +26,7 @@ public class Conexao {
 		return instance;
 	}
 	
-	private void configuraStringConexao() {
+	private void configuraStringConexao() throws SQLException {
 		ConfigurationFile configurador = new ConfigurationFile();
 		Properties propriedades = configurador.obtemPropriedadesArquivoConfiguracao();
 		String servidor = propriedades.getProperty("SERVER");

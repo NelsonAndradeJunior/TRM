@@ -5,11 +5,15 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.event.InternalFrameListener;
 
+import br.com.spei.bibliotecatrm5.mvc.control.TipoObraControl;
 import br.com.spei.bibliotecatrm5.mvc.control.TipoObraPesquisaControl;
+import br.com.spei.bibliotecatrm5.mvc.model.TipoObra;
 
 public class FrameTipoObra extends JInternalFrame {
 
@@ -34,6 +38,7 @@ public class FrameTipoObra extends JInternalFrame {
 	private void inicializa() {
 		this.setBounds(50, 50, 260, 120);
 		this.setTitle("Cadastro de Tipos de Obra");
+		this.setName("frmTipoObraPesquisa");
 		this.setDefaultCloseOperation(JInternalFrame.HIDE_ON_CLOSE);
 		
 		SpringLayout layoutManager = getLayoutManager();
@@ -68,11 +73,9 @@ public class FrameTipoObra extends JInternalFrame {
 		this.getContentPane().add(btnGravar);
 		this.getContentPane().add(btnCancelar);
 		this.getContentPane().add(btnPesquisar);
-		
-		frameTipoObraPesquisa = getFramePesquisa();
 	}
 
-	private FrameTipoObraPesquisa getFramePesquisa() {
+	private FrameTipoObraPesquisa getFramePesquisa() throws SQLException {
 		frameTipoObraPesquisa = new FrameTipoObraPesquisa();
 		
 		return frameTipoObraPesquisa;
@@ -135,14 +138,28 @@ public class FrameTipoObra extends JInternalFrame {
 		btnPesquisar.addActionListener(actionListener);
 	}
 
-	public void MostraFormTipoObraPesquisa() {
-		TipoObraPesquisaControl controladorObraPesquisa = new TipoObraPesquisaControl(frameTipoObraPesquisa);
+	public void mostraFormTipoObraPesquisa(TipoObra model) {
+		boolean adicionaListeners = frameTipoObraPesquisa == null;
 		
-		((JDesktopPane)this.getParent()).add(frameTipoObraPesquisa);
-		controladorObraPesquisa.inicia();
+		if(frameTipoObraPesquisa == null) {
+			try {
+				frameTipoObraPesquisa = getFramePesquisa();
+				((JDesktopPane)this.getParent()).add(frameTipoObraPesquisa);
+			} catch (SQLException e) {
+				JOptionPane.showMessageDialog(null, "Ocorreu um erro ao carregar o formulárlio de pesquisa.", "Erro", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+		}
+		
+		TipoObraPesquisaControl controladorObraPesquisa = new TipoObraPesquisaControl(frameTipoObraPesquisa, model);
+		controladorObraPesquisa.inicia(adicionaListeners);
 	}
 
-//	public void configuraOuvinteFoco(FocusListener focusListener) {
-//		txtCodigoTipoObra.addFocusListener(focusListener);
-//	}
+	public void preencheCampoTexto(TipoObra model) {
+		this.txtDescricaoTipoObra.setText(model.getDescricaoTipoObra());
+	}
+
+	public void configuraOuvinteInternalFrame(InternalFrameListener listener) {
+		this.addInternalFrameListener(listener);
+	}
 }
