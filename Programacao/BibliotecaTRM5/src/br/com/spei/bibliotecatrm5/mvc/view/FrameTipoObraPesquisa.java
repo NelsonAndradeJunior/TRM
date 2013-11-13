@@ -1,9 +1,21 @@
 package br.com.spei.bibliotecatrm5.mvc.view;
 
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseListener;
+import java.sql.SQLException;
+import java.util.List;
 
 import javax.swing.*;
+import javax.swing.event.InternalFrameListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+
+import com.microsoft.sqlserver.jdbc.SQLServerException;
+
+import br.com.spei.bibliotecatrm5.mvc.model.JDBCTableModel;
+import br.com.spei.bibliotecatrm5.mvc.model.TipoObra;
+import br.com.spei.bibliotecatrm5.mvc.model.TipoObraPesquisaTableModel;
 
 public class FrameTipoObraPesquisa extends JInternalFrame {
 
@@ -18,20 +30,25 @@ public class FrameTipoObraPesquisa extends JInternalFrame {
 	private JTable tblDados;
 	private JScrollPane spnDados;
 	
-	public FrameTipoObraPesquisa() {
+	public FrameTipoObraPesquisa() throws SQLException {
 		super("", false, true, false, true);
 		inicializa();
 	}
 
-	private void inicializa() {
-		this.setBounds(100, 100, 320, 120);
+	private void inicializa() throws SQLException {
+		this.setBounds(100, 100, 400, 200);
 		this.setTitle("Pesquisa de Tipo de Obra");
+		this.setName("frmTipoObra");
 		this.setDefaultCloseOperation(JInternalFrame.HIDE_ON_CLOSE);
 		
 		lblPesquisar = getLabelPesquisar();
 		txtPesquisar = getTextPesquisar();
 		btnPesquisar = getButtonPesquisar();
 		tblDados = getTableDados();
+		
+		if(tblDados == null)
+			return;
+		
 		spnDados = getScrollPaneDados();
 		
 		SpringLayout layoutManager = getLayoutManager();
@@ -52,6 +69,8 @@ public class FrameTipoObraPesquisa extends JInternalFrame {
 		
 		layoutManager.putConstraint(SpringLayout.WEST, spnDados, 0, SpringLayout.WEST, tblDados);
 		layoutManager.putConstraint(SpringLayout.NORTH, spnDados, 0, SpringLayout.NORTH, tblDados);
+		layoutManager.putConstraint(SpringLayout.EAST, spnDados, -10, SpringLayout.EAST, getContentPane());
+		layoutManager.putConstraint(SpringLayout.SOUTH, spnDados, -10, SpringLayout.SOUTH, getContentPane());
 		
 		getContentPane().add(lblPesquisar);
 		getContentPane().add(txtPesquisar);
@@ -65,25 +84,26 @@ public class FrameTipoObraPesquisa extends JInternalFrame {
 		return scrollPane;
 	}
 
-	private JTable getTableDados() {
-		DefaultTableModel model = getTabelModel();
+	private JTable getTableDados()  throws SQLException{
+		
+		TableModel model = getTableModel();
+		
+		if(model == null)
+			return null;
+		
 		JTable tabela = new JTable(model);
 		tabela.setName("tblDados");
-		
-		// TODO Definir tamanhos
-		model.addColumn("Código");
-		model.addColumn("Descrição");
-		
-		tabela.getColumnModel().getColumn(0).setPreferredWidth(20);
-		tabela.getColumnModel().getColumn(1).setPreferredWidth(20);
-		tabela.getColumnModel().getColumn(0).setWidth(20);
-		tabela.getColumnModel().getColumn(1).setWidth(20);
-		
+		ajustaColunas(tabela);
 		return tabela;
 	}
 
-	private DefaultTableModel getTabelModel() {
-		return new DefaultTableModel();
+	private void ajustaColunas(JTable tabela) {
+		tabela.getColumnModel().getColumn(0).setPreferredWidth(15);
+		tabela.getColumnModel().getColumn(1).setPreferredWidth(220);
+	}
+
+	private TableModel getTableModel() throws SQLException {
+		return new TipoObraPesquisaTableModel();
 	}
 
 	private JTextField getTextPesquisar() {
@@ -111,5 +131,31 @@ public class FrameTipoObraPesquisa extends JInternalFrame {
 	
 	public void configuraOuvinteAcao(ActionListener actionListener) {
 		btnPesquisar.addActionListener(actionListener);
+	}
+	
+	public void configuraOuvinteMouse(MouseListener mouseListener) {
+		tblDados.addMouseListener(mouseListener);
+	}
+
+	public String getTextoPesquisa() {
+		return txtPesquisar.getText();
+	}
+
+	public void disparaExcecaoSQL(SQLException excecao) {
+		// TODO Melhorar a mensagem
+		JOptionPane.showMessageDialog(null, "Ocorreu um erro ao tentar fazer a operação.");
+	}
+
+	public void atualizaTabela(List<TipoObra> listaTipoObra) {
+		TipoObraPesquisaTableModel tableModel = (TipoObraPesquisaTableModel)tblDados.getModel();
+		tableModel.setRowCount(listaTipoObra.size());
+		for (int i = 0; i < listaTipoObra.size(); i++) {
+			tableModel.setValueAt(listaTipoObra.get(i).getCodObra(), i, 0);
+			tableModel.setValueAt(listaTipoObra.get(i).getDescricaoTipoObra(), i, 1);
+		}
+	}
+
+	public void configuraOuvinteFrame(InternalFrameListener frameListener) {
+		this.addInternalFrameListener(frameListener);
 	}
 }
