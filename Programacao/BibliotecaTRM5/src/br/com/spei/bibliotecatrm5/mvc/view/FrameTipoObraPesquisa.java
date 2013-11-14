@@ -2,6 +2,7 @@ package br.com.spei.bibliotecatrm5.mvc.view;
 
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.SQLException;
 import java.util.List;
@@ -157,5 +158,9 @@ public class FrameTipoObraPesquisa extends JInternalFrame {
 
 	public void configuraOuvinteFrame(InternalFrameListener frameListener) {
 		this.addInternalFrameListener(frameListener);
+	}
+
+	public void disparaExcecao(Exception e) {
+		JOptionPane.showMessageDialog(null, "Ocorreu um erro ao tentar repassar o valor.");
 	}
 }

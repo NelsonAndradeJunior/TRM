@@ -102,4 +102,19 @@ public class TipoObraDAOImpl implements TipoObraDAO {
 		return listaTipoObra;
 	}
 
+	@Override
+	public void insert(TipoObra model) throws SQLException {
+		Connection conexao = Conexao.getInstance().getConnection();
+		
+		String query = "INSERT INTO TIPO_OBRA (DS_TIPO_OBRA) VALUES (?)";
+		
+		PreparedStatement pstmt = conexao.prepareStatement(query);
+		pstmt.setString(1, model.getDescricaoTipoObra());
+		
+		pstmt.executeUpdate();
+		
+		pstmt.close();
+		conexao.close();
+	}
+
 }

@@ -138,7 +138,7 @@ public class FrameTipoObra extends JInternalFrame {
 		btnPesquisar.addActionListener(actionListener);
 	}
 
-	public void mostraFormTipoObraPesquisa(TipoObra model) {
+	public void mostraFormTipoObraPesquisa() {
 		boolean adicionaListeners = frameTipoObraPesquisa == null;
 		
 		if(frameTipoObraPesquisa == null) {
@@ -151,8 +151,10 @@ public class FrameTipoObra extends JInternalFrame {
 			}
 		}
 		
-		TipoObraPesquisaControl controladorObraPesquisa = new TipoObraPesquisaControl(frameTipoObraPesquisa, model);
+		TipoObraPesquisaControl controladorObraPesquisa = new TipoObraPesquisaControl(frameTipoObraPesquisa);
 		controladorObraPesquisa.inicia(adicionaListeners);
+		
+		controladorObraPesquisa.atualizaInformacoes();
 	}
 
 	public void preencheCampoTexto(TipoObra model) {
@@ -161,5 +163,25 @@ public class FrameTipoObra extends JInternalFrame {
 
 	public void configuraOuvinteInternalFrame(InternalFrameListener listener) {
 		this.addInternalFrameListener(listener);
+	}
+
+	public TipoObra getModel() {
+		TipoObra tipoObra = new TipoObra();
+		tipoObra.setDescricaoTipoObra(txtDescricaoTipoObra.getText());
+		
+		return tipoObra;
+	}
+
+	public void disparaExcecaoSQL(SQLException e1) {
+		// TODO melhorar mensagem
+		JOptionPane.showMessageDialog(null, "Ocorreu um erro ao tentar fazer a operação.", "Erro", JOptionPane.ERROR_MESSAGE);
+	}
+
+	public void mostraMensagemSucessoGravacao() {
+		JOptionPane.showMessageDialog(null, "Cadastro efetuado com sucesso");
+	}
+
+	public void limpaTexto() {
+		txtDescricaoTipoObra.setText("");
 	}
 }

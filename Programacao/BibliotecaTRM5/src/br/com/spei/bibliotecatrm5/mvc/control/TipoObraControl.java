@@ -39,12 +39,21 @@ public class TipoObraControl implements ActionListener, InternalFrameListener{
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
 		case "gravar":
+			model = view.getModel();
+			TipoObraDAO tipoObraDAO = new TipoObraDAOImpl();
+			try {
+				tipoObraDAO.insert(model);
+				view.mostraMensagemSucessoGravacao();
+				view.limpaTexto();
+			} catch (SQLException e1) {
+				view.disparaExcecaoSQL(e1);
+			}
 			break;
 		case "cancelar":
 			view.setVisible(false);
 			break;
 		case "pesquisar":
-			view.mostraFormTipoObraPesquisa(model);
+			view.mostraFormTipoObraPesquisa();
 			break;
 		default:
 			break;
@@ -58,7 +67,7 @@ public class TipoObraControl implements ActionListener, InternalFrameListener{
 
 	@Override
 	public void internalFrameActivated(InternalFrameEvent e) {
-		view.preencheCampoTexto(model);
+		// TODO Auto-generated method stub
 	}
 
 	@Override
