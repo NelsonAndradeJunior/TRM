@@ -29,6 +29,8 @@ public class FrameTipoObra extends JInternalFrame {
 	private JButton btnPesquisar;
 	private BufferedImage picLupa;
 	private FrameTipoObraPesquisa frameTipoObraPesquisa;
+	private boolean modoAtualizacao;
+	private TipoObra model;
 	
 	public FrameTipoObra() {
 		super("", false, true, false, true);
@@ -154,11 +156,11 @@ public class FrameTipoObra extends JInternalFrame {
 		TipoObraPesquisaControl controladorObraPesquisa = new TipoObraPesquisaControl(frameTipoObraPesquisa);
 		controladorObraPesquisa.inicia(adicionaListeners);
 		
-		controladorObraPesquisa.atualizaInformacoes();
+		controladorObraPesquisa.carregaInformacoes();
 	}
 
-	public void preencheCampoTexto(TipoObra model) {
-		this.txtDescricaoTipoObra.setText(model.getDescricaoTipoObra());
+	public void preencheCampoTexto() {
+		this.txtDescricaoTipoObra.setText(this.model.getDescricaoTipoObra());
 	}
 
 	public void configuraOuvinteInternalFrame(InternalFrameListener listener) {
@@ -166,10 +168,7 @@ public class FrameTipoObra extends JInternalFrame {
 	}
 
 	public TipoObra getModel() {
-		TipoObra tipoObra = new TipoObra();
-		tipoObra.setDescricaoTipoObra(txtDescricaoTipoObra.getText());
-		
-		return tipoObra;
+		return this.model;
 	}
 
 	public void disparaExcecaoSQL(SQLException e1) {
@@ -177,11 +176,32 @@ public class FrameTipoObra extends JInternalFrame {
 		JOptionPane.showMessageDialog(null, "Ocorreu um erro ao tentar fazer a operação.", "Erro", JOptionPane.ERROR_MESSAGE);
 	}
 
-	public void mostraMensagemSucessoGravacao() {
-		JOptionPane.showMessageDialog(null, "Cadastro efetuado com sucesso");
-	}
-
 	public void limpaTexto() {
 		txtDescricaoTipoObra.setText("");
+	}
+
+	public void setModoAtualizacao(boolean modoAtualizacao) {
+		this.modoAtualizacao = modoAtualizacao;
+	}
+	
+	public boolean getModoAtualizacao() {
+		return modoAtualizacao;
+	}
+
+	public void mostraMensagem(String mensagem) {
+		JOptionPane.showMessageDialog(null, mensagem);		
+	}
+
+	public int confirmaAtualizacao() {
+		int retorno = JOptionPane.showConfirmDialog(null, "Deseja modificar a descrição do tipo da obra?", "Confirmar Atualização", JOptionPane.YES_NO_CANCEL_OPTION);
+		return retorno;
+	}
+
+	public void setModel(TipoObra model) {
+		this.model = model;
+	}
+
+	public String getDescricaoTipoObra() {
+		return txtDescricaoTipoObra.getText();
 	}
 }

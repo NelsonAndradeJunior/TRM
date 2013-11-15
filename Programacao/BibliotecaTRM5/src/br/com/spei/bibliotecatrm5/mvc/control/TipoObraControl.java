@@ -40,14 +40,35 @@ public class TipoObraControl implements ActionListener, InternalFrameListener{
 		switch (e.getActionCommand()) {
 		case "gravar":
 			model = view.getModel();
+			model.setDescricaoTipoObra(view.getDescricaoTipoObra());
 			TipoObraDAO tipoObraDAO = new TipoObraDAOImpl();
 			try {
-				tipoObraDAO.insert(model);
-				view.mostraMensagemSucessoGravacao();
-				view.limpaTexto();
+				if(view.getModoAtualizacao()) 
+					switch (view.confirmaAtualizacao()) {
+					case JOptionPane.YES_OPTION:
+						tipoObraDAO.update(model);
+						view.limpaTexto();
+						view.setModoAtualizacao(false);
+						break;
+					case JOptionPane.NO_OPTION:
+						view.limpaTexto();
+						view.setModoAtualizacao(false);
+						break;
+					case JOptionPane.CANCEL_OPTION:
+						break;
+					default:
+						break;
+					}
+				else {
+					tipoObraDAO.insert(model);
+					view.mostraMensagem("Cadastro efetuado com sucesso.");
+					view.limpaTexto();
+				}
 			} catch (SQLException e1) {
 				view.disparaExcecaoSQL(e1);
 			}
+			
+			
 			break;
 		case "cancelar":
 			view.setVisible(false);

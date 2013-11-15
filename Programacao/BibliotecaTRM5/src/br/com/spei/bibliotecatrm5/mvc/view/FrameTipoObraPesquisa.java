@@ -163,4 +163,8 @@ public class FrameTipoObraPesquisa extends JInternalFrame {
 	public void disparaExcecao(Exception e) {
 		JOptionPane.showMessageDialog(null, "Ocorreu um erro ao tentar repassar o valor.");
 	}
+
+	public void limpaTexto() {
+		this.txtPesquisar.setText("");
+	}
 }

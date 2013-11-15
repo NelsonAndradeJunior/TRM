@@ -11,4 +11,5 @@ public interface TipoObraDAO {
 	public List<String> getColumnNames() throws SQLException;
 	public List<TipoObra> getByName(String textoPesquisa) throws SQLException;
 	public void insert(TipoObra model) throws SQLException;
+	public void update(TipoObra model) throws SQLException;
 }
