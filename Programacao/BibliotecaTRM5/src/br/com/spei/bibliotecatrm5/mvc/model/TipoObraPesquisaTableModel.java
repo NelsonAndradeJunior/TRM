@@ -1,16 +1,11 @@
 package br.com.spei.bibliotecatrm5.mvc.model;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-import br.com.spei.bibliotecatrm5.mvc.dao.Conexao;
 import br.com.spei.bibliotecatrm5.mvc.dao.TipoObraDAO;
 import br.com.spei.bibliotecatrm5.mvc.dao.TipoObraDAOImpl;
 

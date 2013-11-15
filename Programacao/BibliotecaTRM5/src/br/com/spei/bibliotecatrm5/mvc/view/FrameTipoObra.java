@@ -1,6 +1,5 @@
 package br.com.spei.bibliotecatrm5.mvc.view;
 
-import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -11,7 +10,6 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.InternalFrameListener;
 
-import br.com.spei.bibliotecatrm5.mvc.control.TipoObraControl;
 import br.com.spei.bibliotecatrm5.mvc.control.TipoObraPesquisaControl;
 import br.com.spei.bibliotecatrm5.mvc.model.TipoObra;
 

@@ -1,20 +1,14 @@
 package br.com.spei.bibliotecatrm5.mvc.view;
 
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import java.sql.SQLException;
 import java.util.List;
 
 import javax.swing.*;
 import javax.swing.event.InternalFrameListener;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
-import com.microsoft.sqlserver.jdbc.SQLServerException;
 
-import br.com.spei.bibliotecatrm5.mvc.model.JDBCTableModel;
 import br.com.spei.bibliotecatrm5.mvc.model.TipoObra;
 import br.com.spei.bibliotecatrm5.mvc.model.TipoObraPesquisaTableModel;
 
