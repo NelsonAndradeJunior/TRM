@@ -117,4 +117,19 @@ public class TipoObraDAOImpl implements TipoObraDAO {
 		conexao.close();
 	}
 
+	@Override
+	public void update(TipoObra model) throws SQLException {
+		Connection conexao = Conexao.getInstance().getConnection();
+		
+		String query = "UPDATE TIPO_OBRA SET DS_TIPO_OBRA = ? WHERE ID_TIPO_OBRA = ?";
+		
+		PreparedStatement pstmt = conexao.prepareStatement(query);
+		pstmt.setString(1, model.getDescricaoTipoObra());
+		pstmt.setInt(2, model.getCodObra());
+		
+		pstmt.executeUpdate();
+		
+		pstmt.close();
+		conexao.close();
+	}
 }

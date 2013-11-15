@@ -27,7 +27,6 @@ public class TipoObraPesquisaControl extends MouseAdapter implements ActionListe
 	
 	public TipoObraPesquisaControl(FrameTipoObraPesquisa view) {
 		this.view = view;
-		this.model = model;
 	}
 
 	@Override
@@ -64,10 +63,14 @@ public class TipoObraPesquisaControl extends MouseAdapter implements ActionListe
 					for (JInternalFrame frame : view.getDesktopPane().getAllFrames()) {
 						if(frame.getName() != null && frame.getName().equalsIgnoreCase("frmTipoObraPesquisa")) {
 							frame.setSelected(true);
-							((FrameTipoObra)frame).preencheCampoTexto(model);
+							// TODO Criar Frame Abstrato
+							((FrameTipoObra)frame).setModel(model);
+							((FrameTipoObra)frame).preencheCampoTexto();
+							((FrameTipoObra)frame).setModoAtualizacao(true);
 						}
 					}
-					view.setVisible(false);					
+					view.setVisible(false);
+					view.limpaTexto();
 				} catch (PropertyVetoException e1) {
 					view.disparaExcecao(e1);
 				}
@@ -89,6 +92,18 @@ public class TipoObraPesquisaControl extends MouseAdapter implements ActionListe
 		
 	}
 
+	public void carregaInformacoes() {
+		TipoObraDAO tipoObraDAO = new TipoObraDAOImpl();
+		try {
+			List<TipoObra> listaTipoObra = tipoObraDAO.listAll();
+			view.atualizaTabela(listaTipoObra);
+		} catch (SQLException e1) {
+			// TODO remover
+			e1.printStackTrace();
+			view.disparaExcecaoSQL(e1);
+		}
+	}
+	
 	@Override
 	public void internalFrameActivated(InternalFrameEvent e) {
 		// TODO Auto-generated method stub
@@ -109,7 +124,7 @@ public class TipoObraPesquisaControl extends MouseAdapter implements ActionListe
 
 	@Override
 	public void internalFrameDeactivated(InternalFrameEvent e) {
-		
+		view.limpaTexto();
 	}
 
 	@Override
