@@ -1,5 +1,6 @@
 package br.com.spei.bibliotecatrm5.mvc.dao;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.Connection;
@@ -34,11 +35,13 @@ public class ObraDAOImpl implements ObraDAO {
 				String editora = rs.getString("EDITORA");
 				String tipoObra = rs.getString("ID_TIPO_OBRA");
 				
-				obra.setIdObra(idObra);
-				obra.setAutor(autor);
-				obra.setDtFabricacao((java.sql.Date) dtFabricacao);
-				obra.setEditora(editora);
-				obra.setTipoObra(tipoObra);
+				// TODO implementar
+				
+//				obra.setIdObra(idObra);
+//				obra.setAutor(autor);
+//				obra.setDtFabricacao((java.sql.Date) dtFabricacao);
+//				obra.setEditora(editora);
+//				obra.setTipoObra(tipoObra);
 				
 				listaObra.add(obra);
 			}
@@ -50,6 +53,32 @@ public class ObraDAOImpl implements ObraDAO {
 		};
 		
 		return listaObra;
+	}
+
+	@Override
+	public void insert(Obra model) throws SQLException {
+		String query = "INSERT INTO OBRA (DS_OBRA, ID_AUTOR, DT_ANO, ID_EDITORA, ID_TIPO_OBRA) VALUES (?, ?, ? , ?, ?)";
+		
+		String nomeObra = model.getNomeObra();
+		int codAutor = model.getAutor().getCodAutor();
+		int ano = model.getAno();
+		int codEditora = model.getEditora().getCodEditora();
+		int codTipoObra = model.getTipoObra().getCodTipoObra();
+		
+		Connection conexao = Conexao.getInstance().getConnection();
+		
+		PreparedStatement pstmt = conexao.prepareStatement(query);
+		
+		pstmt.setString(1, nomeObra);
+		pstmt.setInt(2, codAutor);
+		pstmt.setInt(3, ano);
+		pstmt.setInt(4, codEditora);
+		pstmt.setInt(5, codTipoObra);
+		
+		pstmt.executeUpdate();
+		
+		pstmt.close();
+		conexao.close();
 	}
 
 }

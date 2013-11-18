@@ -25,15 +25,9 @@ public class ObraControl implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
 		case "gravar":
-			// TODO Teste - Remover
-			ObraDAO t = new ObraDAOImpl();
-			List<Obra> l = t.listAll();
-			
-			for (Obra obra : l) {
-				JOptionPane.showMessageDialog(null, obra.getAutor());
-				
-			}
-			
+			ObraDAO obraDAO = new ObraDAOImpl();
+			// TODO Tratar exceção
+//			obraDAO.insert(model);
 			break;
 		case "cancelar":
 			view.setVisible(false);

@@ -40,7 +40,7 @@ public class TipoObraPesquisaTableModel extends AbstractTableModel {
 		
 		for (TipoObra tipoObra : listaTipoObra) {
 			Object[] linha = new Object[listaNomeColunas.size()];
-			linha[0] = tipoObra.getCodObra();
+			linha[0] = tipoObra.getCodTipoObra();
 			linha[1] = tipoObra.getDescricaoTipoObra();
 			
 			linhas.add(linha);

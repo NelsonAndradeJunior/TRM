@@ -31,7 +31,7 @@ public class TipoObraDAOImpl implements TipoObraDAO {
 			int codigoObra = rs.getInt("ID_TIPO_OBRA");
 			String descricaoTipoObra = rs.getString("DS_TIPO_OBRA");
 			
-			tipoObra.setCodObra(codigoObra);
+			tipoObra.setCodTipoObra(codigoObra);
 			tipoObra.setDescricaoTipoObra(descricaoTipoObra);
 			
 			listaTipoObra.add(tipoObra);
@@ -89,7 +89,7 @@ public class TipoObraDAOImpl implements TipoObraDAO {
 			int codigoObra = rs.getInt("ID_TIPO_OBRA");
 			String descricaoTipoObra = rs.getString("DS_TIPO_OBRA");
 			
-			tipoObra.setCodObra(codigoObra);
+			tipoObra.setCodTipoObra(codigoObra);
 			tipoObra.setDescricaoTipoObra(descricaoTipoObra);
 			
 			listaTipoObra.add(tipoObra);
@@ -125,7 +125,7 @@ public class TipoObraDAOImpl implements TipoObraDAO {
 		
 		PreparedStatement pstmt = conexao.prepareStatement(query);
 		pstmt.setString(1, model.getDescricaoTipoObra());
-		pstmt.setInt(2, model.getCodObra());
+		pstmt.setInt(2, model.getCodTipoObra());
 		
 		pstmt.executeUpdate();
 		

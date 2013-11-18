@@ -145,7 +145,7 @@ public class FrameTipoObraPesquisa extends JInternalFrame {
 		TipoObraPesquisaTableModel tableModel = (TipoObraPesquisaTableModel)tblDados.getModel();
 		tableModel.setRowCount(listaTipoObra.size());
 		for (int i = 0; i < listaTipoObra.size(); i++) {
-			tableModel.setValueAt(listaTipoObra.get(i).getCodObra(), i, 0);
+			tableModel.setValueAt(listaTipoObra.get(i).getCodTipoObra(), i, 0);
 			tableModel.setValueAt(listaTipoObra.get(i).getDescricaoTipoObra(), i, 1);
 		}
 	}

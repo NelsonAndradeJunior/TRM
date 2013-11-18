@@ -57,7 +57,7 @@ public class TipoObraPesquisaControl extends MouseAdapter implements ActionListe
 				int codigo = (int)fonte.getModel().getValueAt(fonte.getSelectedRow(), 0);
 				String descricao = (String)fonte.getModel().getValueAt(fonte.getSelectedRow(), 1);
 				this.model = new TipoObra();
-				model.setCodObra(codigo);
+				model.setCodTipoObra(codigo);
 				model.setDescricaoTipoObra(descricao);
 				try {
 					for (JInternalFrame frame : view.getDesktopPane().getAllFrames()) {

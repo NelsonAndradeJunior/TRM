@@ -2,14 +2,14 @@ package br.com.spei.bibliotecatrm5.mvc.model;
 
 public class TipoObra {
 
-	private int codObra;
+	private int codTipoObra;
 	private String descricaoTipoObra;
 	
-	public int getCodObra() {
-		return codObra;
+	public int getCodTipoObra() {
+		return codTipoObra;
 	}
-	public void setCodObra(int codObra) {
-		this.codObra = codObra;
+	public void setCodTipoObra(int codTipoObra) {
+		this.codTipoObra = codTipoObra;
 	}
 	public String getDescricaoTipoObra() {
 		return descricaoTipoObra;

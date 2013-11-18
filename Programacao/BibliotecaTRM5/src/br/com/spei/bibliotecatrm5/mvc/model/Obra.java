@@ -1,15 +1,12 @@
 package br.com.spei.bibliotecatrm5.mvc.model;
 
-import java.sql.Date;
-
 public class Obra {
-	
 	private int idObra;
-	private String autor;
-	private Date dtFabricacao;
-	private String editora;
-	private String tipoObra;
-	
+	private String nomeObra;
+	private Autor autor;
+	private int ano;
+	private Editora editora;
+	private TipoObra tipoObra;	
 	
 	public int getIdObra() {
 		return idObra;
@@ -17,32 +14,34 @@ public class Obra {
 	public void setIdObra(int idObra) {
 		this.idObra = idObra;
 	}
-	public String getAutor() {
+	public Autor getAutor() {
 		return autor;
 	}
-	public void setAutor(String autor) {
+	public void setAutor(Autor autor) {
 		this.autor = autor;
 	}
-	public Date getDtFabricacao() {
-		return dtFabricacao;
+	public int getAno() {
+		return ano;
 	}
-	public void setDtFabricacao(Date dtFabricacao) {
-		this.dtFabricacao = dtFabricacao;
+	public void setAno(int ano) {
+		this.ano = ano;
 	}
-	public String getEditora() {
+	public Editora getEditora() {
 		return editora;
 	}
-	public void setEditora(String editora) {
+	public void setEditora(Editora editora) {
 		this.editora = editora;
 	}
-	public String getTipoObra() {
+	public TipoObra getTipoObra() {
 		return tipoObra;
 	}
-	public void setTipoObra(String tipoObra) {
+	public void setTipoObra(TipoObra tipoObra) {
 		this.tipoObra = tipoObra;
 	}
-	
-		
-	
-
+	public String getNomeObra() {
+		return nomeObra;
+	}
+	public void setNomeObra(String nomeObra) {
+		this.nomeObra = nomeObra;
+	}
 }
