@@ -8,6 +8,12 @@ public class Obra {
 	private Editora editora;
 	private TipoObra tipoObra;	
 	
+	public Obra() {
+		autor = new Autor();
+		editora = new Editora();
+		tipoObra = new TipoObra();
+	}
+	
 	public int getIdObra() {
 		return idObra;
 	}

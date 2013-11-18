@@ -26,6 +26,7 @@ public class ObraControl implements ActionListener {
 		switch (e.getActionCommand()) {
 		case "gravar":
 			ObraDAO obraDAO = new ObraDAOImpl();
+			List<Obra> obras = obraDAO.listAll();
 			// TODO Tratar exceção
 //			obraDAO.insert(model);
 			break;

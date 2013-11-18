@@ -20,7 +20,11 @@ public class ObraDAOImpl implements ObraDAO {
 		try {
 			Connection conexao = Conexao.getInstance().getConnection();
 			
-			String query = "SELECT * FROM OBRA";
+			String query = "SELECT O.ID_OBRA, O.DS_OBRA, A.ID_AUTOR, A.NM_AUTOR, O.DT_ANO, " +
+						   "E.ID_EDITORA, E.DS_EDITORA, T.ID_TIPO_OBRA, T.DS_TIPO_OBRA FROM OBRA O " +
+						   "INNER JOIN AUTOR A ON A.ID_AUTOR = O.ID_AUTOR " +
+						   "INNER JOIN EDITORA E ON E.ID_EDITORA = O.ID_EDITORA " +
+						   "INNER JOIN TIPO_OBRA T ON T.ID_TIPO_OBRA = O.ID_TIPO_OBRA";
 			
 			Statement stmt = conexao.createStatement();
 			
@@ -30,18 +34,24 @@ public class ObraDAOImpl implements ObraDAO {
 				Obra obra = new Obra();
 				
 				int idObra = rs.getInt("ID_OBRA");
-				String autor = rs.getString("AUTOR");
-				Date dtFabricacao = rs.getDate("DT_FABRICACAO");
-				String editora = rs.getString("EDITORA");
-				String tipoObra = rs.getString("ID_TIPO_OBRA");
+				String nomeObra = rs.getString("DS_OBRA");
+				int idAutor = rs.getInt("ID_AUTOR");
+				String nomeAutor = rs.getString("NM_AUTOR");
+				int ano = rs.getInt("DT_ANO");
+				int idEditora = rs.getInt("ID_EDITORA");
+				String descricaoEditora = rs.getString("DS_EDITORA");
+				int idTipoObra= rs.getInt("ID_TIPO_OBRA");
+				String descricaoTipoObra = rs.getString("DS_TIPO_OBRA");
 				
-				// TODO implementar
-				
-//				obra.setIdObra(idObra);
-//				obra.setAutor(autor);
-//				obra.setDtFabricacao((java.sql.Date) dtFabricacao);
-//				obra.setEditora(editora);
-//				obra.setTipoObra(tipoObra);
+				obra.setIdObra(idObra);
+				obra.setNomeObra(nomeObra);
+				obra.getAutor().setCodAutor(idAutor);
+				obra.getAutor().setNomeAutor(nomeAutor);
+				obra.setAno(ano);
+				obra.getEditora().setCodEditora(idEditora);
+				obra.getEditora().setNomeEditora(descricaoEditora);
+				obra.getTipoObra().setCodTipoObra(idTipoObra);
+				obra.getTipoObra().setDescricaoTipoObra(descricaoTipoObra);
 				
 				listaObra.add(obra);
 			}
