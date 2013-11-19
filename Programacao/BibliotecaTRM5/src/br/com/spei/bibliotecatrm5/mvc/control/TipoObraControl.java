@@ -2,6 +2,7 @@ package br.com.spei.bibliotecatrm5.mvc.control;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyVetoException;
 import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
@@ -29,13 +30,13 @@ public class TipoObraControl implements ActionListener, InternalFrameListener{
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
 		case "gravar":
-			model = view.getModel();
-			model.setDescricaoTipoObra(view.getDescricaoTipoObra());
 			TipoObraDAO tipoObraDAO = new TipoObraDAOImpl();
 			try {
 				if(view.getModoAtualizacao()) 
 					switch (view.confirmaAtualizacao()) {
 					case JOptionPane.YES_OPTION:
+						model = view.getModel();
+						model.setDescricaoTipoObra(view.getDescricaoTipoObra());
 						tipoObraDAO.update(model);
 						view.limpaTexto();
 						view.setModoAtualizacao(false);
@@ -50,6 +51,8 @@ public class TipoObraControl implements ActionListener, InternalFrameListener{
 						break;
 					}
 				else {
+					model = new TipoObra();
+					model.setDescricaoTipoObra(view.getDescricaoTipoObra());
 					tipoObraDAO.insert(model);
 					view.mostraMensagem("Cadastro efetuado com sucesso.");
 					view.limpaTexto();
@@ -95,8 +98,6 @@ public class TipoObraControl implements ActionListener, InternalFrameListener{
 
 	@Override
 	public void internalFrameDeactivated(InternalFrameEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
