@@ -22,8 +22,6 @@ public class TipoObraControl implements ActionListener, InternalFrameListener{
 	public TipoObraControl(FrameTipoObra view) {
 		this.view = view;
 		model = new TipoObra();
-		view.configuraOuvinteAcao(this);
-		view.configuraOuvinteInternalFrame(this);
 	}
 
 	@Override
@@ -64,6 +62,13 @@ public class TipoObraControl implements ActionListener, InternalFrameListener{
 			
 			break;
 		case "cancelar":
+			try {
+				view.setSelected(false);
+			} catch (PropertyVetoException e1) {
+				view.mostraMensagem("Ocorreu um erro ao tentar fechar o formulário.");
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			view.setVisible(false);
 			break;
 		case "pesquisar":
@@ -77,6 +82,15 @@ public class TipoObraControl implements ActionListener, InternalFrameListener{
 	public void inicia() {
 		view.setVisible(true);
 //		view.configuraOuvinteFoco(this);
+	}
+	
+	public void inicia(boolean configuraOuvinte) {
+		if(configuraOuvinte) {
+			view.configuraOuvinteAcao(this);
+			view.configuraOuvinteInternalFrame(this);
+			view.setListenersAdicionados(true);
+		}
+		inicia();			
 	}
 
 	@Override
@@ -98,6 +112,9 @@ public class TipoObraControl implements ActionListener, InternalFrameListener{
 
 	@Override
 	public void internalFrameDeactivated(InternalFrameEvent e) {
+		view.limpaTexto();
+		view.setModoAtualizacao(false);
+		view.setModel(null);
 	}
 
 	@Override

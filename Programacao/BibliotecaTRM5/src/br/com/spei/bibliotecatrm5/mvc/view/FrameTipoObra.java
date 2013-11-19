@@ -29,6 +29,8 @@ public class FrameTipoObra extends JInternalFrame {
 	private FrameTipoObraPesquisa frameTipoObraPesquisa;
 	private boolean modoAtualizacao;
 	private TipoObra model;
+
+	private boolean listenersAdicionados;
 	
 	public FrameTipoObra() {
 		super("", false, true, false, true);
@@ -187,6 +189,7 @@ public class FrameTipoObra extends JInternalFrame {
 	}
 
 	public void mostraMensagem(String mensagem) {
+		// TODO Melhorar - Tipos de mensagem
 		JOptionPane.showMessageDialog(null, mensagem);		
 	}
 
@@ -201,5 +204,13 @@ public class FrameTipoObra extends JInternalFrame {
 
 	public String getDescricaoTipoObra() {
 		return txtDescricaoTipoObra.getText();
+	}
+
+	public boolean adicionouListeners() {
+		return this.listenersAdicionados;
+	}
+	
+	public void setListenersAdicionados(boolean listenersAdicionados) {
+		this.listenersAdicionados = listenersAdicionados;
 	}
 }

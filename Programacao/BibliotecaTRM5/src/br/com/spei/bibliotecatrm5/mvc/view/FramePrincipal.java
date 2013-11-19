@@ -181,14 +181,15 @@ public class FramePrincipal extends JFrame {
 		itemMenuCadDevolucao.addActionListener(actionListener);
 	}
 	
-	public void mostraFormCadastroTipoObra() {	
+	public void mostraFormCadastroTipoObra() {
+		
 		TipoObraControl controladorTipoObra = new TipoObraControl(frameTipoObra);
-		controladorTipoObra.inicia();
+		controladorTipoObra.inicia(!frameTipoObra.adicionouListeners());
 	}
 	
-	public void mostraFormCadastroObra() {	
+	public void mostraFormCadastroObra() {
 		ObraControl controladorObra = new ObraControl(frameObra);
-		controladorObra.inicia();
+		controladorObra.inicia(!frameObra.adicionouListeners());
 	}
 	
 	public void mostraFormCadastroEmprestimo() {	

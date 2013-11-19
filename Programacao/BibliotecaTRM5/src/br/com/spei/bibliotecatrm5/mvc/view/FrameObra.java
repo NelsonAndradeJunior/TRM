@@ -15,7 +15,9 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
+import javax.swing.event.InternalFrameListener;
 
+import br.com.spei.bibliotecatrm5.mvc.control.AutorPesquisaControl;
 import br.com.spei.bibliotecatrm5.mvc.control.ObraPesquisaControl;
 import br.com.spei.bibliotecatrm5.mvc.model.Obra;
 
@@ -45,8 +47,10 @@ public class FrameObra extends JInternalFrame {
 	private JButton btnPesquisarTipoObra;
 	private BufferedImage picLupa;
 	private FrameObraPesquisa frameObraPesquisa;
+	private FrameAutorPesquisa frameAutorPesquisa;
 	private Obra model;
 	private boolean modoAtualizacao;
+	private boolean listenersAdicionados;
 
 	public FrameObra() {
 		super("", false, true, false, true);
@@ -372,12 +376,12 @@ public class FrameObra extends JInternalFrame {
 	}
 
 	public void mostraFrameAutorPesquisa() {
-		boolean adicionaListeners = frameObraPesquisa == null;
+		boolean adicionaListeners = frameAutorPesquisa == null;
 		
-		if(frameObraPesquisa == null) {
+		if(frameAutorPesquisa == null) {
 			try {
-				frameObraPesquisa = getFramePesquisa();
-				((JDesktopPane)this.getParent()).add(frameObraPesquisa);
+				frameAutorPesquisa = getFrameAutorPesquisa();
+				((JDesktopPane)this.getParent()).add(frameAutorPesquisa);
 			} catch (SQLException e) {
 				JOptionPane.showMessageDialog(null, "Ocorreu um erro ao carregar o formulárlio de pesquisa.", "Erro", JOptionPane.ERROR_MESSAGE);
 				// TODO Remover
@@ -386,10 +390,38 @@ public class FrameObra extends JInternalFrame {
 			}
 		}
 		
-		ObraPesquisaControl controladorObraPesquisa = new ObraPesquisaControl(frameObraPesquisa);
-		controladorObraPesquisa.inicia(adicionaListeners);
+		AutorPesquisaControl controladorAutorPesquisa = new AutorPesquisaControl(frameAutorPesquisa);
+		controladorAutorPesquisa.inicia(adicionaListeners);
 		
-		controladorObraPesquisa.carregaInformacoes();
+		controladorAutorPesquisa.carregaInformacoes();
 	}
 
+	private FrameAutorPesquisa getFrameAutorPesquisa() throws SQLException {
+		return new FrameAutorPesquisa();
+	}
+
+	public void mostraMensagem(String mensagem) {
+		JOptionPane.showMessageDialog(null, mensagem);
+	}
+
+	public void limpaTela() {
+		txtCodigoObra.setText("");
+		txtNomeObra.setText("");
+		txtAno.setText("");
+		txtAutorObra.setText("");
+		txtEditora.setText("");
+		txtTipoObra.setText("");
+	}
+
+	public void configuraOuvinteFrame(InternalFrameListener listener) {
+		this.addInternalFrameListener(listener);
+	}
+
+	public boolean adicionouListeners() {
+		return this.listenersAdicionados;
+	}
+	
+	public void setListenersAdicionados(boolean listenersAdicionados) {
+		this.listenersAdicionados = listenersAdicionados;
+	}
 }
