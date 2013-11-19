@@ -1,19 +1,13 @@
 package br.com.spei.bibliotecatrm5.mvc.control;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
+
 import java.beans.PropertyVetoException;
 import java.sql.SQLException;
 import java.util.List;
 
-import javax.swing.JInternalFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.event.InternalFrameEvent;
-import javax.swing.event.InternalFrameListener;
+import javax.swing.*;
+import javax.swing.event.*;
 
 import br.com.spei.bibliotecatrm5.mvc.dao.TipoObraDAO;
 import br.com.spei.bibliotecatrm5.mvc.dao.TipoObraDAOImpl;
@@ -61,7 +55,7 @@ public class TipoObraPesquisaControl extends MouseAdapter implements ActionListe
 				model.setDescricaoTipoObra(descricao);
 				try {
 					for (JInternalFrame frame : view.getDesktopPane().getAllFrames()) {
-						if(frame.getName() != null && frame.getName().equalsIgnoreCase("frmTipoObraPesquisa")) {
+						if(frame.getName() != null && frame.getName().equalsIgnoreCase("frmTipoObra")) {
 							frame.setSelected(true);
 							// TODO Criar Frame Abstrato
 							((FrameTipoObra)frame).setModel(model);

@@ -4,14 +4,20 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
+
+import br.com.spei.bibliotecatrm5.mvc.control.ObraPesquisaControl;
+import br.com.spei.bibliotecatrm5.mvc.model.Obra;
 
 public class FrameObra extends JInternalFrame {
 
@@ -38,6 +44,9 @@ public class FrameObra extends JInternalFrame {
 	private JButton btnPesquisarEditora;
 	private JButton btnPesquisarTipoObra;
 	private BufferedImage picLupa;
+	private FrameObraPesquisa frameObraPesquisa;
+	private Obra model;
+	private boolean modoAtualizacao;
 
 	public FrameObra() {
 		super("", false, true, false, true);
@@ -47,6 +56,7 @@ public class FrameObra extends JInternalFrame {
 	private void inicializa() {
 		this.setBounds(50, 50, 470, 230);
 		this.setTitle("Cadastro de Obra");
+		this.setName("frmObra");
 		this.setDefaultCloseOperation(JInternalFrame.HIDE_ON_CLOSE);
 
 		SpringLayout layoutManager = getLayoutManager();
@@ -65,10 +75,10 @@ public class FrameObra extends JInternalFrame {
 		txtTipoObra = getTextTipoObra();
 		btnGravar = getButtonGravar();
 		btnCancelar = getButtonCancelar();
-		btnPesquisarObra = getButtonPesquisa();
-		btnPesquisarAutor = getButtonPesquisa();
-		btnPesquisarEditora = getButtonPesquisa();
-		btnPesquisarTipoObra = getButtonPesquisa();
+		btnPesquisarObra = getButtonPesquisa("obra");
+		btnPesquisarAutor = getButtonPesquisa("autor");
+		btnPesquisarEditora = getButtonPesquisa("editora");
+		btnPesquisarTipoObra = getButtonPesquisa("tipo_obra");
 		
 		layoutManager.putConstraint(SpringLayout.NORTH, lblCodigoObra, 10,
 				SpringLayout.NORTH, getContentPane());
@@ -190,6 +200,12 @@ public class FrameObra extends JInternalFrame {
 		this.getContentPane().add(btnPesquisarTipoObra);
 	}
 
+	private JButton getButtonPesquisa(String actionCommand) {
+		JButton botao = getButtonPesquisa();
+		botao.setActionCommand(actionCommand);
+		return botao;
+	}
+
 	private JTextField getTextNomeObra() {
 		JTextField textField = new JTextField(33);
 		return textField;
@@ -305,6 +321,75 @@ public class FrameObra extends JInternalFrame {
 		btnGravar.addActionListener(actionListener);
 		btnPesquisarObra.addActionListener(actionListener);
 		btnPesquisarAutor.addActionListener(actionListener);
+	}
+
+	public void mostraExcecaoSQL() {
+		JOptionPane.showMessageDialog(null, "Ocorreu um erro ao tentar realizar a operação.", "Erro", JOptionPane.ERROR_MESSAGE);
+	}
+
+	public void mostraFrameObraPesquisa() {
+		boolean adicionaListeners = frameObraPesquisa == null;
+		
+		if(frameObraPesquisa == null) {
+			try {
+				frameObraPesquisa = getFramePesquisa();
+				((JDesktopPane)this.getParent()).add(frameObraPesquisa);
+			} catch (SQLException e) {
+				JOptionPane.showMessageDialog(null, "Ocorreu um erro ao carregar o formulárlio de pesquisa.", "Erro", JOptionPane.ERROR_MESSAGE);
+				// TODO Remover
+				e.printStackTrace();
+				return;
+			}
+		}
+		
+		ObraPesquisaControl controladorObraPesquisa = new ObraPesquisaControl(frameObraPesquisa);
+		controladorObraPesquisa.inicia(adicionaListeners);
+		
+		controladorObraPesquisa.carregaInformacoes();
+	}
+
+	private FrameObraPesquisa getFramePesquisa() throws SQLException {
+		return new FrameObraPesquisa();
+	}
+
+	public void setModel(Obra model) {
+		this.model = model;
+	}
+
+	public void preencheInformacoesFrame() {
+		String idObraString = ((Integer)model.getIdObra()).toString();
+		this.txtCodigoObra.setText(idObraString);
+		this.txtNomeObra.setText(model.getNomeObra());
+		this.txtAutorObra.setText(model.getAutor().getNomeAutor());
+		String anoString = ((Integer)model.getAno()).toString();
+		this.txtAno.setText(anoString);
+		this.txtEditora.setText(model.getEditora().getNomeEditora());
+		this.txtTipoObra.setText(model.getTipoObra().getDescricaoTipoObra());
+	}
+
+	public void setModoAtualizacao(boolean modoAtualizacao) {
+		this.modoAtualizacao = modoAtualizacao;
+	}
+
+	public void mostraFrameAutorPesquisa() {
+		boolean adicionaListeners = frameObraPesquisa == null;
+		
+		if(frameObraPesquisa == null) {
+			try {
+				frameObraPesquisa = getFramePesquisa();
+				((JDesktopPane)this.getParent()).add(frameObraPesquisa);
+			} catch (SQLException e) {
+				JOptionPane.showMessageDialog(null, "Ocorreu um erro ao carregar o formulárlio de pesquisa.", "Erro", JOptionPane.ERROR_MESSAGE);
+				// TODO Remover
+				e.printStackTrace();
+				return;
+			}
+		}
+		
+		ObraPesquisaControl controladorObraPesquisa = new ObraPesquisaControl(frameObraPesquisa);
+		controladorObraPesquisa.inicia(adicionaListeners);
+		
+		controladorObraPesquisa.carregaInformacoes();
 	}
 
 }

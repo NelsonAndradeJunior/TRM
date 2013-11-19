@@ -117,7 +117,7 @@ public class FramePrincipal extends JFrame {
 	
 	private JMenu getFrameReserva(){
 		reserva = new JMenu("Reserva");
-		reserva.setMnemonic(KeyEvent.VK_C);
+		reserva.setMnemonic(KeyEvent.VK_R);
 		reserva.add(getItemMenuCadastroReserva());
 		
 		return reserva;
@@ -126,7 +126,7 @@ public class FramePrincipal extends JFrame {
 	
 	private JMenu getFrameDevolucaoObra(){
 		devolucao = new JMenu("Devolucao");
-		devolucao.setMnemonic(KeyEvent.VK_C);
+		devolucao.setMnemonic(KeyEvent.VK_D);
 		devolucao.add(getItemMenuCadastroDevolucao());
 		
 		return devolucao;

@@ -2,6 +2,7 @@ package br.com.spei.bibliotecatrm5.mvc.control;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -23,17 +24,29 @@ public class ObraControl implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		ObraDAO obraDAO = new ObraDAOImpl();
 		switch (e.getActionCommand()) {
 		case "gravar":
-			ObraDAO obraDAO = new ObraDAOImpl();
-			List<Obra> obras = obraDAO.listAll();
-			// TODO Tratar exceção
-//			obraDAO.insert(model);
+			try {
+				obraDAO.insert(model);
+			} catch (SQLException e1) {
+				view.mostraExcecaoSQL();
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			break;
 		case "cancelar":
 			view.setVisible(false);
 			break;
-		case "pesquisar":
+		case "obra":
+			view.mostraFrameObraPesquisa();
+			break;
+		case "autor":
+			view.mostraFrameAutorPesquisa();
+			break;
+		case "editora":
+			break;
+		case "tipo_obra":
 			break;
 		default:
 			break;

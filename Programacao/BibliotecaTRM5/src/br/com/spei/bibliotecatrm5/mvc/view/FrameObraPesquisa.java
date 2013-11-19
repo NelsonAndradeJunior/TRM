@@ -5,35 +5,33 @@ import java.sql.SQLException;
 import java.util.List;
 
 import javax.swing.*;
-import javax.swing.event.InternalFrameListener;
 import javax.swing.table.TableModel;
 
+import br.com.spei.bibliotecatrm5.mvc.model.Obra;
+import br.com.spei.bibliotecatrm5.mvc.model.ObraPesquisaTableModel;
 
-import br.com.spei.bibliotecatrm5.mvc.model.TipoObra;
-import br.com.spei.bibliotecatrm5.mvc.model.TipoObraPesquisaTableModel;
-
-public class FrameTipoObraPesquisa extends JInternalFrame {
+public class FrameObraPesquisa extends JInternalFrame {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	private JLabel lblPesquisar;
 	private JTextField txtPesquisar;
 	private JButton btnPesquisar;
 	private JTable tblDados;
-	private JScrollPane spnDados;
+	private JScrollPane spnDados;	
 	
-	public FrameTipoObraPesquisa() throws SQLException {
+	public FrameObraPesquisa() throws SQLException {
 		super("", false, true, false, true);
 		inicializa();
 	}
 
 	private void inicializa() throws SQLException {
-		this.setBounds(100, 100, 400, 200);
-		this.setTitle("Pesquisa de Tipo de Obra");
-		this.setName("frmTipoObraPesquisa");
+		this.setBounds(100, 100, 900, 400);
+		this.setTitle("Pesquisa de Obra");
+		this.setName("frmObraPesquisa");
 		this.setDefaultCloseOperation(JInternalFrame.HIDE_ON_CLOSE);
 		
 		lblPesquisar = getLabelPesquisar();
@@ -71,16 +69,10 @@ public class FrameTipoObraPesquisa extends JInternalFrame {
 		getContentPane().add(txtPesquisar);
 		getContentPane().add(btnPesquisar);
 		getContentPane().add(spnDados);		
-	}
-	
-	private JScrollPane getScrollPaneDados() {
-		JScrollPane scrollPane = new JScrollPane(tblDados);
-		
-		return scrollPane;
+
 	}
 
-	private JTable getTableDados()  throws SQLException{
-		
+	private JTable getTableDados() throws SQLException {
 		TableModel model = getTableModel();
 		
 		if(model == null)
@@ -92,73 +84,81 @@ public class FrameTipoObraPesquisa extends JInternalFrame {
 		return tabela;
 	}
 
+	private TableModel getTableModel() throws SQLException {
+		return new ObraPesquisaTableModel();
+	}
+
 	private void ajustaColunas(JTable tabela) {
 		tabela.getColumnModel().getColumn(0).setPreferredWidth(15);
 		tabela.getColumnModel().getColumn(1).setPreferredWidth(220);
+		tabela.getColumnModel().getColumn(2).setMinWidth(5);
+		tabela.getColumnModel().getColumn(2).setPreferredWidth(5);
+		tabela.getColumnModel().getColumn(5).setPreferredWidth(15);
 	}
-
-	private TableModel getTableModel() throws SQLException {
-		return new TipoObraPesquisaTableModel();
-	}
-
-	private JTextField getTextPesquisar() {
-		JTextField campoTexto = new JTextField(10);
-		campoTexto.setName("txtPesquisa");
-		return campoTexto;
-	}
-
+	
 	private SpringLayout getLayoutManager() {
 		return new SpringLayout();
 	}
-	
-	private JLabel getLabelPesquisar() {
-		JLabel label = new JLabel("Pesquisa:");
-		label.setName("lblPesquisa");
-		return label;
+
+	private JScrollPane getScrollPaneDados() {
+		JScrollPane scrollPane = new JScrollPane(tblDados);
+		
+		return scrollPane;
 	}
-	
+
 	private JButton getButtonPesquisar() {
 		JButton botao = new JButton("Pesquisar");
 		botao.setName("btnPesquisar");
 		botao.setActionCommand("pesquisar");
 		return botao;
 	}
-	
+
+	private JTextField getTextPesquisar() {
+		JTextField campoTexto = new JTextField(30);
+		campoTexto.setName("txtPesquisa");
+		return campoTexto;
+	}
+
+	private JLabel getLabelPesquisar() {
+		JLabel label = new JLabel("Pesquisa:");
+		label.setName("lblPesquisa");
+		return label;
+	}
+
 	public void configuraOuvinteAcao(ActionListener actionListener) {
 		btnPesquisar.addActionListener(actionListener);
 	}
-	
+
+	public void atualizaTabela(List<Obra> listaObra) {
+		ObraPesquisaTableModel tableModel = (ObraPesquisaTableModel)tblDados.getModel();
+		tableModel.setRowCount(listaObra.size());
+		for (int i = 0; i < listaObra.size(); i++) {
+			tableModel.setValueAt(listaObra.get(i).getIdObra(), i, 0);
+			tableModel.setValueAt(listaObra.get(i).getNomeObra(), i, 1);
+			tableModel.setValueAt(listaObra.get(i).getAno(), i, 2);
+			tableModel.setValueAt(listaObra.get(i).getAutor().getNomeAutor(), i, 3);
+			tableModel.setValueAt(listaObra.get(i).getEditora().getNomeEditora(), i, 4);
+			tableModel.setValueAt(listaObra.get(i).getTipoObra().getDescricaoTipoObra(), i, 5);
+		}
+	}
+
+	public void mostraMensagemErroSQL(SQLException e1) {
+		JOptionPane.showMessageDialog(null, "Ocorreu um erro ao tentar realizar a operação.", "Erro", JOptionPane.ERROR_MESSAGE);
+	}
+
+	public void mostraMensagemErro(String mensagem) {
+		JOptionPane.showMessageDialog(null, mensagem, "Erro", JOptionPane.ERROR_MESSAGE);
+	}
+
+	public void limpaTela() {
+		txtPesquisar.setText("");
+	}
+
 	public void configuraOuvinteMouse(MouseListener mouseListener) {
 		tblDados.addMouseListener(mouseListener);
 	}
 
 	public String getTextoPesquisa() {
 		return txtPesquisar.getText();
-	}
-
-	public void disparaExcecaoSQL(SQLException excecao) {
-		// TODO Melhorar a mensagem
-		JOptionPane.showMessageDialog(null, "Ocorreu um erro ao tentar fazer a operação.");
-	}
-
-	public void atualizaTabela(List<TipoObra> listaTipoObra) {
-		TipoObraPesquisaTableModel tableModel = (TipoObraPesquisaTableModel)tblDados.getModel();
-		tableModel.setRowCount(listaTipoObra.size());
-		for (int i = 0; i < listaTipoObra.size(); i++) {
-			tableModel.setValueAt(listaTipoObra.get(i).getCodTipoObra(), i, 0);
-			tableModel.setValueAt(listaTipoObra.get(i).getDescricaoTipoObra(), i, 1);
-		}
-	}
-
-	public void configuraOuvinteFrame(InternalFrameListener frameListener) {
-		this.addInternalFrameListener(frameListener);
-	}
-
-	public void disparaExcecao(Exception e) {
-		JOptionPane.showMessageDialog(null, "Ocorreu um erro ao tentar repassar o valor.");
-	}
-
-	public void limpaTexto() {
-		this.txtPesquisar.setText("");
 	}
 }

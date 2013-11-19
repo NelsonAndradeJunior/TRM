@@ -38,7 +38,7 @@ public class FrameTipoObra extends JInternalFrame {
 	private void inicializa() {
 		this.setBounds(50, 50, 260, 120);
 		this.setTitle("Cadastro de Tipos de Obra");
-		this.setName("frmTipoObraPesquisa");
+		this.setName("frmTipoObra");
 		this.setDefaultCloseOperation(JInternalFrame.HIDE_ON_CLOSE);
 		
 		SpringLayout layoutManager = getLayoutManager();
