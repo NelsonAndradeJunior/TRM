@@ -19,6 +19,7 @@ import javax.swing.event.InternalFrameListener;
 
 import br.com.spei.bibliotecatrm5.mvc.control.AutorPesquisaControl;
 import br.com.spei.bibliotecatrm5.mvc.control.ObraPesquisaControl;
+import br.com.spei.bibliotecatrm5.mvc.model.Autor;
 import br.com.spei.bibliotecatrm5.mvc.model.Obra;
 
 public class FrameObra extends JInternalFrame {
@@ -423,5 +424,16 @@ public class FrameObra extends JInternalFrame {
 	
 	public void setListenersAdicionados(boolean listenersAdicionados) {
 		this.listenersAdicionados = listenersAdicionados;
+	}
+
+	public void setAutorModel(Autor autor) {
+		if(this.model == null)
+			this.model = new Obra();
+	
+		this.model.setAutor(autor);
+	}
+
+	public void preencheCampoAutor() {
+		this.txtAutorObra.setText(this.model.getAutor().getNomeAutor());
 	}
 }

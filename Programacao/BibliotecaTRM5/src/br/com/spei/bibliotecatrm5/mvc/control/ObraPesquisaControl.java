@@ -63,8 +63,7 @@ public class ObraPesquisaControl extends MouseAdapter implements ActionListener,
 			// TODO remover
 			e1.printStackTrace();
 			view.mostraMensagemErroSQL(e1);
-		}
-		
+		}		
 	}
 	
 	@Override
