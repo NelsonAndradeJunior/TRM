@@ -18,8 +18,10 @@ import javax.swing.SpringLayout;
 import javax.swing.event.InternalFrameListener;
 
 import br.com.spei.bibliotecatrm5.mvc.control.AutorPesquisaControl;
+import br.com.spei.bibliotecatrm5.mvc.control.EditoraPesquisaControl;
 import br.com.spei.bibliotecatrm5.mvc.control.ObraPesquisaControl;
 import br.com.spei.bibliotecatrm5.mvc.model.Autor;
+import br.com.spei.bibliotecatrm5.mvc.model.Editora;
 import br.com.spei.bibliotecatrm5.mvc.model.Obra;
 
 public class FrameObra extends JInternalFrame {
@@ -49,6 +51,7 @@ public class FrameObra extends JInternalFrame {
 	private BufferedImage picLupa;
 	private FrameObraPesquisa frameObraPesquisa;
 	private FrameAutorPesquisa frameAutorPesquisa;
+	private FrameEditoraPesquisa frameEditoraPesquisa;
 	private Obra model;
 	private boolean modoAtualizacao;
 	private boolean listenersAdicionados;
@@ -325,6 +328,7 @@ public class FrameObra extends JInternalFrame {
 		btnCancelar.addActionListener(actionListener);
 		btnGravar.addActionListener(actionListener);
 		btnPesquisarObra.addActionListener(actionListener);
+		btnPesquisarEditora.addActionListener(actionListener);
 		btnPesquisarAutor.addActionListener(actionListener);
 	}
 
@@ -435,5 +439,41 @@ public class FrameObra extends JInternalFrame {
 
 	public void preencheCampoAutor() {
 		this.txtAutorObra.setText(this.model.getAutor().getNomeAutor());
+	}
+
+	public void mostraFrameEditoraPesquisa() {
+		boolean adicionaListeners = frameEditoraPesquisa == null;
+		
+		if(frameEditoraPesquisa == null) {
+			try {
+				frameEditoraPesquisa = getFrameEditoraPesquisa();
+				((JDesktopPane)this.getParent()).add(frameEditoraPesquisa);
+			} catch (SQLException e) {
+				JOptionPane.showMessageDialog(null, "Ocorreu um erro ao carregar o formulárlio de pesquisa.", "Erro", JOptionPane.ERROR_MESSAGE);
+				// TODO Remover
+				e.printStackTrace();
+				return;
+			}
+		}
+		
+		EditoraPesquisaControl controladorEditoraPesquisa = new EditoraPesquisaControl(frameEditoraPesquisa);
+		controladorEditoraPesquisa.inicia(adicionaListeners);
+		
+		controladorEditoraPesquisa.carregaInformacoes();
+	}
+
+	private FrameEditoraPesquisa getFrameEditoraPesquisa() throws SQLException {
+		return new FrameEditoraPesquisa();
+	}
+
+	public void setEditoraModel(Editora editora) {
+		if(this.model == null)
+			this.model = new Obra();
+	
+		this.model.setEditora(editora);
+	}
+
+	public void preencheCampoEditora() {
+		this.txtEditora.setText(this.model.getEditora().getNomeEditora());
 	}
 }
