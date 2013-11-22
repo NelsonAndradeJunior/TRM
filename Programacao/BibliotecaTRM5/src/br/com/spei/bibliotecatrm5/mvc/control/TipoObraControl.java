@@ -100,8 +100,9 @@ public class TipoObraControl implements ActionListener, InternalFrameListener{
 
 	@Override
 	public void internalFrameClosed(InternalFrameEvent e) {
-		// TODO Auto-generated method stub
-		
+		view.limpaTexto();
+		view.setModoAtualizacao(false);
+		view.setModel(null);
 	}
 
 	@Override
@@ -112,9 +113,7 @@ public class TipoObraControl implements ActionListener, InternalFrameListener{
 
 	@Override
 	public void internalFrameDeactivated(InternalFrameEvent e) {
-		view.limpaTexto();
-		view.setModoAtualizacao(false);
-		view.setModel(null);
+		
 	}
 
 	@Override

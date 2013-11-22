@@ -15,14 +15,17 @@ import br.com.spei.bibliotecatrm5.mvc.dao.ObraDAOImpl;
 import br.com.spei.bibliotecatrm5.mvc.model.Obra;
 import br.com.spei.bibliotecatrm5.mvc.view.FrameObra;
 import br.com.spei.bibliotecatrm5.mvc.view.FrameObraPesquisa;
+import br.com.spei.bibliotecatrm5.mvc.view.FrameReserva;
 
 public class ObraPesquisaControl extends MouseAdapter implements ActionListener, InternalFrameListener {
 
 	FrameObraPesquisa view;
 	Obra model;
+	String callerName;
 	
-	public ObraPesquisaControl(FrameObraPesquisa view) {
+	public ObraPesquisaControl(FrameObraPesquisa view, String callerName) {
 		this.view = view;
+		this.callerName = callerName;
 	}
 
 	public void inicia(boolean adicionaListeners) {
@@ -83,12 +86,19 @@ public class ObraPesquisaControl extends MouseAdapter implements ActionListener,
 				}
 				try {
 					for (JInternalFrame frame : view.getDesktopPane().getAllFrames()) {
-						if(frame.getName() != null && frame.getName().equalsIgnoreCase("frmObra")) {
-							frame.setSelected(true);
-							// TODO Criar Frame Abstrato
-							((FrameObra)frame).setModel(model);
-							((FrameObra)frame).preencheInformacoesFrame();
-							((FrameObra)frame).setModoAtualizacao(true);
+						if(frame.getName() != null) {
+							if(frame.getName().equalsIgnoreCase(callerName)) {
+								frame.setSelected(true);
+								if(callerName.equalsIgnoreCase("frmObra")) {
+									// TODO Criar Frame Abstrato
+									((FrameObra)frame).setModel(model);
+									((FrameObra)frame).preencheInformacoesFrame();
+									((FrameObra)frame).setModoAtualizacao(true);
+								} else if (callerName.equalsIgnoreCase("frmReserva")) {
+									((FrameReserva)frame).setObraModel(model);
+									((FrameReserva)frame).preencheCampoObra();
+								}
+							}
 						}
 					}
 					view.setVisible(false);

@@ -18,9 +18,11 @@ import br.com.spei.bibliotecatrm5.mvc.view.FrameTipoObraPesquisa;
 public class TipoObraPesquisaControl extends MouseAdapter implements ActionListener, InternalFrameListener {
 	private FrameTipoObraPesquisa view;
 	private TipoObra model;
+	private String callerName;
 	
-	public TipoObraPesquisaControl(FrameTipoObraPesquisa view) {
+	public TipoObraPesquisaControl(FrameTipoObraPesquisa view, String callerName) {
 		this.view = view;
+		this.callerName = callerName;
 	}
 
 	@Override
@@ -56,19 +58,20 @@ public class TipoObraPesquisaControl extends MouseAdapter implements ActionListe
 				try {
 					for (JInternalFrame frame : view.getDesktopPane().getAllFrames()) {
 						if(frame.getName() != null) {
-							if(frame.getName().equalsIgnoreCase("frmTipoObra")) {
+							if(frame.getName().equalsIgnoreCase(callerName)) {
 								frame.setSelected(true);
-								// TODO Criar Frame Abstrato
-								((FrameTipoObra)frame).setModel(model);
-								((FrameTipoObra)frame).preencheCampoTexto();
-								((FrameTipoObra)frame).setModoAtualizacao(true);
-								break;
-							} else if (frame.getName().equalsIgnoreCase("frmObra")) {
-								frame.setSelected(true);
-								// TODO Criar Frame Abstrato
-								((FrameObra)frame).setTipoObraModel(model);
-								((FrameObra)frame).preencheCampoTipoObra();
-								break;
+								if(callerName.equalsIgnoreCase("frmTipoObra")) {
+									// TODO Criar Frame Abstrato
+									((FrameTipoObra)frame).setModel(model);
+									((FrameTipoObra)frame).preencheCampoTexto();
+									((FrameTipoObra)frame).setModoAtualizacao(true);
+									break;
+								} else if (callerName.equalsIgnoreCase("frmObra")) {
+									// TODO Criar Frame Abstrato
+									((FrameObra)frame).setTipoObraModel(model);
+									((FrameObra)frame).preencheCampoTipoObra();
+									break;
+								}
 							}
 						}
 					}

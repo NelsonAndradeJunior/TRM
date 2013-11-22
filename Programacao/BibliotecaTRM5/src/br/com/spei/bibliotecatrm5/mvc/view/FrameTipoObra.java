@@ -8,6 +8,7 @@ import java.sql.SQLException;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
 
 import br.com.spei.bibliotecatrm5.mvc.control.TipoObraPesquisaControl;
@@ -79,6 +80,12 @@ public class FrameTipoObra extends JInternalFrame {
 		this.getContentPane().add(btnPesquisar);
 	}
 
+	@Override
+	public void setVisible(boolean b) {
+		super.setVisible(b);
+		this.fireInternalFrameEvent(InternalFrameEvent.INTERNAL_FRAME_CLOSED);
+	}
+	
 	private FrameTipoObraPesquisa getFramePesquisa() throws SQLException {
 		frameTipoObraPesquisa = new FrameTipoObraPesquisa();
 		
@@ -155,7 +162,7 @@ public class FrameTipoObra extends JInternalFrame {
 			}
 		}
 		
-		TipoObraPesquisaControl controladorObraPesquisa = new TipoObraPesquisaControl(frameTipoObraPesquisa);
+		TipoObraPesquisaControl controladorObraPesquisa = new TipoObraPesquisaControl(frameTipoObraPesquisa, this.getName());
 		controladorObraPesquisa.inicia(adicionaListeners);
 		
 		controladorObraPesquisa.carregaInformacoes();

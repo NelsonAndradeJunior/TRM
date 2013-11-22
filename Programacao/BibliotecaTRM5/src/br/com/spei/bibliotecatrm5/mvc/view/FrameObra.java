@@ -362,7 +362,7 @@ public class FrameObra extends JInternalFrame {
 			}
 		}
 		
-		ObraPesquisaControl controladorObraPesquisa = new ObraPesquisaControl(frameObraPesquisa);
+		ObraPesquisaControl controladorObraPesquisa = new ObraPesquisaControl(frameObraPesquisa, this.getName());
 		controladorObraPesquisa.inicia(adicionaListeners);
 		
 		controladorObraPesquisa.carregaInformacoes();
@@ -503,7 +503,7 @@ public class FrameObra extends JInternalFrame {
 			}
 		}
 		
-		TipoObraPesquisaControl controladorTipoObraPesquisa = new TipoObraPesquisaControl(frameTipoObraPesquisa);
+		TipoObraPesquisaControl controladorTipoObraPesquisa = new TipoObraPesquisaControl(frameTipoObraPesquisa, this.getName());
 		controladorTipoObraPesquisa.inicia(adicionaListeners);
 		
 		controladorTipoObraPesquisa.carregaInformacoes();

@@ -17,7 +17,9 @@ import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 import javax.swing.event.InternalFrameEvent;
 
+import br.com.spei.bibliotecatrm5.mvc.control.ObraPesquisaControl;
 import br.com.spei.bibliotecatrm5.mvc.control.UsuarioPesquisaControl;
+import br.com.spei.bibliotecatrm5.mvc.model.Obra;
 import br.com.spei.bibliotecatrm5.mvc.model.Reserva;
 import br.com.spei.bibliotecatrm5.mvc.model.Usuario;
 
@@ -34,6 +36,7 @@ public class FrameReserva extends JInternalFrame{
 	private JButton btnPesquisarObra;
 	private BufferedImage picLupa;
 	private FrameUsuarioPesquisa frameUsuarioPesquisa;
+	private FrameObraPesquisa frameObraPesquisa; 
 	private boolean listenersAdicionados;
 	private Reserva model;
 	
@@ -217,5 +220,41 @@ public class FrameReserva extends JInternalFrame{
 
 	public void preencheCampoUsuario() {
 		this.txtUsuario.setText(model.getUsuario().getNomeUsuario() + " " + model.getUsuario().getSobrenomeUsuario());
+	}
+
+	public void mostraFramePesquisaObra() {
+		boolean adicionaListeners = frameObraPesquisa == null;
+		
+		if(frameObraPesquisa == null) {
+			try {
+				frameObraPesquisa = getFrameObraPesquisa();
+				((JDesktopPane)this.getParent()).add(frameObraPesquisa);
+			} catch (SQLException e) {
+				JOptionPane.showMessageDialog(null, "Ocorreu um erro ao carregar o formulárlio de pesquisa.", "Erro", JOptionPane.ERROR_MESSAGE);
+				// TODO Remover
+				e.printStackTrace();
+				return;
+			}
+		}
+		
+		ObraPesquisaControl controladorObraPesquisa = new ObraPesquisaControl(frameObraPesquisa, this.getName());
+		controladorObraPesquisa.inicia(adicionaListeners);
+		
+		controladorObraPesquisa.carregaInformacoes();
+	}
+
+	private FrameObraPesquisa getFrameObraPesquisa() throws SQLException {
+		return new FrameObraPesquisa();
+	}
+
+	public void setObraModel(Obra obra) {
+		if(this.model == null)
+			this.model = new Reserva();
+		
+		this.model.setObra(obra);
+	}
+
+	public void preencheCampoObra() {
+		this.txtObra.setText(model.getObra().getNomeObra());
 	}
 }
