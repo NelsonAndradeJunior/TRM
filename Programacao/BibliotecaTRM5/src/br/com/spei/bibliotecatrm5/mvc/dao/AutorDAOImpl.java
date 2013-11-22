@@ -10,8 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.spei.bibliotecatrm5.mvc.model.Autor;
-import br.com.spei.bibliotecatrm5.mvc.model.Obra;
-import br.com.spei.bibliotecatrm5.mvc.model.TipoObra;
 
 public class AutorDAOImpl implements AutorDAO {
 

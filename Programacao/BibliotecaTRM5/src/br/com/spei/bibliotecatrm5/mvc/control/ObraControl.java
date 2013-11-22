@@ -1,10 +1,8 @@
 package br.com.spei.bibliotecatrm5.mvc.control;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.beans.PropertyVetoException;
 import java.sql.SQLException;
-import java.util.List;
 
 import javax.swing.JOptionPane;
 import javax.swing.event.InternalFrameEvent;
@@ -30,7 +28,37 @@ public class ObraControl implements ActionListener, InternalFrameListener {
 		switch (e.getActionCommand()) {
 		case "gravar":
 			try {
-				obraDAO.insert(model);
+				if(view.getModoAtualizacao()) { 
+					switch (view.confirmaAtualizacao()) {
+					case JOptionPane.YES_OPTION:
+						model = view.getModel();
+						model.setNomeObra(view.getNomeObra());
+						model.setAno(view.getAnoObra());
+						obraDAO.update(model);
+						view.limpaTela();
+						view.setModoAtualizacao(false);
+						break;
+					case JOptionPane.NO_OPTION:
+						view.limpaTela();
+						view.setModoAtualizacao(false);
+						break;
+					case JOptionPane.CANCEL_OPTION:
+						break;
+					default:
+						break;
+					}
+				} else {
+					if(view.validaCamposPreenchidos()) {
+						model = view.getModel();
+						model.setNomeObra(view.getNomeObra());
+						model.setAno(view.getAnoObra());
+						obraDAO.insert(model);
+						view.limpaTela();
+						view.mostraMensagem("Cadastro efetuado com sucesso.");
+					}
+					else
+						view.mostraMensagem("Há campos não preenchidos.");
+				}
 			} catch (SQLException e1) {
 				view.mostraExcecaoSQL();
 				// TODO Auto-generated catch block
@@ -73,6 +101,7 @@ public class ObraControl implements ActionListener, InternalFrameListener {
 		if(adicionaListeners) {
 			view.configuraOuvinteAcao(this);
 			view.configuraOuvinteFrame(this);
+			view.setListenersAdicionados(true);
 		}
 		inicia();
 	}
@@ -85,8 +114,9 @@ public class ObraControl implements ActionListener, InternalFrameListener {
 
 	@Override
 	public void internalFrameClosed(InternalFrameEvent arg0) {
-		// TODO Auto-generated method stub
-		
+		view.limpaTela();
+		view.setModoAtualizacao(false);
+		view.setModel(null);
 	}
 
 	@Override
@@ -97,9 +127,7 @@ public class ObraControl implements ActionListener, InternalFrameListener {
 
 	@Override
 	public void internalFrameDeactivated(InternalFrameEvent arg0) {
-		view.limpaTela();
-		view.setModoAtualizacao(false);
-		view.setModel(null);
+		
 	}
 
 	@Override

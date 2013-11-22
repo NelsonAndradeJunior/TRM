@@ -15,4 +15,6 @@ public interface ObraDAO {
 	public Obra get(int codigo) throws SQLException;
 
 	public List<Obra> getByName(String nomeObra) throws SQLException;
+
+	public void update(Obra model) throws SQLException;
 }

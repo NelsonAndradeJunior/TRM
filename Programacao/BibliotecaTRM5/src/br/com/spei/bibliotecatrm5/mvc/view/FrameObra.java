@@ -1,6 +1,5 @@
 package br.com.spei.bibliotecatrm5.mvc.view;
 
-import java.awt.Component;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -213,6 +212,12 @@ public class FrameObra extends JInternalFrame {
 		this.getContentPane().add(btnPesquisarTipoObra);
 	}
 
+	@Override
+	public void setVisible(boolean b) {
+		super.setVisible(b);
+		this.fireInternalFrameEvent(InternalFrameEvent.INTERNAL_FRAME_CLOSED);
+	}
+	
 	private JButton getButtonPesquisa(String actionCommand) {
 		JButton botao = getButtonPesquisa();
 		botao.setActionCommand(actionCommand);
@@ -517,5 +522,36 @@ public class FrameObra extends JInternalFrame {
 
 	public void preencheCampoTipoObra() {
 		this.txtTipoObra.setText(this.model.getTipoObra().getDescricaoTipoObra());
+	}
+
+	public boolean validaCamposPreenchidos() {
+		return !txtNomeObra.getText().isEmpty() &&
+				!txtAutorObra.getText().isEmpty() &&
+				!txtAno.getText().isEmpty() &&
+				!txtEditora.getText().isEmpty() &&
+				!txtTipoObra.getText().isEmpty();
+	}
+
+	public Obra getModel() {
+		return this.model;
+	}
+
+	public String getNomeObra() {
+		return this.txtNomeObra.getText();
+	}
+	
+	public int getAnoObra() {
+		String anoString = this.txtAno.getText();
+		int retorno = Integer.parseInt(anoString);
+		return retorno;
+	}
+
+	public boolean getModoAtualizacao() {
+		return this.modoAtualizacao;
+	}
+
+	public int confirmaAtualizacao() {
+		int retorno = JOptionPane.showConfirmDialog(null, "Deseja modificar os dados da obra?", "Confirmar Atualização", JOptionPane.YES_NO_CANCEL_OPTION);
+		return retorno;
 	}
 }

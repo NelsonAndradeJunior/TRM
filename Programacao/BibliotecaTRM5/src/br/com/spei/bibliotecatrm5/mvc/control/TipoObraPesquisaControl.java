@@ -68,7 +68,6 @@ public class TipoObraPesquisaControl extends MouseAdapter implements ActionListe
 								// TODO Criar Frame Abstrato
 								((FrameObra)frame).setTipoObraModel(model);
 								((FrameObra)frame).preencheCampoTipoObra();
-								((FrameObra)frame).setModoAtualizacao(true);
 								break;
 							}
 						}

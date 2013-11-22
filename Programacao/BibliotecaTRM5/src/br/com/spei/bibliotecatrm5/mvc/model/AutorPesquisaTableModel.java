@@ -9,8 +9,6 @@ import javax.swing.table.TableModel;
 
 import br.com.spei.bibliotecatrm5.mvc.dao.AutorDAO;
 import br.com.spei.bibliotecatrm5.mvc.dao.AutorDAOImpl;
-import br.com.spei.bibliotecatrm5.mvc.dao.ObraDAO;
-import br.com.spei.bibliotecatrm5.mvc.dao.ObraDAOImpl;
 
 public class AutorPesquisaTableModel extends AbstractTableModel implements
 		TableModel {

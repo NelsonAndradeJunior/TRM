@@ -52,8 +52,8 @@ public class TipoObraControl implements ActionListener, InternalFrameListener{
 					model = new TipoObra();
 					model.setDescricaoTipoObra(view.getDescricaoTipoObra());
 					tipoObraDAO.insert(model);
-					view.mostraMensagem("Cadastro efetuado com sucesso.");
 					view.limpaTexto();
+					view.mostraMensagem("Cadastro efetuado com sucesso.");
 				}
 			} catch (SQLException e1) {
 				view.disparaExcecaoSQL(e1);

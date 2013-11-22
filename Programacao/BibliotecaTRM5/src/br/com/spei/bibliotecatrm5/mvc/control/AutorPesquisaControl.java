@@ -1,9 +1,6 @@
 package br.com.spei.bibliotecatrm5.mvc.control;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.beans.PropertyVetoException;
 import java.sql.SQLException;
 import java.util.List;
@@ -15,10 +12,7 @@ import javax.swing.event.InternalFrameListener;
 
 import br.com.spei.bibliotecatrm5.mvc.dao.AutorDAO;
 import br.com.spei.bibliotecatrm5.mvc.dao.AutorDAOImpl;
-import br.com.spei.bibliotecatrm5.mvc.dao.ObraDAO;
-import br.com.spei.bibliotecatrm5.mvc.dao.ObraDAOImpl;
 import br.com.spei.bibliotecatrm5.mvc.model.Autor;
-import br.com.spei.bibliotecatrm5.mvc.model.Obra;
 import br.com.spei.bibliotecatrm5.mvc.view.FrameAutorPesquisa;
 import br.com.spei.bibliotecatrm5.mvc.view.FrameObra;
 

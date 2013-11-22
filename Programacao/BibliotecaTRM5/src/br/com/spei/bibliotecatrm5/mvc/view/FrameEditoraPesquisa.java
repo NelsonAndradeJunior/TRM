@@ -8,7 +8,6 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.table.TableModel;
 
-import br.com.spei.bibliotecatrm5.mvc.model.Autor;
 import br.com.spei.bibliotecatrm5.mvc.model.Editora;
 import br.com.spei.bibliotecatrm5.mvc.model.EditoraPesquisaTableModel;
 

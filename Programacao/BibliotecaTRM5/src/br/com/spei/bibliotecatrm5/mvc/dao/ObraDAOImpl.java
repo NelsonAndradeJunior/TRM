@@ -211,4 +211,24 @@ public class ObraDAOImpl implements ObraDAO {
 		return obrasRetorno;
 	}
 
+	@Override
+	public void update(Obra model) throws SQLException {
+		Connection conexao = Conexao.getInstance().getConnection();
+		
+		String query = "UPDATE OBRA SET DS_OBRA = ?, ID_AUTOR = ?, DT_ANO = ?, ID_EDITORA = ?, ID_TIPO_OBRA = ? WHERE ID_OBRA = ?";
+		
+		PreparedStatement pstmt = conexao.prepareStatement(query);
+		pstmt.setString(1, model.getNomeObra());
+		pstmt.setInt(2, model.getAutor().getCodAutor());
+		pstmt.setInt(3, model.getAno());
+		pstmt.setInt(4, model.getEditora().getCodEditora());
+		pstmt.setInt(5, model.getTipoObra().getCodTipoObra());
+		pstmt.setInt(6, model.getIdObra());
+		
+		pstmt.executeUpdate();
+		
+		pstmt.close();
+		conexao.close();
+	}
+
 }

@@ -6,13 +6,16 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-import br.com.spei.bibliotecatrm5.mvc.dao.AutorDAO;
-import br.com.spei.bibliotecatrm5.mvc.dao.AutorDAOImpl;
 import br.com.spei.bibliotecatrm5.mvc.dao.EditoraDAO;
 import br.com.spei.bibliotecatrm5.mvc.dao.EditoraDAOImpl;
 
 public class EditoraPesquisaTableModel extends AbstractTableModel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	Object[][] conteudo; 
 	String[] nomeColunas;
 	
