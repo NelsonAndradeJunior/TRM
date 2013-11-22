@@ -57,6 +57,7 @@ public class ObraControl implements ActionListener, InternalFrameListener {
 			view.mostraFrameEditoraPesquisa();
 			break;
 		case "tipo_obra":
+			view.mostraFrameTipoObraPesquisa();
 			break;
 		default:
 			break;

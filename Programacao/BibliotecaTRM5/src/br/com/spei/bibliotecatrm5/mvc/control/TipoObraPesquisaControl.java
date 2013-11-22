@@ -1,7 +1,6 @@
 package br.com.spei.bibliotecatrm5.mvc.control;
 
 import java.awt.event.*;
-
 import java.beans.PropertyVetoException;
 import java.sql.SQLException;
 import java.util.List;
@@ -12,6 +11,7 @@ import javax.swing.event.*;
 import br.com.spei.bibliotecatrm5.mvc.dao.TipoObraDAO;
 import br.com.spei.bibliotecatrm5.mvc.dao.TipoObraDAOImpl;
 import br.com.spei.bibliotecatrm5.mvc.model.TipoObra;
+import br.com.spei.bibliotecatrm5.mvc.view.FrameObra;
 import br.com.spei.bibliotecatrm5.mvc.view.FrameTipoObra;
 import br.com.spei.bibliotecatrm5.mvc.view.FrameTipoObraPesquisa;
 
@@ -55,14 +55,25 @@ public class TipoObraPesquisaControl extends MouseAdapter implements ActionListe
 				model.setDescricaoTipoObra(descricao);
 				try {
 					for (JInternalFrame frame : view.getDesktopPane().getAllFrames()) {
-						if(frame.getName() != null && frame.getName().equalsIgnoreCase("frmTipoObra")) {
-							frame.setSelected(true);
-							// TODO Criar Frame Abstrato
-							((FrameTipoObra)frame).setModel(model);
-							((FrameTipoObra)frame).preencheCampoTexto();
-							((FrameTipoObra)frame).setModoAtualizacao(true);
+						if(frame.getName() != null) {
+							if(frame.getName().equalsIgnoreCase("frmTipoObra")) {
+								frame.setSelected(true);
+								// TODO Criar Frame Abstrato
+								((FrameTipoObra)frame).setModel(model);
+								((FrameTipoObra)frame).preencheCampoTexto();
+								((FrameTipoObra)frame).setModoAtualizacao(true);
+								break;
+							} else if (frame.getName().equalsIgnoreCase("frmObra")) {
+								frame.setSelected(true);
+								// TODO Criar Frame Abstrato
+								((FrameObra)frame).setTipoObraModel(model);
+								((FrameObra)frame).preencheCampoTipoObra();
+								((FrameObra)frame).setModoAtualizacao(true);
+								break;
+							}
 						}
 					}
+					
 					view.setVisible(false);
 					view.limpaTexto();
 				} catch (PropertyVetoException e1) {

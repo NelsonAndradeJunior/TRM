@@ -20,6 +20,8 @@ public class FrameTipoObra extends JInternalFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	// TODO Ajustar para não repassar o model
+	
 	private JLabel lblDescricaoTipoObra;
 	private JTextField txtDescricaoTipoObra;
 	private JButton btnGravar;

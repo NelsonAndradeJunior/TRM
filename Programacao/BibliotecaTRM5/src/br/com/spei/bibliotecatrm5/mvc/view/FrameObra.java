@@ -1,5 +1,6 @@
 package br.com.spei.bibliotecatrm5.mvc.view;
 
+import java.awt.Component;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -15,14 +16,17 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
+import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
 
 import br.com.spei.bibliotecatrm5.mvc.control.AutorPesquisaControl;
 import br.com.spei.bibliotecatrm5.mvc.control.EditoraPesquisaControl;
 import br.com.spei.bibliotecatrm5.mvc.control.ObraPesquisaControl;
+import br.com.spei.bibliotecatrm5.mvc.control.TipoObraPesquisaControl;
 import br.com.spei.bibliotecatrm5.mvc.model.Autor;
 import br.com.spei.bibliotecatrm5.mvc.model.Editora;
 import br.com.spei.bibliotecatrm5.mvc.model.Obra;
+import br.com.spei.bibliotecatrm5.mvc.model.TipoObra;
 
 public class FrameObra extends JInternalFrame {
 
@@ -52,6 +56,7 @@ public class FrameObra extends JInternalFrame {
 	private FrameObraPesquisa frameObraPesquisa;
 	private FrameAutorPesquisa frameAutorPesquisa;
 	private FrameEditoraPesquisa frameEditoraPesquisa;
+	private FrameTipoObraPesquisa frameTipoObraPesquisa;
 	private Obra model;
 	private boolean modoAtualizacao;
 	private boolean listenersAdicionados;
@@ -60,7 +65,7 @@ public class FrameObra extends JInternalFrame {
 		super("", false, true, false, true);
 		inicializa();
 	}
-
+	
 	private void inicializa() {
 		this.setBounds(50, 50, 470, 230);
 		this.setTitle("Cadastro de Obra");
@@ -330,6 +335,7 @@ public class FrameObra extends JInternalFrame {
 		btnPesquisarObra.addActionListener(actionListener);
 		btnPesquisarEditora.addActionListener(actionListener);
 		btnPesquisarAutor.addActionListener(actionListener);
+		btnPesquisarTipoObra.addActionListener(actionListener);
 	}
 
 	public void mostraExcecaoSQL() {
@@ -475,5 +481,41 @@ public class FrameObra extends JInternalFrame {
 
 	public void preencheCampoEditora() {
 		this.txtEditora.setText(this.model.getEditora().getNomeEditora());
+	}
+
+	public void mostraFrameTipoObraPesquisa() {
+		boolean adicionaListeners = frameTipoObraPesquisa == null;
+		
+		if(frameTipoObraPesquisa == null) {
+			try {
+				frameTipoObraPesquisa = getFrameTipoObraPesquisa();
+				((JDesktopPane)this.getParent()).add(frameTipoObraPesquisa);
+			} catch (SQLException e) {
+				JOptionPane.showMessageDialog(null, "Ocorreu um erro ao carregar o formulárlio de pesquisa.", "Erro", JOptionPane.ERROR_MESSAGE);
+				// TODO Remover
+				e.printStackTrace();
+				return;
+			}
+		}
+		
+		TipoObraPesquisaControl controladorTipoObraPesquisa = new TipoObraPesquisaControl(frameTipoObraPesquisa);
+		controladorTipoObraPesquisa.inicia(adicionaListeners);
+		
+		controladorTipoObraPesquisa.carregaInformacoes();
+	}
+
+	private FrameTipoObraPesquisa getFrameTipoObraPesquisa() throws SQLException {
+		return new FrameTipoObraPesquisa();
+	}
+
+	public void setTipoObraModel(TipoObra tipoObra) {
+		if(this.model == null)
+			this.model = new Obra();
+	
+		this.model.setTipoObra(tipoObra);
+	}
+
+	public void preencheCampoTipoObra() {
+		this.txtTipoObra.setText(this.model.getTipoObra().getDescricaoTipoObra());
 	}
 }
