@@ -208,7 +208,7 @@ public class FramePrincipal extends JFrame {
 	
 	public void mostraFormReserva(){
 		ReservaControl controladorReserva = new ReservaControl(frameReserva);
-		controladorReserva.inicia();
+		controladorReserva.inicia(!frameReserva.adicionouListeners());
 	}
 	
 	public void mostraFormDevolucao(){

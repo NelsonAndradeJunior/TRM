@@ -12,60 +12,76 @@ import javax.swing.event.InternalFrameListener;
 
 import br.com.spei.bibliotecatrm5.mvc.dao.AutorDAO;
 import br.com.spei.bibliotecatrm5.mvc.dao.AutorDAOImpl;
+import br.com.spei.bibliotecatrm5.mvc.dao.UsuarioDAO;
+import br.com.spei.bibliotecatrm5.mvc.dao.UsuarioDAOImpl;
 import br.com.spei.bibliotecatrm5.mvc.model.Autor;
-import br.com.spei.bibliotecatrm5.mvc.view.FrameAutorPesquisa;
+import br.com.spei.bibliotecatrm5.mvc.model.Usuario;
 import br.com.spei.bibliotecatrm5.mvc.view.FrameObra;
+import br.com.spei.bibliotecatrm5.mvc.view.FrameReserva;
+import br.com.spei.bibliotecatrm5.mvc.view.FrameUsuarioPesquisa;
 
-public class AutorPesquisaControl extends MouseAdapter implements
-		ActionListener, InternalFrameListener {
+public class UsuarioPesquisaControl extends MouseAdapter implements ActionListener, InternalFrameListener{
 
-	private FrameAutorPesquisa view;
-	private Autor model;
+	private FrameUsuarioPesquisa view;
+	private Usuario model;
 	
-	public AutorPesquisaControl(FrameAutorPesquisa view) {
-		super();
+	public UsuarioPesquisaControl(FrameUsuarioPesquisa view) {
 		this.view = view;
+	}
+
+	public void inicia(boolean adicionaListeners) {
+		if(adicionaListeners) {
+			view.configuraOuvinteAcao(this);
+			view.configuraOuvinteFrame(this);
+			view.configuraMouseListener(this);
+		}
+		inicia();
+	}
+
+	private void inicia() {
+		view.setVisible(true);
 	}
 
 	@Override
 	public void internalFrameActivated(InternalFrameEvent arg0) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void internalFrameClosed(InternalFrameEvent arg0) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void internalFrameClosing(InternalFrameEvent arg0) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void internalFrameDeactivated(InternalFrameEvent arg0) {
-		view.limpaTela();
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
 	public void internalFrameDeiconified(InternalFrameEvent arg0) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void internalFrameIconified(InternalFrameEvent arg0) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void internalFrameOpened(InternalFrameEvent arg0) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
@@ -77,10 +93,10 @@ public class AutorPesquisaControl extends MouseAdapter implements
 
 	private void atualizaInformacoes() {
 		String textoPesquisa = view.getTextoPesquisa();
-		AutorDAO autorDAO = new AutorDAOImpl();
+		UsuarioDAO usuarioDAO = new UsuarioDAOImpl();
 		try {
-			List<Autor> listaAutor = autorDAO.getByName(textoPesquisa);
-			view.atualizaTabela(listaAutor);
+			List<Usuario> listaUsuarios = usuarioDAO.getByName(textoPesquisa);
+			view.atualizaTabela(listaUsuarios);
 		} catch (SQLException e1) {
 			// TODO remover
 			e1.printStackTrace();
@@ -89,27 +105,15 @@ public class AutorPesquisaControl extends MouseAdapter implements
 	}
 
 	public void carregaInformacoes() {
-		AutorDAO autorDAO = new AutorDAOImpl();
+		UsuarioDAO usuarioDAO = new UsuarioDAOImpl();
 		try {
-			List<Autor> listaAutor = autorDAO.listAll();
-			view.atualizaTabela(listaAutor);
+			List<Usuario> listaUsuarios = usuarioDAO.listAll();
+			view.atualizaTabela(listaUsuarios);
 		} catch (SQLException e1) {
 			// TODO remover
 			e1.printStackTrace();
 			view.mostraMensagemErroSQL(e1);
 		}
-	}
-	
-	public void inicia(boolean adicionaListeners) {
-		if(adicionaListeners) {
-			view.configuraActionListener(this);
-			view.configuraMouseListener(this);
-		}
-		inicia();
-	}
-	
-	private void inicia() {
-		view.setVisible(true);
 	}
 	
 	@Override
@@ -119,7 +123,7 @@ public class AutorPesquisaControl extends MouseAdapter implements
 				JTable fonte = (JTable)e.getSource();
 				int codigo = (int)fonte.getModel().getValueAt(fonte.getSelectedRow(), 0);
 				
-				AutorDAO autorDAO = new AutorDAOImpl();
+				UsuarioDAO autorDAO = new UsuarioDAOImpl();
 				try {
 					model = autorDAO.get(codigo);
 				} catch (SQLException e2) {
@@ -129,11 +133,11 @@ public class AutorPesquisaControl extends MouseAdapter implements
 				}
 				try {
 					for (JInternalFrame frame : view.getDesktopPane().getAllFrames()) {
-						if(frame.getName() != null && frame.getName().equalsIgnoreCase("frmObra")) {
+						if(frame.getName() != null && frame.getName().equalsIgnoreCase("frmReserva")) {
 							frame.setSelected(true);
 							// TODO Criar Frame Abstrato
-							((FrameObra)frame).setAutorModel(model);
-							((FrameObra)frame).preencheCampoAutor();
+							((FrameReserva)frame).setUsuarioModel(model);
+							((FrameReserva)frame).preencheCampoUsuario();
 						}
 					}
 					view.setVisible(false);
@@ -146,4 +150,5 @@ public class AutorPesquisaControl extends MouseAdapter implements
 			}
 		}
 	}
+
 }

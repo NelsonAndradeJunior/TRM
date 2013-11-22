@@ -40,7 +40,7 @@ public class AutorDAOImpl implements AutorDAO {
 
 	@Override
 	public List<Autor> listAll() throws SQLException {
-		List<Autor> listaObra = new ArrayList<>();
+		List<Autor> listaAutores = new ArrayList<>();
 		
 		Connection conexao = Conexao.getInstance().getConnection();
 		
@@ -59,10 +59,10 @@ public class AutorDAOImpl implements AutorDAO {
 			autor.setCodAutor(idAutor);
 			autor.setNomeAutor(nomeAutor);
 			
-			listaObra.add(autor);
+			listaAutores.add(autor);
 		}
 		
-		return listaObra;
+		return listaAutores;
 	}
 
 	@Override

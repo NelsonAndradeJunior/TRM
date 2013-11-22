@@ -1,16 +1,19 @@
 package br.com.spei.bibliotecatrm5.mvc.view;
 
-import java.awt.event.*;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseListener;
 import java.sql.SQLException;
 import java.util.List;
 
 import javax.swing.*;
+import javax.swing.event.InternalFrameListener;
 import javax.swing.table.TableModel;
 
 import br.com.spei.bibliotecatrm5.mvc.model.Autor;
-import br.com.spei.bibliotecatrm5.mvc.model.AutorPesquisaTableModel;
+import br.com.spei.bibliotecatrm5.mvc.model.Usuario;
+import br.com.spei.bibliotecatrm5.mvc.model.UsuarioPesquisaTableModel;
 
-public class FrameAutorPesquisa extends JInternalFrame {
+public class FrameUsuarioPesquisa extends JInternalFrame {
 
 	/**
 	 * 
@@ -23,15 +26,15 @@ public class FrameAutorPesquisa extends JInternalFrame {
 	private JTable tblDados;
 	private JScrollPane spnDados;
 	
-	public FrameAutorPesquisa() throws SQLException {
+	public FrameUsuarioPesquisa() throws SQLException {
 		super("", false, true, false, true);
 		inicializa();
 	}
 
 	private void inicializa() throws SQLException {
 		this.setBounds(100, 100, 400, 200);
-		this.setTitle("Pesquisa de Autor");
-		this.setName("frmAutorPesquisa");
+		this.setTitle("Pesquisa de Usuário");
+		this.setName("frmUsuarioPesquisa");
 		this.setDefaultCloseOperation(JInternalFrame.HIDE_ON_CLOSE);
 		
 		lblPesquisar = getLabelPesquisar();
@@ -82,16 +85,16 @@ public class FrameAutorPesquisa extends JInternalFrame {
 		ajustaColunas(tabela);
 		return tabela;
 	}
-
+	
 	private void ajustaColunas(JTable tabela) {
 		tabela.getColumnModel().getColumn(0).setPreferredWidth(15);
 		tabela.getColumnModel().getColumn(1).setPreferredWidth(220);
 	}
 
 	private TableModel getTableModel() throws SQLException {
-		return new AutorPesquisaTableModel();
+		return new UsuarioPesquisaTableModel();
 	}
-
+	
 	private SpringLayout getLayoutManager() {
 		return new SpringLayout();
 	}
@@ -99,7 +102,7 @@ public class FrameAutorPesquisa extends JInternalFrame {
 	private JScrollPane getScrollPaneDados() {
 		return new JScrollPane(tblDados);
 	}
-
+	
 	private JButton getBotaoPesquisar() {
 		JButton botao = new JButton("Pesquisar");
 		botao.setActionCommand("Pesquisar");
@@ -114,24 +117,22 @@ public class FrameAutorPesquisa extends JInternalFrame {
 		return new JLabel("Pesquisar:");
 	}
 
-	public void configuraActionListener(ActionListener listener) {
-		btnPesquisar.addActionListener(listener);
+	public void configuraOuvinteAcao(
+			ActionListener listener) {
+		this.btnPesquisar.addActionListener(listener);
 	}
 
-	public void configuraMouseListener(MouseListener listener) {
-		tblDados.addMouseListener(listener);
+	public void configuraOuvinteFrame(
+			InternalFrameListener listener) {
+		this.addInternalFrameListener(listener);
 	}
 
-	public String getTextoPesquisa() {
-		return txtPesquisar.getText();
-	}
-
-	public void atualizaTabela(List<Autor> listaAutor) {
-		AutorPesquisaTableModel tableModel = (AutorPesquisaTableModel)tblDados.getModel();
-		tableModel.setRowCount(listaAutor.size());
-		for (int i = 0; i < listaAutor.size(); i++) {
-			tableModel.setValueAt(listaAutor.get(i).getCodAutor(), i, 0);
-			tableModel.setValueAt(listaAutor.get(i).getNomeAutor(), i, 1);
+	public void atualizaTabela(List<Usuario> listaUsuarios) {
+		UsuarioPesquisaTableModel tableModel = (UsuarioPesquisaTableModel)tblDados.getModel();
+		tableModel.setRowCount(listaUsuarios.size());
+		for (int i = 0; i < listaUsuarios.size(); i++) {
+			tableModel.setValueAt(listaUsuarios.get(i).getCodUsuario(), i, 0);
+			tableModel.setValueAt(listaUsuarios.get(i).getNomeUsuario() + " " + listaUsuarios.get(i).getSobrenomeUsuario(), i, 1);
 		}
 	}
 
@@ -139,12 +140,20 @@ public class FrameAutorPesquisa extends JInternalFrame {
 		JOptionPane.showMessageDialog(null, "Ocorreu um erro ao tentar realizar a operação.", "Erro", JOptionPane.ERROR_MESSAGE);
 	}
 
+	public String getTextoPesquisa() {
+		return this.txtPesquisar.getText();
+	}
+
 	public void limpaTela() {
-		txtPesquisar.setText("");
+		this.txtPesquisar.setText("");
 	}
 
 	public void mostraMensagemErro(String mensagem) {
-		// TODO Auto-generated method stub
 		JOptionPane.showMessageDialog(null, mensagem);
+	}
+
+	public void configuraMouseListener(
+			MouseListener listener) {
+		this.tblDados.addMouseListener(listener);
 	}
 }

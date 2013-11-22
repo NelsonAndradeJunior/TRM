@@ -32,6 +32,7 @@ public class ReservaControl implements ActionListener, InternalFrameListener {
 			view.setVisible(false);
 			break;
 		case "PesquisarUsuario":
+			view.mostraFramePesquisaUsuario();
 			break;
 		case "PesquisarObra":
 			break;
@@ -40,7 +41,7 @@ public class ReservaControl implements ActionListener, InternalFrameListener {
 		}
 	}
 
-	public void inicia() {
+	private void inicia() {
 		view.setVisible(true);
 //		view.configuraOuvinteFoco(this);
 	}
@@ -85,6 +86,15 @@ public class ReservaControl implements ActionListener, InternalFrameListener {
 	public void internalFrameOpened(InternalFrameEvent arg0) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public void inicia(boolean adicionaListeners) {
+		if(adicionaListeners) {
+			view.configuraOuvinteAcao(this);
+			view.setListenersAdicionados(true);
+		}
+		
+		inicia();
 	}
 }
 

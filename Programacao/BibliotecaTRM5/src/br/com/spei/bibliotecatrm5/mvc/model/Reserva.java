@@ -2,37 +2,20 @@ package br.com.spei.bibliotecatrm5.mvc.model;
 
 public class Reserva {
 	
-	private int idReserva;
-	private String catUsuario;
-	private String nomeUsuario;
-	private String dtReserva;
+	private Usuario usuario;
+	private Obra obra;
 	
-	
-	public int getIdReserva() {
-		return idReserva;
+	public Usuario getUsuario() {
+		return usuario;
 	}
-	public void setIdReserva(int idReserva) {
-		this.idReserva = idReserva;
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
-	public String getCatUsuario() {
-		return catUsuario;
+	public Obra getObra() {
+		return obra;
 	}
-	public void setCatUsuario(String catUsuario) {
-		this.catUsuario = catUsuario;
+	public void setObra(Obra obra) {
+		this.obra = obra;
 	}
-	public String getNomeUsuario() {
-		return nomeUsuario;
-	}
-	public void setNomeUsuario(String nomeUsuario) {
-		this.nomeUsuario = nomeUsuario;
-	}
-	public String getDtReserva() {
-		return dtReserva;
-	}
-	public void setDtReserva(String dtReserva) {
-		this.dtReserva = dtReserva;
-	}
-
-	
 	
 }

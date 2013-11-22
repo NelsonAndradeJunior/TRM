@@ -32,10 +32,7 @@ public class ReservaDAOImpl implements ReservaDAO {
 				String dtReserva = rs.getString("DT_RESERVA");
 				
 				
-				reserva.setIdReserva(idReserva);
-				reserva.setCatUsuario(catUsuario);
-				reserva.setNomeUsuario(nomeUsuario);
-				reserva.setDtReserva(dtReserva);
+				// TODO Implementar
 				
 				listaReserva.add(reserva);
 			}
