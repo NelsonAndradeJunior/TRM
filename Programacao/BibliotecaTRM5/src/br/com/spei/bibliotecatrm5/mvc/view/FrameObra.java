@@ -235,7 +235,7 @@ public class FrameObra extends JInternalFrame {
 
 	private JTextField getTextCodObra() {
 		JTextField textField = new JTextField(4);
-		textField.setEnabled(false);
+		textField.setEditable(false);
 		return textField;
 	}
 
@@ -282,7 +282,7 @@ public class FrameObra extends JInternalFrame {
 	private JTextField getTextAutorObra() {
 		JTextField campoTexto = new JTextField(20);
 		campoTexto.setName("txtAutorObra");
-		campoTexto.setEnabled(false);
+		campoTexto.setEditable(false);
 		return campoTexto;
 	}
 
@@ -307,7 +307,7 @@ public class FrameObra extends JInternalFrame {
 	private JTextField getTextEditora() {
 		JTextField campoTexto = new JTextField(15);
 		campoTexto.setName("txtEditora");
-		campoTexto.setEnabled(false);
+		campoTexto.setEditable(false);
 		return campoTexto;
 	}
 
@@ -320,7 +320,7 @@ public class FrameObra extends JInternalFrame {
 	private JTextField getTextTipoObra() {
 		JTextField campoTexto = new JTextField(10);
 		campoTexto.setName("txtTipoObra");
-		campoTexto.setEnabled(false);
+		campoTexto.setEditable(false);
 		return campoTexto;
 	}
 
