@@ -66,13 +66,6 @@ public class ObraControl implements ActionListener, InternalFrameListener {
 			}
 			break;
 		case "cancelar":
-			try {
-				view.setSelected(false);
-			} catch (PropertyVetoException e1) {
-				view.mostraMensagem("Ocorreu um erro ao tentar fechar o formulário.");
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
 			view.setVisible(false);
 			break;
 		case "obra":

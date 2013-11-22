@@ -12,19 +12,19 @@ import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
+import javax.swing.event.InternalFrameEvent;
 
 public class FrameReserva extends JInternalFrame{
 	
 	private static final long serialVersionUID = 1L;
-	private JLabel lblCatUsuario;
-	private JTextField txtCatUsuario;
-	private JLabel lblNomeUsuario;
-	private JTextField txtNomeUsuario;
-	private JLabel lblDtReserva;
-	private JTextField txtDtReserva;
-	private JButton btnGravar;
+	private JLabel lblUsuario;
+	private JTextField txtUsuario;
+	private JLabel lblObra;
+	private JTextField txtObra;
+	private JButton btnReservar;
 	private JButton btnCancelar;
-	private JButton btnPesquisar;
+	private JButton btnPesquisarUsuario;
+	private JButton btnPesquisarObra;
 	private BufferedImage picLupa;
 	
 	public FrameReserva() {
@@ -33,75 +33,71 @@ public class FrameReserva extends JInternalFrame{
 	}
 	
 	private void inicializa() {
-		this.setBounds(50, 50, 320, 160);
-		this.setTitle("Cadastro de Reserva");
+		this.setBounds(50, 50, 470, 130);
+		this.setTitle("Reserva de Obra");
 		this.setDefaultCloseOperation(JInternalFrame.HIDE_ON_CLOSE);
-		
-		
+			
 		SpringLayout layoutManager = getLayoutManager();
-	
 		
-		
-		
-		lblCatUsuario = getLabelCatUsuario();
-		txtCatUsuario = getTextCatUsuario();
-		lblNomeUsuario = getLabelNomeUsuario();
-		txtNomeUsuario = getTextNomeUsuario();
-		lblDtReserva = getLabelDtReserva();
-		txtDtReserva = getTextDtReserva();
-		btnGravar = getButtonGravar();
+		lblUsuario = getLabelUsuario();
+		txtUsuario = getTextUsuario();
+		lblObra = getLabelObra();
+		txtObra = getTextObra();
+		btnReservar = getButtonReservar();
 		btnCancelar = getButtonCancelar();
-		btnPesquisar = getButtonPesquisa();
+		btnPesquisarUsuario = getButtonPesquisa("btnPesquisarUsuario", "PesquisarUsuario");
+		btnPesquisarObra = getButtonPesquisa("btnPesquisarObra", "PesquisarObra");
 		
-		layoutManager.putConstraint(SpringLayout.NORTH, lblCatUsuario, 10, SpringLayout.NORTH, getContentPane());
-		layoutManager.putConstraint(SpringLayout.EAST, lblCatUsuario, 0, SpringLayout.EAST, lblDtReserva);
+		layoutManager.putConstraint(SpringLayout.NORTH, lblUsuario, 10, SpringLayout.NORTH, getContentPane());
+		layoutManager.putConstraint(SpringLayout.WEST, lblUsuario, 10, SpringLayout.WEST, getContentPane());
 		
-		layoutManager.putConstraint(SpringLayout.SOUTH, txtCatUsuario, 0, SpringLayout.SOUTH, lblCatUsuario);
-		layoutManager.putConstraint(SpringLayout.WEST, txtCatUsuario, 10, SpringLayout.EAST, lblCatUsuario);
+		layoutManager.putConstraint(SpringLayout.SOUTH, txtUsuario, 0, SpringLayout.SOUTH, lblUsuario);
+		layoutManager.putConstraint(SpringLayout.WEST, txtUsuario, 10, SpringLayout.EAST, lblUsuario);
 		
-		layoutManager.putConstraint(SpringLayout.NORTH, lblNomeUsuario, 10, SpringLayout.SOUTH, lblCatUsuario);
-		layoutManager.putConstraint(SpringLayout.EAST, lblNomeUsuario, 0, SpringLayout.EAST, lblDtReserva);
+		layoutManager.putConstraint(SpringLayout.NORTH, lblObra, 10, SpringLayout.SOUTH, lblUsuario);
+		layoutManager.putConstraint(SpringLayout.EAST, lblObra, 0, SpringLayout.EAST, lblUsuario);
 		
-		layoutManager.putConstraint(SpringLayout.SOUTH, txtNomeUsuario, 0, SpringLayout.SOUTH, lblNomeUsuario);
-		layoutManager.putConstraint(SpringLayout.WEST, txtNomeUsuario, 10, SpringLayout.EAST, lblNomeUsuario);
+		layoutManager.putConstraint(SpringLayout.SOUTH, txtObra, 0, SpringLayout.SOUTH, lblObra);
+		layoutManager.putConstraint(SpringLayout.WEST, txtObra, 10, SpringLayout.EAST, lblObra);
 		
-		layoutManager.putConstraint(SpringLayout.NORTH, lblDtReserva, 10, SpringLayout.SOUTH, lblNomeUsuario);
-		layoutManager.putConstraint(SpringLayout.WEST, lblDtReserva, 20, SpringLayout.WEST, getContentPane());
+		layoutManager.putConstraint(SpringLayout.NORTH, btnReservar, 10, SpringLayout.SOUTH, lblObra);
+		layoutManager.putConstraint(SpringLayout.WEST, btnReservar, 0, SpringLayout.WEST, lblUsuario);
 		
-		layoutManager.putConstraint(SpringLayout.SOUTH, txtDtReserva, 0, SpringLayout.SOUTH, lblDtReserva);
-		layoutManager.putConstraint(SpringLayout.WEST, txtDtReserva, 10, SpringLayout.EAST, lblDtReserva);
+		layoutManager.putConstraint(SpringLayout.NORTH, btnCancelar, 10, SpringLayout.SOUTH, lblObra);
+		layoutManager.putConstraint(SpringLayout.WEST, btnCancelar, 10, SpringLayout.EAST, btnReservar);
 		
-		layoutManager.putConstraint(SpringLayout.NORTH, btnGravar, 10, SpringLayout.SOUTH, lblDtReserva);
-		layoutManager.putConstraint(SpringLayout.WEST, btnGravar, 0, SpringLayout.WEST, lblDtReserva);
-		layoutManager.putConstraint(SpringLayout.EAST, btnGravar, 0, SpringLayout.EAST, lblDtReserva);
+		layoutManager.putConstraint(SpringLayout.SOUTH, btnPesquisarUsuario, 0, SpringLayout.SOUTH, txtUsuario);
+		layoutManager.putConstraint(SpringLayout.NORTH, btnPesquisarUsuario, 0, SpringLayout.NORTH, txtUsuario);
+		layoutManager.putConstraint(SpringLayout.WEST, btnPesquisarUsuario, 5, SpringLayout.EAST, txtUsuario);
 		
-		layoutManager.putConstraint(SpringLayout.NORTH, btnCancelar, 10, SpringLayout.SOUTH, txtDtReserva);
-		layoutManager.putConstraint(SpringLayout.WEST, btnCancelar, 10, SpringLayout.EAST, btnGravar);
-		
-		layoutManager.putConstraint(SpringLayout.SOUTH, btnPesquisar, 0, SpringLayout.SOUTH, txtCatUsuario);
-		layoutManager.putConstraint(SpringLayout.NORTH, btnPesquisar, 0, SpringLayout.NORTH, txtCatUsuario);
-		layoutManager.putConstraint(SpringLayout.WEST, btnPesquisar, 5, SpringLayout.EAST, txtCatUsuario);	
+		layoutManager.putConstraint(SpringLayout.SOUTH, btnPesquisarObra, 0, SpringLayout.SOUTH, txtObra);
+		layoutManager.putConstraint(SpringLayout.NORTH, btnPesquisarObra, 0, SpringLayout.NORTH, txtObra);
+		layoutManager.putConstraint(SpringLayout.WEST, btnPesquisarObra, 5, SpringLayout.EAST, txtObra);	
 		
 		this.setLayout(layoutManager);
 		
 		
-		this.getContentPane().add(lblCatUsuario);
-		this.getContentPane().add(txtCatUsuario);
-		this.getContentPane().add(lblNomeUsuario);
-		this.getContentPane().add(txtNomeUsuario);
-		this.getContentPane().add(lblDtReserva);
-		this.getContentPane().add(txtDtReserva);
-		this.getContentPane().add(btnGravar);
+		this.getContentPane().add(lblUsuario);
+		this.getContentPane().add(txtUsuario);
+		this.getContentPane().add(lblObra);
+		this.getContentPane().add(txtObra);
+		this.getContentPane().add(btnReservar);
 		this.getContentPane().add(btnCancelar);
-		this.getContentPane().add(btnPesquisar);
-		
+		this.getContentPane().add(btnPesquisarUsuario);
+		this.getContentPane().add(btnPesquisarObra);
 	}
 	
-	private JButton getButtonPesquisa() {
+	@Override
+	public void setVisible(boolean b) {
+		super.setVisible(b);
+		this.fireInternalFrameEvent(InternalFrameEvent.INTERNAL_FRAME_CLOSED);
+	}
+	
+	private JButton getButtonPesquisa(String nomeBotao, String actionCommand) {
 		picLupa = getPictureLupa();
 		JButton botao = new JButton(new ImageIcon(picLupa.getScaledInstance(8, 8, BufferedImage.SCALE_SMOOTH)));
-		botao.setName("btnPesquisar");
-		botao.setActionCommand("pesquisar");
+		botao.setName(nomeBotao);
+		botao.setActionCommand(actionCommand);
 		return botao;
 	}
 	
@@ -120,50 +116,40 @@ public class FrameReserva extends JInternalFrame{
 	private JButton getButtonCancelar() {
 		JButton botao = new JButton("Cancelar");
 		botao.setName("btnCancelar");
-		botao.setActionCommand("cancelar");
+		botao.setActionCommand("Cancelar");
 		return botao;
 	}
 
-	private JButton getButtonGravar() {
-		JButton botao = new JButton("Gravar");
-		botao.setName("btnGravar");
-		botao.setActionCommand("gravar");
+	private JButton getButtonReservar() {
+		JButton botao = new JButton("Reservar");
+		botao.setName("btnReservar");
+		botao.setActionCommand("Reservar");
 		return botao;
 	}
 	
-	private JTextField getTextCatUsuario() {
-		JTextField campoTexto = new JTextField(10);
-		campoTexto.setName("txtCatUsuario");
+	private JTextField getTextUsuario() {
+		JTextField campoTexto = new JTextField(30);
+		campoTexto.setName("txtUsuario");
+		campoTexto.setEditable(false);
 		return campoTexto;
 	}
 
-	private JLabel getLabelCatUsuario() {
-		JLabel label = new JLabel("Categoria Usuário:");
-		label.setName("lblCatUsuario");
+	private JLabel getLabelUsuario() {
+		JLabel label = new JLabel("Usuário:");
+		label.setName("lblUsuario");
 		return label;
 	}
 	
-	private JTextField getTextNomeUsuario() {
-		JTextField campoTexto = new JTextField(10);
-		campoTexto.setName("txtNomeUsuario");
+	private JTextField getTextObra() {
+		JTextField campoTexto = new JTextField(30);
+		campoTexto.setName("txtObra");
+		campoTexto.setEditable(false);
 		return campoTexto;
 	}
 
-	private JLabel getLabelNomeUsuario() {
-		JLabel label = new JLabel("Nome Usuário:");
-		label.setName("lblNomeUsuario");
-		return label;
-	}
-	
-	private JTextField getTextDtReserva() {
-		JTextField campoTexto = new JTextField(10);
-		campoTexto.setName("txtDtReserva");
-		return campoTexto;
-	}
-
-	private JLabel getLabelDtReserva() {
-		JLabel label = new JLabel("Data de Reserva:");
-		label.setName("lblDtReserva");
+	private JLabel getLabelObra() {
+		JLabel label = new JLabel("Obra:");
+		label.setName("lblObra");
 		return label;
 	}
 
@@ -173,7 +159,8 @@ public class FrameReserva extends JInternalFrame{
 	
 	public void configuraOuvinteAcao(ActionListener actionListener) {
 		btnCancelar.addActionListener(actionListener);
-		btnGravar.addActionListener(actionListener);
-		btnPesquisar.addActionListener(actionListener);
+		btnReservar.addActionListener(actionListener);
+		btnPesquisarObra.addActionListener(actionListener);
+		btnPesquisarUsuario.addActionListener(actionListener);
 	}
 }

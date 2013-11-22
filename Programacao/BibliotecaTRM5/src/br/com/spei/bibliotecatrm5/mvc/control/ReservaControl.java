@@ -5,13 +5,15 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.swing.JOptionPane;
+import javax.swing.event.InternalFrameEvent;
+import javax.swing.event.InternalFrameListener;
 
 import br.com.spei.bibliotecatrm5.mvc.dao.ReservaDAO;
 import br.com.spei.bibliotecatrm5.mvc.dao.ReservaDAOImpl;
 import br.com.spei.bibliotecatrm5.mvc.model.Reserva;
 import br.com.spei.bibliotecatrm5.mvc.view.FrameReserva;
 
-public class ReservaControl implements ActionListener{
+public class ReservaControl implements ActionListener, InternalFrameListener {
 	
 	
 	private FrameReserva view;
@@ -19,26 +21,19 @@ public class ReservaControl implements ActionListener{
 	
 	public ReservaControl(FrameReserva view){
 		this.view = view;
-		view.configuraOuvinteAcao(this);
 	}
 	
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
-		case "gravar":
-			// TODO Teste - Remover
-			ReservaDAO t = new ReservaDAOImpl();
-			List<Reserva> l = t.listAll();
-			
-			for (Reserva reserva : l) {
-				JOptionPane.showMessageDialog(null, reserva.getNomeUsuario());
-				
-			}
-			
+		case "Reservar":
+			// TODO Implementar
 			break;
-		case "cancelar":
+		case "Cancelar":
 			view.setVisible(false);
 			break;
-		case "pesquisar":
+		case "PesquisarUsuario":
+			break;
+		case "PesquisarObra":
 			break;
 		default:
 			break;
@@ -48,6 +43,48 @@ public class ReservaControl implements ActionListener{
 	public void inicia() {
 		view.setVisible(true);
 //		view.configuraOuvinteFoco(this);
+	}
+
+	@Override
+	public void internalFrameActivated(InternalFrameEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void internalFrameClosed(InternalFrameEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void internalFrameClosing(InternalFrameEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void internalFrameDeactivated(InternalFrameEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void internalFrameDeiconified(InternalFrameEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void internalFrameIconified(InternalFrameEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void internalFrameOpened(InternalFrameEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 }
 

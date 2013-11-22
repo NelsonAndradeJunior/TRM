@@ -29,6 +29,7 @@ public class FramePrincipal extends JFrame {
 	private JMenu reserva;
 	private JMenu devolucao;
 	private JMenuItem itemMenuReservaObra;
+	private JMenuItem itemMenuPesquisaReserva;
 	private JMenuItem itemMenuCadObra;
 	private JMenuItem itemMenuCadTipoObra;
 	private JMenuItem itemMenuCadEmprestimo;
@@ -119,9 +120,9 @@ public class FramePrincipal extends JFrame {
 		reserva = new JMenu("Reserva");
 		reserva.setMnemonic(KeyEvent.VK_R);
 		reserva.add(getItemMenuCadastroReserva());
+		reserva.add(getItemMenuPesquisaReserva());
 		
 		return reserva;
-		
 	}
 	
 	private JMenu getFrameDevolucaoObra(){
@@ -134,12 +135,20 @@ public class FramePrincipal extends JFrame {
 	}
 	
 	private JMenuItem getItemMenuCadastroReserva(){
-		itemMenuReservaObra = new JMenuItem("Cadastrar Reserva", KeyEvent.VK_0);
+		itemMenuReservaObra = new JMenuItem("Cadastrar Reserva", KeyEvent.VK_R);
 		
 		itemMenuReservaObra.setActionCommand("MenuReservaObra");
 		
 		return itemMenuReservaObra;
-		}
+	}
+	
+	private JMenuItem getItemMenuPesquisaReserva() {
+		itemMenuPesquisaReserva = new JMenuItem("Pesquisar Reserva", KeyEvent.VK_P);
+		
+		itemMenuPesquisaReserva.setActionCommand("MenuPesquisaReserva");
+		
+		return itemMenuPesquisaReserva;
+	}
 	
 	private JMenuItem getItemMenuCadastroDevolucao(){
 		itemMenuCadDevolucao = new JMenuItem("Realizar Devolucao", KeyEvent.VK_0);
@@ -147,7 +156,7 @@ public class FramePrincipal extends JFrame {
 		itemMenuCadDevolucao.setActionCommand("MenuDevolucaoObra");
 		
 		return itemMenuCadDevolucao;
-		}
+	}
 
 	private JMenuItem getItemMenuCadastroObra() {
 		itemMenuCadObra = new JMenuItem("Obra", KeyEvent.VK_O);
