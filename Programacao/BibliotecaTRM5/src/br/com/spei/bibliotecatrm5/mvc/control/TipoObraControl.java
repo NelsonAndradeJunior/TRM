@@ -28,19 +28,24 @@ public class TipoObraControl implements ActionListener, InternalFrameListener{
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
 		case "gravar":
+			if(!view.ValidaCamposPreenchidos()) {
+				view.mostraMensagem("Há campos não preenchidos");
+				return;
+			}
+			
 			TipoObraDAO tipoObraDAO = new TipoObraDAOImpl();
 			try {
 				if(view.getModoAtualizacao()) 
 					switch (view.confirmaAtualizacao()) {
 					case JOptionPane.YES_OPTION:
 						model = view.getModel();
-						model.setDescricaoTipoObra(view.getDescricaoTipoObra());
+						preencheModel();						
 						tipoObraDAO.update(model);
-						view.limpaTexto();
+						view.limpaTela();
 						view.setModoAtualizacao(false);
 						break;
 					case JOptionPane.NO_OPTION:
-						view.limpaTexto();
+						view.limpaTela();
 						view.setModoAtualizacao(false);
 						break;
 					case JOptionPane.CANCEL_OPTION:
@@ -48,11 +53,11 @@ public class TipoObraControl implements ActionListener, InternalFrameListener{
 					default:
 						break;
 					}
-				else {
+				else {					
 					model = new TipoObra();
-					model.setDescricaoTipoObra(view.getDescricaoTipoObra());
+					preencheModel();
 					tipoObraDAO.insert(model);
-					view.limpaTexto();
+					view.limpaTela();
 					view.mostraMensagem("Cadastro efetuado com sucesso.");
 				}
 			} catch (SQLException e1) {
@@ -79,6 +84,14 @@ public class TipoObraControl implements ActionListener, InternalFrameListener{
 		}
 	}
 
+	private void preencheModel() {
+		model.setDescricaoTipoObra(view.getDescricaoTipoObra());
+		
+		model.setDicionario(view.ehDicionario());
+		model.setEnciclopedia(view.ehEnciclopedia());
+		model.setPeriodico(view.ehPeriodico());
+	}
+
 	public void inicia() {
 		view.setVisible(true);
 //		view.configuraOuvinteFoco(this);
@@ -100,7 +113,7 @@ public class TipoObraControl implements ActionListener, InternalFrameListener{
 
 	@Override
 	public void internalFrameClosed(InternalFrameEvent e) {
-		view.limpaTexto();
+		view.limpaTela();
 		view.setModoAtualizacao(false);
 		view.setModel(null);
 	}

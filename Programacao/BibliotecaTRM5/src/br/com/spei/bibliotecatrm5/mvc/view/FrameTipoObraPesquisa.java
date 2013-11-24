@@ -31,7 +31,7 @@ public class FrameTipoObraPesquisa extends JInternalFrame {
 	}
 
 	private void inicializa() throws SQLException {
-		this.setBounds(100, 100, 400, 200);
+		this.setBounds(100, 100, 560, 200);
 		this.setTitle("Pesquisa de Tipo de Obra");
 		this.setName("frmTipoObraPesquisa");
 		this.setDefaultCloseOperation(JInternalFrame.HIDE_ON_CLOSE);
@@ -93,7 +93,7 @@ public class FrameTipoObraPesquisa extends JInternalFrame {
 	}
 
 	private void ajustaColunas(JTable tabela) {
-		tabela.getColumnModel().getColumn(0).setPreferredWidth(15);
+		tabela.getColumnModel().getColumn(0).setPreferredWidth(60);
 		tabela.getColumnModel().getColumn(1).setPreferredWidth(220);
 	}
 
@@ -147,6 +147,9 @@ public class FrameTipoObraPesquisa extends JInternalFrame {
 		for (int i = 0; i < listaTipoObra.size(); i++) {
 			tableModel.setValueAt(listaTipoObra.get(i).getCodTipoObra(), i, 0);
 			tableModel.setValueAt(listaTipoObra.get(i).getDescricaoTipoObra(), i, 1);
+			tableModel.setValueAt(listaTipoObra.get(i).isDicionario(), i, 2);
+			tableModel.setValueAt(listaTipoObra.get(i).isEnciclopedia(), i, 3);
+			tableModel.setValueAt(listaTipoObra.get(i).isPeriodico(), i, 4);
 		}
 	}
 

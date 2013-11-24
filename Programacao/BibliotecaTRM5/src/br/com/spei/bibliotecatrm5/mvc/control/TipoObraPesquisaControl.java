@@ -52,9 +52,15 @@ public class TipoObraPesquisaControl extends MouseAdapter implements ActionListe
 				JTable fonte = (JTable)e.getSource();
 				int codigo = (int)fonte.getModel().getValueAt(fonte.getSelectedRow(), 0);
 				String descricao = (String)fonte.getModel().getValueAt(fonte.getSelectedRow(), 1);
+				boolean dicionario = (boolean)fonte.getModel().getValueAt(fonte.getSelectedRow(), 2);
+				boolean enciclopedia = (boolean)fonte.getModel().getValueAt(fonte.getSelectedRow(), 3);
+				boolean periodico = (boolean)fonte.getModel().getValueAt(fonte.getSelectedRow(), 4);
 				this.model = new TipoObra();
 				model.setCodTipoObra(codigo);
 				model.setDescricaoTipoObra(descricao);
+				model.setDicionario(dicionario);
+				model.setEnciclopedia(enciclopedia);
+				model.setPeriodico(periodico);
 				try {
 					for (JInternalFrame frame : view.getDesktopPane().getAllFrames()) {
 						if(frame.getName() != null) {
@@ -63,7 +69,7 @@ public class TipoObraPesquisaControl extends MouseAdapter implements ActionListe
 								if(callerName.equalsIgnoreCase("frmTipoObra")) {
 									// TODO Criar Frame Abstrato
 									((FrameTipoObra)frame).setModel(model);
-									((FrameTipoObra)frame).preencheCampoTexto();
+									((FrameTipoObra)frame).preencheInformacoes(model);
 									((FrameTipoObra)frame).setModoAtualizacao(true);
 									break;
 								} else if (callerName.equalsIgnoreCase("frmObra")) {

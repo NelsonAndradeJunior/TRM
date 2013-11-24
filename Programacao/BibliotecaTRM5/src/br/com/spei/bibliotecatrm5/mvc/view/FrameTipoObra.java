@@ -23,11 +23,15 @@ public class FrameTipoObra extends JInternalFrame {
 	
 	// TODO Ajustar para não repassar o model
 	
+	private JLabel lblCodigoTipoObra;
+	private JTextField txtCodigoTipoObra;
 	private JLabel lblDescricaoTipoObra;
 	private JTextField txtDescricaoTipoObra;
 	private JButton btnGravar;
 	private JButton btnCancelar;
 	private JButton btnPesquisar;
+	private JLabel lblTiposEspeciais;
+	private JComboBox<String> cmbTiposEspeciais;
 	private BufferedImage picLupa;
 	private FrameTipoObraPesquisa frameTipoObraPesquisa;
 	private boolean modoAtualizacao;
@@ -41,43 +45,88 @@ public class FrameTipoObra extends JInternalFrame {
 	}
 
 	private void inicializa() {
-		this.setBounds(50, 50, 260, 120);
+		this.setBounds(50, 50, 310, 155);
 		this.setTitle("Cadastro de Tipos de Obra");
 		this.setName("frmTipoObra");
 		this.setDefaultCloseOperation(JInternalFrame.HIDE_ON_CLOSE);
 		
 		SpringLayout layoutManager = getLayoutManager();
-				
+			
+		lblCodigoTipoObra = getLabelCodTipoObra();
+		txtCodigoTipoObra = getTextCodigoObra();
 		lblDescricaoTipoObra = getLabelDescTipoObra();
 		txtDescricaoTipoObra = getTextDescTipoObra();
 		btnGravar = getButtonGravar();
 		btnCancelar = getButtonCancelar();
 		btnPesquisar = getButtonPesquisar();
+		cmbTiposEspeciais = getComboTiposEspeciais();
+		lblTiposEspeciais = getLabel("Tipos Especiais:", "lblTiposEspeciais");
 		
-		layoutManager.putConstraint(SpringLayout.NORTH, lblDescricaoTipoObra, 20, SpringLayout.NORTH, getContentPane());
-		layoutManager.putConstraint(SpringLayout.WEST, lblDescricaoTipoObra, 10, SpringLayout.WEST, getContentPane());
+		layoutManager.putConstraint(SpringLayout.NORTH, lblCodigoTipoObra, 10, SpringLayout.NORTH, getContentPane());
+		layoutManager.putConstraint(SpringLayout.EAST, lblCodigoTipoObra, 0, SpringLayout.EAST, lblTiposEspeciais);
+		
+		layoutManager.putConstraint(SpringLayout.SOUTH, txtCodigoTipoObra, 0, SpringLayout.SOUTH, lblCodigoTipoObra);
+		layoutManager.putConstraint(SpringLayout.WEST, txtCodigoTipoObra, 10, SpringLayout.EAST, lblCodigoTipoObra);
+		
+		layoutManager.putConstraint(SpringLayout.NORTH, lblDescricaoTipoObra, 10, SpringLayout.SOUTH, lblCodigoTipoObra);
+		layoutManager.putConstraint(SpringLayout.EAST, lblDescricaoTipoObra, 0, SpringLayout.EAST, lblTiposEspeciais);
 		
 		layoutManager.putConstraint(SpringLayout.SOUTH, txtDescricaoTipoObra, 0, SpringLayout.SOUTH, lblDescricaoTipoObra);
 		layoutManager.putConstraint(SpringLayout.WEST, txtDescricaoTipoObra, 10, SpringLayout.EAST, lblDescricaoTipoObra);
 		
-		layoutManager.putConstraint(SpringLayout.NORTH, btnCancelar, 10, SpringLayout.SOUTH, txtDescricaoTipoObra);
-		layoutManager.putConstraint(SpringLayout.EAST, btnCancelar, 0, SpringLayout.EAST, txtDescricaoTipoObra);
+		layoutManager.putConstraint(SpringLayout.NORTH, lblTiposEspeciais, 10, SpringLayout.SOUTH, lblDescricaoTipoObra);
+		layoutManager.putConstraint(SpringLayout.WEST, lblTiposEspeciais, 10, SpringLayout.WEST, getContentPane());
 		
-		layoutManager.putConstraint(SpringLayout.NORTH, btnGravar, 0, SpringLayout.NORTH, btnCancelar);
-		layoutManager.putConstraint(SpringLayout.WEST, btnGravar, 0, SpringLayout.WEST, lblDescricaoTipoObra);
-		layoutManager.putConstraint(SpringLayout.EAST, btnGravar, -10, SpringLayout.WEST, btnCancelar);
+		layoutManager.putConstraint(SpringLayout.SOUTH, cmbTiposEspeciais, 4, SpringLayout.SOUTH, lblTiposEspeciais);
+		layoutManager.putConstraint(SpringLayout.WEST, cmbTiposEspeciais, 10, SpringLayout.EAST, lblTiposEspeciais);
 		
-		layoutManager.putConstraint(SpringLayout.SOUTH, btnPesquisar, 0, SpringLayout.SOUTH, txtDescricaoTipoObra);
-		layoutManager.putConstraint(SpringLayout.NORTH, btnPesquisar, 0, SpringLayout.NORTH, txtDescricaoTipoObra);
-		layoutManager.putConstraint(SpringLayout.WEST, btnPesquisar, 5, SpringLayout.EAST, txtDescricaoTipoObra);		
+		layoutManager.putConstraint(SpringLayout.NORTH, btnGravar, 10, SpringLayout.SOUTH, lblTiposEspeciais);
+		layoutManager.putConstraint(SpringLayout.WEST, btnGravar, 0, SpringLayout.WEST, lblTiposEspeciais);
+		
+		layoutManager.putConstraint(SpringLayout.SOUTH, btnCancelar, 0, SpringLayout.SOUTH, btnGravar);
+		layoutManager.putConstraint(SpringLayout.WEST, btnCancelar, 10, SpringLayout.EAST, btnGravar);
+		
+		layoutManager.putConstraint(SpringLayout.SOUTH, btnPesquisar, 0, SpringLayout.SOUTH, txtCodigoTipoObra);
+		layoutManager.putConstraint(SpringLayout.NORTH, btnPesquisar, 0, SpringLayout.NORTH, txtCodigoTipoObra);
+		layoutManager.putConstraint(SpringLayout.WEST, btnPesquisar, 5, SpringLayout.EAST, txtCodigoTipoObra);		
 		
 		this.setLayout(layoutManager);
 		
+		this.getContentPane().add(lblCodigoTipoObra);
+		this.getContentPane().add(txtCodigoTipoObra);
 		this.getContentPane().add(lblDescricaoTipoObra);
 		this.getContentPane().add(txtDescricaoTipoObra);
 		this.getContentPane().add(btnGravar);
 		this.getContentPane().add(btnCancelar);
 		this.getContentPane().add(btnPesquisar);
+		this.getContentPane().add(lblTiposEspeciais);
+		this.getContentPane().add(cmbTiposEspeciais);
+	}
+
+	private JLabel getLabel(String texto, String name) {
+		JLabel label = new JLabel(texto);
+		label.setName(name);
+		return label;
+	}
+
+	private JComboBox<String> getComboTiposEspeciais() {
+		String[] conteudo = new String[] { "Selecione", "Dicionário", "Enciclopédia", "Periódico", "Nenhum" };
+		JComboBox<String> comboBox = new JComboBox<String>(conteudo);
+		comboBox.setName("cmbTiposEspeciais");
+		return comboBox;
+	}
+
+	private JTextField getTextCodigoObra() {
+		JTextField campoTexto = new JTextField(3);
+		campoTexto.setName("txtCodigoObra");
+		campoTexto.setEditable(false);
+		return campoTexto;
+	}
+
+	private JLabel getLabelCodTipoObra() {
+		JLabel label = new JLabel("Código:");
+		label.setName("lblCodigo");
+		return label;
 	}
 
 	@Override
@@ -128,7 +177,7 @@ public class FrameTipoObra extends JInternalFrame {
 	}
 
 	private JTextField getTextDescTipoObra() {
-		JTextField campoTexto = new JTextField(10);
+		JTextField campoTexto = new JTextField(16);
 		campoTexto.setName("txtDescTipoObra");
 		return campoTexto;
 	}
@@ -168,10 +217,6 @@ public class FrameTipoObra extends JInternalFrame {
 		controladorObraPesquisa.carregaInformacoes();
 	}
 
-	public void preencheCampoTexto() {
-		this.txtDescricaoTipoObra.setText(this.model.getDescricaoTipoObra());
-	}
-
 	public void configuraOuvinteInternalFrame(InternalFrameListener listener) {
 		this.addInternalFrameListener(listener);
 	}
@@ -185,8 +230,10 @@ public class FrameTipoObra extends JInternalFrame {
 		JOptionPane.showMessageDialog(null, "Ocorreu um erro ao tentar fazer a operação.", "Erro", JOptionPane.ERROR_MESSAGE);
 	}
 
-	public void limpaTexto() {
-		txtDescricaoTipoObra.setText("");
+	public void limpaTela() {
+		this.txtCodigoTipoObra.setText("");
+		this.txtDescricaoTipoObra.setText("");
+		this.cmbTiposEspeciais.setSelectedIndex(0);
 	}
 
 	public void setModoAtualizacao(boolean modoAtualizacao) {
@@ -221,5 +268,38 @@ public class FrameTipoObra extends JInternalFrame {
 	
 	public void setListenersAdicionados(boolean listenersAdicionados) {
 		this.listenersAdicionados = listenersAdicionados;
+	}
+
+	public boolean ehDicionario() {
+		return cmbTiposEspeciais.getSelectedIndex() == 1;
+	}
+
+	public boolean ehEnciclopedia() {
+		return cmbTiposEspeciais.getSelectedIndex() == 2;
+	}
+
+	public boolean ehPeriodico() {
+		return cmbTiposEspeciais.getSelectedIndex() == 3;
+	}
+
+	public boolean ValidaCamposPreenchidos() {
+		return !txtDescricaoTipoObra.getText().isEmpty() && cmbTiposEspeciais.getSelectedIndex() > 0;
+	}
+
+	public void preencheComboTiposEspeciais(TipoObra model) {
+		if(model.isDicionario())
+			cmbTiposEspeciais.setSelectedIndex(1);
+		else if(model.isEnciclopedia())
+			cmbTiposEspeciais.setSelectedIndex(2);
+		else if(model.isPeriodico())
+			cmbTiposEspeciais.setSelectedIndex(3);
+		else
+			cmbTiposEspeciais.setSelectedIndex(4);
+	}
+
+	public void preencheInformacoes(TipoObra model) {
+		this.txtCodigoTipoObra.setText(((Integer)model.getCodTipoObra()).toString());
+		this.txtDescricaoTipoObra.setText(model.getDescricaoTipoObra());
+		preencheComboTiposEspeciais(model);
 	}
 }

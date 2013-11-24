@@ -42,6 +42,9 @@ public class TipoObraPesquisaTableModel extends AbstractTableModel {
 			Object[] linha = new Object[listaNomeColunas.size()];
 			linha[0] = tipoObra.getCodTipoObra();
 			linha[1] = tipoObra.getDescricaoTipoObra();
+			linha[2] = tipoObra.isDicionario();
+			linha[3] = tipoObra.isEnciclopedia();
+			linha[4] = tipoObra.isPeriodico();
 			
 			linhas.add(linha);
 		}
@@ -78,6 +81,11 @@ public class TipoObraPesquisaTableModel extends AbstractTableModel {
 		return nomeColunas[index];
 	}
 
+	@Override
+	public Class<? extends Object> getColumnClass(int column) {
+		return getValueAt(0, column).getClass();
+	}
+	
 	public void setRowCount(int rowCount) {
 		Object[][] copiaConteudo = new Object[rowCount][this.getColumnCount()];
 		

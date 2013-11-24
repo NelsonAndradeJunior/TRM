@@ -30,9 +30,15 @@ public class TipoObraDAOImpl implements TipoObraDAO {
 			
 			int codigoObra = rs.getInt("ID_TIPO_OBRA");
 			String descricaoTipoObra = rs.getString("DS_TIPO_OBRA");
+			boolean isDicionario = rs.getBoolean("SN_DICIONARIO");
+			boolean isEnciclopedia = rs.getBoolean("SN_ENCICLOPEDIA");
+			boolean isPeriodico = rs.getBoolean("SN_PERIODICO");
 			
 			tipoObra.setCodTipoObra(codigoObra);
 			tipoObra.setDescricaoTipoObra(descricaoTipoObra);
+			tipoObra.setDicionario(isDicionario);
+			tipoObra.setEnciclopedia(isEnciclopedia);
+			tipoObra.setPeriodico(isPeriodico);
 			
 			listaTipoObra.add(tipoObra);
 		}
@@ -50,7 +56,9 @@ public class TipoObraDAOImpl implements TipoObraDAO {
 
 		Connection conexao = Conexao.getInstance().getConnection();
 		
-		String query = "SELECT TOP(1) ID_TIPO_OBRA Código, DS_TIPO_OBRA Descrição FROM TIPO_OBRA ";
+		String query = "SELECT TOP(1) ID_TIPO_OBRA Código, DS_TIPO_OBRA Descrição, " +
+						"SN_DICIONARIO 'Dicionário', SN_ENCICLOPEDIA 'Enciclopédia', " +
+						"SN_PERIODICO 'Periódico' FROM TIPO_OBRA ";
 		
 		Statement stmt = conexao.createStatement();
 		
@@ -88,9 +96,15 @@ public class TipoObraDAOImpl implements TipoObraDAO {
 			
 			int codigoObra = rs.getInt("ID_TIPO_OBRA");
 			String descricaoTipoObra = rs.getString("DS_TIPO_OBRA");
+			boolean isDicionario = rs.getBoolean("SN_DICIONARIO");
+			boolean isEnciclopedia = rs.getBoolean("SN_ENCICLOPEDIA");
+			boolean isPeriodico = rs.getBoolean("SN_PERIODICO");
 			
 			tipoObra.setCodTipoObra(codigoObra);
 			tipoObra.setDescricaoTipoObra(descricaoTipoObra);
+			tipoObra.setDicionario(isDicionario);
+			tipoObra.setEnciclopedia(isEnciclopedia);
+			tipoObra.setPeriodico(isPeriodico);
 			
 			listaTipoObra.add(tipoObra);
 		}
@@ -106,10 +120,13 @@ public class TipoObraDAOImpl implements TipoObraDAO {
 	public void insert(TipoObra model) throws SQLException {
 		Connection conexao = Conexao.getInstance().getConnection();
 		
-		String query = "INSERT INTO TIPO_OBRA (DS_TIPO_OBRA) VALUES (?)";
+		String query = "INSERT INTO TIPO_OBRA (DS_TIPO_OBRA, SN_PERIODICO, SN_DICIONARIO, SN_ENCICLOPEDIA) VALUES (?, ?, ?, ?)";
 		
 		PreparedStatement pstmt = conexao.prepareStatement(query);
 		pstmt.setString(1, model.getDescricaoTipoObra());
+		pstmt.setBoolean(2, model.isPeriodico());
+		pstmt.setBoolean(3, model.isDicionario());
+		pstmt.setBoolean(4, model.isEnciclopedia());
 		
 		pstmt.executeUpdate();
 		
@@ -121,11 +138,14 @@ public class TipoObraDAOImpl implements TipoObraDAO {
 	public void update(TipoObra model) throws SQLException {
 		Connection conexao = Conexao.getInstance().getConnection();
 		
-		String query = "UPDATE TIPO_OBRA SET DS_TIPO_OBRA = ? WHERE ID_TIPO_OBRA = ?";
+		String query = "UPDATE TIPO_OBRA SET DS_TIPO_OBRA = ?, SN_DICIONARIO = ?, SN_ENCICLOPEDIA = ?, SN_PERIODICO = ? WHERE ID_TIPO_OBRA = ?";
 		
 		PreparedStatement pstmt = conexao.prepareStatement(query);
 		pstmt.setString(1, model.getDescricaoTipoObra());
-		pstmt.setInt(2, model.getCodTipoObra());
+		pstmt.setBoolean(2, model.isDicionario());
+		pstmt.setBoolean(3, model.isEnciclopedia());
+		pstmt.setBoolean(4, model.isPeriodico());
+		pstmt.setInt(5, model.getCodTipoObra());
 		
 		pstmt.executeUpdate();
 		
