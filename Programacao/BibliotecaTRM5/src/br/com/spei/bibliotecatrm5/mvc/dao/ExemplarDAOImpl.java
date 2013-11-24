@@ -49,7 +49,7 @@ public class ExemplarDAOImpl implements ExemplarDAO {
 		
 		Connection conexao = Conexao.getInstance().getConnection();
 		
-		String query = "SELECT O.ID_OBRA, O.DS_OBRA, O.DT_ANO, A.ID_AUTOR, A.NM_AUTOR, " +
+		String query = "SELECT O.ID_OBRA, O.DS_OBRA, O.DT_ANO, O.SN_CLASSICO, A.ID_AUTOR, A.NM_AUTOR, " +
 						"ED.ID_EDITORA, ED.DS_EDITORA, T.ID_TIPO_OBRA, T.DS_TIPO_OBRA, " +
 						"E.ID_EXEMPLAR, E.NR_EXEMPLAR FROM EXEMPLAR E " +
 						"INNER JOIN OBRA O ON O.ID_OBRA = E.ID_OBRA " +
@@ -76,6 +76,8 @@ public class ExemplarDAOImpl implements ExemplarDAO {
 			obra.setNomeObra(descricaoObra);
 			int ano = rs.getInt("DT_ANO");
 			obra.setAno(ano);
+			boolean isClassico = rs.getBoolean("SN_CLASSICO");
+			obra.setClassico(isClassico);
 			
 			Autor autor = new Autor();
 			int codAutor = rs.getInt("ID_AUTOR");
@@ -116,7 +118,7 @@ public class ExemplarDAOImpl implements ExemplarDAO {
 		
 		Connection conexao = Conexao.getInstance().getConnection();
 		
-		String query = "SELECT O.ID_OBRA, O.DS_OBRA, O.DT_ANO, A.ID_AUTOR, A.NM_AUTOR, " +
+		String query = "SELECT O.ID_OBRA, O.DS_OBRA, O.DT_ANO, O.SN_CLASSICO, A.ID_AUTOR, A.NM_AUTOR, " +
 				"ED.ID_EDITORA, ED.DS_EDITORA, T.ID_TIPO_OBRA, T.DS_TIPO_OBRA, " +
 				"E.ID_EXEMPLAR, E.NR_EXEMPLAR FROM EXEMPLAR E " +
 				"INNER JOIN OBRA O ON O.ID_OBRA = E.ID_OBRA " +
@@ -146,6 +148,8 @@ public class ExemplarDAOImpl implements ExemplarDAO {
 			obra.setNomeObra(descricaoObra);
 			int ano = rs.getInt("DT_ANO");
 			obra.setAno(ano);
+			boolean isClassico = rs.getBoolean("SN_CLASSICO");
+			obra.setClassico(isClassico);
 			
 			Autor autor = new Autor();
 			int codAutor = rs.getInt("ID_AUTOR");
@@ -184,7 +188,7 @@ public class ExemplarDAOImpl implements ExemplarDAO {
 	public Exemplar get(int codigo) throws SQLException {
 		Connection conexao = Conexao.getInstance().getConnection();
 		
-		String query = "SELECT O.ID_OBRA, O.DS_OBRA, O.DT_ANO, A.ID_AUTOR, A.NM_AUTOR, " +
+		String query = "SELECT O.ID_OBRA, O.DS_OBRA, O.DT_ANO, O.SN_CLASSICO, A.ID_AUTOR, A.NM_AUTOR, " +
 				"ED.ID_EDITORA, ED.DS_EDITORA, T.ID_TIPO_OBRA, T.DS_TIPO_OBRA, " +
 				"E.ID_EXEMPLAR, E.NR_EXEMPLAR FROM EXEMPLAR E " +
 				"INNER JOIN OBRA O ON O.ID_OBRA = E.ID_OBRA " +
@@ -216,6 +220,8 @@ public class ExemplarDAOImpl implements ExemplarDAO {
 			obra.setNomeObra(descricaoObra);
 			int ano = rs.getInt("DT_ANO");
 			obra.setAno(ano);
+			boolean isClassico = rs.getBoolean("SN_CLASSICO");
+			obra.setClassico(isClassico);
 			
 			Autor autor = new Autor();
 			int codAutor = rs.getInt("ID_AUTOR");
@@ -246,6 +252,149 @@ public class ExemplarDAOImpl implements ExemplarDAO {
 		conexao.close();
 		
 		return exemplarRetorno;
+	}
+
+	@Override
+	public List<Exemplar> getLocaveisByName(String textoPesquisa)
+			throws SQLException {
+		List<Exemplar> listaExemplares = new ArrayList<>();
+		
+		Connection conexao = Conexao.getInstance().getConnection();
+		
+		String query = "SELECT O.ID_OBRA, O.DS_OBRA, O.DT_ANO, O.SN_CLASSICO, A.ID_AUTOR, A.NM_AUTOR, " +
+				"ED.ID_EDITORA, ED.DS_EDITORA, T.ID_TIPO_OBRA, T.DS_TIPO_OBRA, " +
+				"E.ID_EXEMPLAR, E.NR_EXEMPLAR FROM EXEMPLAR E " +
+				"INNER JOIN OBRA O ON O.ID_OBRA = E.ID_OBRA " +
+				"INNER JOIN AUTOR A ON A.ID_AUTOR = O.ID_AUTOR " +
+				"INNER JOIN EDITORA ED ON ED.ID_EDITORA = O.ID_EDITORA " +
+				"INNER JOIN TIPO_OBRA T ON T.ID_TIPO_OBRA = O.ID_TIPO_OBRA " +
+				"WHERE O.DS_OBRA LIKE ? AND T.SN_DICIONARIO = 0 AND T.SN_ENCICLOPEDIA = 0 AND T.SN_PERIODICO = 0";
+		
+		PreparedStatement preparedStatement = conexao.prepareStatement(query);
+		
+		preparedStatement.setString(1, "%" + textoPesquisa  + "%");
+		
+		ResultSet rs = preparedStatement.executeQuery();
+		
+		while (rs.next()) {
+			Exemplar exemplar = new Exemplar();
+			
+			int codExemplar = rs.getInt("ID_EXEMPLAR");
+			exemplar.setCodExemplar(codExemplar);
+			int nrExemplar = rs.getInt("NR_EXEMPLAR");
+			exemplar.setNumeroExemplar(nrExemplar);
+			
+			Obra obra = new Obra();
+			int idObra = rs.getInt("ID_OBRA");
+			obra.setIdObra(idObra);
+			String descricaoObra = rs.getString("DS_OBRA");
+			obra.setNomeObra(descricaoObra);
+			int ano = rs.getInt("DT_ANO");
+			obra.setAno(ano);
+			boolean isClassico = rs.getBoolean("SN_CLASSICO");
+			obra.setClassico(isClassico);
+			
+			Autor autor = new Autor();
+			int codAutor = rs.getInt("ID_AUTOR");
+			autor.setCodAutor(codAutor);
+			String nomeAutor = rs.getString("NM_AUTOR");
+			autor.setNomeAutor(nomeAutor);
+			
+			Editora editora = new Editora();
+			int codEditora = rs.getInt("ID_EDITORA");
+			editora.setCodEditora(codEditora);
+			String nomeEditora = rs.getString("DS_EDITORA");
+			editora.setNomeEditora(nomeEditora);
+			
+			TipoObra tipoObra = new TipoObra();
+			int codTipoObra = rs.getInt("ID_TIPO_OBRA");
+			tipoObra.setCodTipoObra(codTipoObra);
+			String descricaoTipoObra = rs.getString("DS_TIPO_OBRA");
+			tipoObra.setDescricaoTipoObra(descricaoTipoObra);
+			
+			obra.setAutor(autor);
+			obra.setEditora(editora);
+			obra.setTipoObra(tipoObra);
+			exemplar.setObra(obra);			
+			
+			listaExemplares.add(exemplar);
+		}
+		
+		rs.close();
+		preparedStatement.close();
+		conexao.close();
+			
+		return listaExemplares;
+	}
+
+	@Override
+	public List<Exemplar> listAllLocaveis() throws SQLException {
+		List<Exemplar> listaExemplar = new ArrayList<>();
+		
+		Connection conexao = Conexao.getInstance().getConnection();
+		
+		String query = "SELECT O.ID_OBRA, O.DS_OBRA, O.DT_ANO, O.SN_CLASSICO, A.ID_AUTOR, A.NM_AUTOR, " +
+						"ED.ID_EDITORA, ED.DS_EDITORA, T.ID_TIPO_OBRA, T.DS_TIPO_OBRA, " +
+						"E.ID_EXEMPLAR, E.NR_EXEMPLAR FROM EXEMPLAR E " +
+						"INNER JOIN OBRA O ON O.ID_OBRA = E.ID_OBRA " +
+						"INNER JOIN AUTOR A ON A.ID_AUTOR = O.ID_AUTOR " +
+						"INNER JOIN EDITORA ED ON ED.ID_EDITORA = O.ID_EDITORA " +
+						"INNER JOIN TIPO_OBRA T ON T.ID_TIPO_OBRA = O.ID_TIPO_OBRA " +
+						"WHERE T.SN_DICIONARIO = 0 AND T.SN_ENCICLOPEDIA = 0 AND T.SN_PERIODICO = 0";
+		
+		Statement stmt = conexao.createStatement();
+		
+		ResultSet rs = stmt.executeQuery(query);
+		
+		while (rs.next()) {
+			Exemplar exemplar = new Exemplar();
+			
+			int codExemplar = rs.getInt("ID_EXEMPLAR");
+			exemplar.setCodExemplar(codExemplar);
+			int nrExemplar = rs.getInt("NR_EXEMPLAR");
+			exemplar.setNumeroExemplar(nrExemplar);
+			
+			Obra obra = new Obra();
+			int idObra = rs.getInt("ID_OBRA");
+			obra.setIdObra(idObra);
+			String descricaoObra = rs.getString("DS_OBRA");
+			obra.setNomeObra(descricaoObra);
+			int ano = rs.getInt("DT_ANO");
+			obra.setAno(ano);
+			boolean isClassico = rs.getBoolean("SN_CLASSICO");
+			obra.setClassico(isClassico);
+			
+			Autor autor = new Autor();
+			int codAutor = rs.getInt("ID_AUTOR");
+			autor.setCodAutor(codAutor);
+			String nomeAutor = rs.getString("NM_AUTOR");
+			autor.setNomeAutor(nomeAutor);
+			
+			Editora editora = new Editora();
+			int codEditora = rs.getInt("ID_EDITORA");
+			editora.setCodEditora(codEditora);
+			String nomeEditora = rs.getString("DS_EDITORA");
+			editora.setNomeEditora(nomeEditora);
+			
+			TipoObra tipoObra = new TipoObra();
+			int codTipoObra = rs.getInt("ID_TIPO_OBRA");
+			tipoObra.setCodTipoObra(codTipoObra);
+			String descricaoTipoObra = rs.getString("DS_TIPO_OBRA");
+			tipoObra.setDescricaoTipoObra(descricaoTipoObra);
+			
+			obra.setAutor(autor);
+			obra.setEditora(editora);
+			obra.setTipoObra(tipoObra);
+			exemplar.setObra(obra);			
+			
+			listaExemplar.add(exemplar);
+		}
+		
+		stmt.close();
+		rs.close();
+		conexao.close();
+		
+		return listaExemplar;
 	}
 
 }

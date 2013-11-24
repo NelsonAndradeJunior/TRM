@@ -17,4 +17,8 @@ public interface ExemplarDAO {
 
 	Exemplar get(int codigo) throws SQLException;
 
+	List<Exemplar> getLocaveisByName(String textoPesquisa) throws SQLException;
+
+	List<Exemplar> listAllLocaveis() throws SQLException;
+
 }
