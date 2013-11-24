@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
@@ -51,6 +52,7 @@ public class FrameObra extends JInternalFrame {
 	private JButton btnPesquisarAutor;
 	private JButton btnPesquisarEditora;
 	private JButton btnPesquisarTipoObra;
+	private JCheckBox chkClassico;
 	private BufferedImage picLupa;
 	private FrameObraPesquisa frameObraPesquisa;
 	private FrameAutorPesquisa frameAutorPesquisa;
@@ -91,6 +93,7 @@ public class FrameObra extends JInternalFrame {
 		btnPesquisarAutor = getButtonPesquisa("autor");
 		btnPesquisarEditora = getButtonPesquisa("editora");
 		btnPesquisarTipoObra = getButtonPesquisa("tipo_obra");
+		chkClassico = getCheckBox("Clássico", "chkClassico");
 		
 		layoutManager.putConstraint(SpringLayout.NORTH, lblCodigoObra, 10,
 				SpringLayout.NORTH, getContentPane());
@@ -190,6 +193,9 @@ public class FrameObra extends JInternalFrame {
 		layoutManager.putConstraint(SpringLayout.WEST, btnPesquisarTipoObra, 5,
 				SpringLayout.EAST, txtTipoObra);
 		
+		layoutManager.putConstraint(SpringLayout.WEST, chkClassico, 10, SpringLayout.EAST, btnPesquisarTipoObra);
+		layoutManager.putConstraint(SpringLayout.SOUTH, chkClassico, 3, SpringLayout.SOUTH, btnPesquisarTipoObra);
+		
 		this.setLayout(layoutManager);
 
 		this.getContentPane().add(lblCodigoObra);
@@ -210,6 +216,13 @@ public class FrameObra extends JInternalFrame {
 		this.getContentPane().add(btnPesquisarAutor);
 		this.getContentPane().add(btnPesquisarEditora);
 		this.getContentPane().add(btnPesquisarTipoObra);
+		this.getContentPane().add(chkClassico);
+	}
+
+	private JCheckBox getCheckBox(String texto, String nome) {
+		JCheckBox checkBox = new JCheckBox(texto);
+		checkBox.setName(nome);
+		return checkBox;
 	}
 
 	@Override
@@ -385,6 +398,7 @@ public class FrameObra extends JInternalFrame {
 		this.txtAno.setText(anoString);
 		this.txtEditora.setText(model.getEditora().getNomeEditora());
 		this.txtTipoObra.setText(model.getTipoObra().getDescricaoTipoObra());
+		this.chkClassico.setSelected(model.isClassico());
 	}
 
 	public void setModoAtualizacao(boolean modoAtualizacao) {
@@ -427,6 +441,7 @@ public class FrameObra extends JInternalFrame {
 		txtAutorObra.setText("");
 		txtEditora.setText("");
 		txtTipoObra.setText("");
+		chkClassico.setSelected(false);
 	}
 
 	public void configuraOuvinteFrame(InternalFrameListener listener) {
@@ -553,5 +568,9 @@ public class FrameObra extends JInternalFrame {
 	public int confirmaAtualizacao() {
 		int retorno = JOptionPane.showConfirmDialog(null, "Deseja modificar os dados da obra?", "Confirmar Atualização", JOptionPane.YES_NO_CANCEL_OPTION);
 		return retorno;
+	}
+
+	public boolean isClassico() {
+		return chkClassico.isSelected();
 	}
 }

@@ -89,11 +89,13 @@ public class FrameObraPesquisa extends JInternalFrame {
 	}
 
 	private void ajustaColunas(JTable tabela) {
-		tabela.getColumnModel().getColumn(0).setPreferredWidth(15);
+		tabela.getColumnModel().getColumn(0).setPreferredWidth(10);
 		tabela.getColumnModel().getColumn(1).setPreferredWidth(220);
-		tabela.getColumnModel().getColumn(2).setMinWidth(5);
+		tabela.getColumnModel().getColumn(2).setMinWidth(0);
 		tabela.getColumnModel().getColumn(2).setPreferredWidth(5);
-		tabela.getColumnModel().getColumn(5).setPreferredWidth(15);
+		tabela.getColumnModel().getColumn(3).setPreferredWidth(100);
+		tabela.getColumnModel().getColumn(4).setPreferredWidth(100);
+		tabela.getColumnModel().getColumn(6).setPreferredWidth(20);
 	}
 	
 	private SpringLayout getLayoutManager() {
@@ -139,6 +141,7 @@ public class FrameObraPesquisa extends JInternalFrame {
 			tableModel.setValueAt(listaObra.get(i).getAutor().getNomeAutor(), i, 3);
 			tableModel.setValueAt(listaObra.get(i).getEditora().getNomeEditora(), i, 4);
 			tableModel.setValueAt(listaObra.get(i).getTipoObra().getDescricaoTipoObra(), i, 5);
+			tableModel.setValueAt(listaObra.get(i).isClassico(), i, 6);
 		}
 	}
 

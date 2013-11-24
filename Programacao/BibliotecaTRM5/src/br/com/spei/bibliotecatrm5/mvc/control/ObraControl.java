@@ -27,13 +27,16 @@ public class ObraControl implements ActionListener, InternalFrameListener {
 		ObraDAO obraDAO = new ObraDAOImpl();
 		switch (e.getActionCommand()) {
 		case "gravar":
+			if(!view.validaCamposPreenchidos()) {
+				view.mostraMensagem("Há campos não preenchidos.");
+				return;
+			}
 			try {
-				if(view.getModoAtualizacao()) { 
+				if(view.getModoAtualizacao()) {
 					switch (view.confirmaAtualizacao()) {
 					case JOptionPane.YES_OPTION:
 						model = view.getModel();
-						model.setNomeObra(view.getNomeObra());
-						model.setAno(view.getAnoObra());
+						preencheInformacoes();
 						obraDAO.update(model);
 						view.limpaTela();
 						view.setModoAtualizacao(false);
@@ -48,16 +51,11 @@ public class ObraControl implements ActionListener, InternalFrameListener {
 						break;
 					}
 				} else {
-					if(view.validaCamposPreenchidos()) {
-						model = view.getModel();
-						model.setNomeObra(view.getNomeObra());
-						model.setAno(view.getAnoObra());
-						obraDAO.insert(model);
-						view.limpaTela();
-						view.mostraMensagem("Cadastro efetuado com sucesso.");
-					}
-					else
-						view.mostraMensagem("Há campos não preenchidos.");
+					model = view.getModel();
+					preencheInformacoes();
+					obraDAO.insert(model);
+					view.limpaTela();
+					view.mostraMensagem("Cadastro efetuado com sucesso.");
 				}
 			} catch (SQLException e1) {
 				view.mostraExcecaoSQL();
@@ -83,6 +81,12 @@ public class ObraControl implements ActionListener, InternalFrameListener {
 		default:
 			break;
 		}
+	}
+
+	private void preencheInformacoes() {
+		model.setNomeObra(view.getNomeObra());
+		model.setAno(view.getAnoObra());
+		model.setClassico(view.isClassico());
 	}
 
 	public void inicia() {

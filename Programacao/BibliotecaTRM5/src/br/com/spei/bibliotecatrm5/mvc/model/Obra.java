@@ -6,7 +6,8 @@ public class Obra {
 	private Autor autor;
 	private int ano;
 	private Editora editora;
-	private TipoObra tipoObra;	
+	private TipoObra tipoObra;
+	private boolean classico;
 	
 	public Obra() {
 		autor = new Autor();
@@ -49,5 +50,11 @@ public class Obra {
 	}
 	public void setNomeObra(String nomeObra) {
 		this.nomeObra = nomeObra;
+	}
+	public boolean isClassico() {
+		return classico;
+	}
+	public void setClassico(boolean classico) {
+		this.classico = classico;
 	}
 }

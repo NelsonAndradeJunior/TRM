@@ -20,7 +20,7 @@ public class ObraDAOImpl implements ObraDAO {
 		Connection conexao = Conexao.getInstance().getConnection();
 		
 		String query = "SELECT O.ID_OBRA, O.DS_OBRA, A.ID_AUTOR, A.NM_AUTOR, O.DT_ANO, " +
-					   "E.ID_EDITORA, E.DS_EDITORA, T.ID_TIPO_OBRA, T.DS_TIPO_OBRA FROM OBRA O " +
+					   "E.ID_EDITORA, E.DS_EDITORA, T.ID_TIPO_OBRA, T.DS_TIPO_OBRA, O.SN_CLASSICO FROM OBRA O " +
 					   "INNER JOIN AUTOR A ON A.ID_AUTOR = O.ID_AUTOR " +
 					   "INNER JOIN EDITORA E ON E.ID_EDITORA = O.ID_EDITORA " +
 					   "INNER JOIN TIPO_OBRA T ON T.ID_TIPO_OBRA = O.ID_TIPO_OBRA";
@@ -41,6 +41,7 @@ public class ObraDAOImpl implements ObraDAO {
 			String descricaoEditora = rs.getString("DS_EDITORA");
 			int idTipoObra= rs.getInt("ID_TIPO_OBRA");
 			String descricaoTipoObra = rs.getString("DS_TIPO_OBRA");
+			boolean isClassico = rs.getBoolean("SN_CLASSICO");
 			
 			obra.setIdObra(idObra);
 			obra.setNomeObra(nomeObra);
@@ -51,6 +52,7 @@ public class ObraDAOImpl implements ObraDAO {
 			obra.getEditora().setNomeEditora(descricaoEditora);
 			obra.getTipoObra().setCodTipoObra(idTipoObra);
 			obra.getTipoObra().setDescricaoTipoObra(descricaoTipoObra);
+			obra.setClassico(isClassico);
 			
 			listaObra.add(obra);
 		}
@@ -60,13 +62,14 @@ public class ObraDAOImpl implements ObraDAO {
 
 	@Override
 	public void insert(Obra model) throws SQLException {
-		String query = "INSERT INTO OBRA (DS_OBRA, ID_AUTOR, DT_ANO, ID_EDITORA, ID_TIPO_OBRA) VALUES (?, ?, ? , ?, ?)";
+		String query = "INSERT INTO OBRA (DS_OBRA, ID_AUTOR, DT_ANO, ID_EDITORA, ID_TIPO_OBRA, SN_CLASSICO) VALUES (?, ?, ? , ?, ?, ?)";
 		
 		String nomeObra = model.getNomeObra();
 		int codAutor = model.getAutor().getCodAutor();
 		int ano = model.getAno();
 		int codEditora = model.getEditora().getCodEditora();
 		int codTipoObra = model.getTipoObra().getCodTipoObra();
+		boolean classico = model.isClassico();
 		
 		Connection conexao = Conexao.getInstance().getConnection();
 		
@@ -77,6 +80,7 @@ public class ObraDAOImpl implements ObraDAO {
 		pstmt.setInt(3, ano);
 		pstmt.setInt(4, codEditora);
 		pstmt.setInt(5, codTipoObra);
+		pstmt.setBoolean(6, classico);
 		
 		pstmt.executeUpdate();
 		
@@ -90,7 +94,9 @@ public class ObraDAOImpl implements ObraDAO {
 
 		Connection conexao = Conexao.getInstance().getConnection();
 		
-		String query = "SELECT TOP(1) O.ID_OBRA Código, O.DS_OBRA Nome, O.DT_ANO Ano, A.NM_AUTOR Autor, E.DS_EDITORA Editora, T.DS_TIPO_OBRA 'Tipo da Obra' FROM OBRA O " +
+		String query = "SELECT TOP(1) O.ID_OBRA Código, O.DS_OBRA Nome, O.DT_ANO Ano, A.NM_AUTOR Autor, " +
+						"E.DS_EDITORA Editora, T.DS_TIPO_OBRA 'Tipo da Obra', O.SN_CLASSICO 'Clássico' " +
+						   "FROM OBRA O " +
 						   "INNER JOIN AUTOR A ON A.ID_AUTOR = O.ID_AUTOR " +
 						   "INNER JOIN EDITORA E ON E.ID_EDITORA = O.ID_EDITORA " +
 						   "INNER JOIN TIPO_OBRA T ON T.ID_TIPO_OBRA = O.ID_TIPO_OBRA";
@@ -117,7 +123,7 @@ public class ObraDAOImpl implements ObraDAO {
 		Connection conexao = Conexao.getInstance().getConnection();
 		
 		String query = "SELECT O.ID_OBRA, O.DS_OBRA, A.ID_AUTOR, A.NM_AUTOR, O.DT_ANO, " +
-					   "E.ID_EDITORA, E.DS_EDITORA, T.ID_TIPO_OBRA, T.DS_TIPO_OBRA FROM OBRA O " +
+					   "E.ID_EDITORA, E.DS_EDITORA, T.ID_TIPO_OBRA, T.DS_TIPO_OBRA , O.SN_CLASSICO FROM OBRA O " +
 					   "INNER JOIN AUTOR A ON A.ID_AUTOR = O.ID_AUTOR " +
 					   "INNER JOIN EDITORA E ON E.ID_EDITORA = O.ID_EDITORA " +
 					   "INNER JOIN TIPO_OBRA T ON T.ID_TIPO_OBRA = O.ID_TIPO_OBRA " +
@@ -150,7 +156,9 @@ public class ObraDAOImpl implements ObraDAO {
 			int idTipoObra= rs.getInt("ID_TIPO_OBRA");
 			obraRetorno.getTipoObra().setCodTipoObra(idTipoObra);
 			String descricaoTipoObra = rs.getString("DS_TIPO_OBRA");
-			obraRetorno.getTipoObra().setDescricaoTipoObra(descricaoTipoObra);			
+			obraRetorno.getTipoObra().setDescricaoTipoObra(descricaoTipoObra);
+			boolean isClassico = rs.getBoolean("SN_CLASSICO");
+			obraRetorno.setClassico(isClassico);
 		}
 		
 		rs.close();
@@ -165,7 +173,7 @@ public class ObraDAOImpl implements ObraDAO {
 		Connection conexao = Conexao.getInstance().getConnection();
 		
 		String query = "SELECT O.ID_OBRA, O.DS_OBRA, A.ID_AUTOR, A.NM_AUTOR, O.DT_ANO, " +
-					   "E.ID_EDITORA, E.DS_EDITORA, T.ID_TIPO_OBRA, T.DS_TIPO_OBRA FROM OBRA O " +
+					   "E.ID_EDITORA, E.DS_EDITORA, T.ID_TIPO_OBRA, T.DS_TIPO_OBRA, O.SN_CLASSICO FROM OBRA O " +
 					   "INNER JOIN AUTOR A ON A.ID_AUTOR = O.ID_AUTOR " +
 					   "INNER JOIN EDITORA E ON E.ID_EDITORA = O.ID_EDITORA " +
 					   "INNER JOIN TIPO_OBRA T ON T.ID_TIPO_OBRA = O.ID_TIPO_OBRA " +
@@ -199,7 +207,9 @@ public class ObraDAOImpl implements ObraDAO {
 			int idTipoObra= rs.getInt("ID_TIPO_OBRA");
 			obra.getTipoObra().setCodTipoObra(idTipoObra);
 			String descricaoTipoObra = rs.getString("DS_TIPO_OBRA");
-			obra.getTipoObra().setDescricaoTipoObra(descricaoTipoObra);	
+			obra.getTipoObra().setDescricaoTipoObra(descricaoTipoObra);
+			boolean isClassico = rs.getBoolean("SN_CLASSICO");
+			obra.setClassico(isClassico);
 			
 			obrasRetorno.add(obra);
 		}
@@ -215,7 +225,7 @@ public class ObraDAOImpl implements ObraDAO {
 	public void update(Obra model) throws SQLException {
 		Connection conexao = Conexao.getInstance().getConnection();
 		
-		String query = "UPDATE OBRA SET DS_OBRA = ?, ID_AUTOR = ?, DT_ANO = ?, ID_EDITORA = ?, ID_TIPO_OBRA = ? WHERE ID_OBRA = ?";
+		String query = "UPDATE OBRA SET DS_OBRA = ?, ID_AUTOR = ?, DT_ANO = ?, ID_EDITORA = ?, ID_TIPO_OBRA = ?, SN_CLASSICO = ? WHERE ID_OBRA = ?";
 		
 		PreparedStatement pstmt = conexao.prepareStatement(query);
 		pstmt.setString(1, model.getNomeObra());
@@ -223,7 +233,8 @@ public class ObraDAOImpl implements ObraDAO {
 		pstmt.setInt(3, model.getAno());
 		pstmt.setInt(4, model.getEditora().getCodEditora());
 		pstmt.setInt(5, model.getTipoObra().getCodTipoObra());
-		pstmt.setInt(6, model.getIdObra());
+		pstmt.setBoolean(6, model.isClassico());
+		pstmt.setInt(7, model.getIdObra());
 		
 		pstmt.executeUpdate();
 		

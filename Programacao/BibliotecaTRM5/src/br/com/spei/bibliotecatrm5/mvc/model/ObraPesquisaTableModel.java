@@ -46,6 +46,7 @@ public class ObraPesquisaTableModel extends AbstractTableModel {
 			linha[3] = obra.getAutor().getNomeAutor();
 			linha[4] = obra.getEditora().getNomeEditora();
 			linha[5] = obra.getTipoObra().getDescricaoTipoObra();
+			linha[6] = obra.isClassico();
 			
 			linhas.add(linha);
 		}
@@ -81,6 +82,11 @@ public class ObraPesquisaTableModel extends AbstractTableModel {
 	@Override
 	public String getColumnName(int index) {
 		return nomeColunas[index];
+	}
+	
+	@Override
+	public Class<? extends Object> getColumnClass(int column) {
+		return getValueAt(0, column).getClass();
 	}
 	
 	public void setRowCount(int rowCount) {
