@@ -1,6 +1,7 @@
 package br.com.spei.bibliotecatrm5.mvc.dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -44,6 +45,26 @@ public class ReservaDAOImpl implements ReservaDAO {
 		};
 		
 		return listaReserva;
+	}
+
+	@Override
+	public void insert(Reserva reserva) throws SQLException {
+		Connection conexao = Conexao.getInstance().getConnection();
+		
+		String query = "INSERT INTO RESERVA (ID_USUARIO, ID_EXEMPLAR, DT_RESERVA) VALUES (?, ?, ?)";
+		
+		PreparedStatement pstmt = conexao.prepareStatement(query);
+		pstmt.setInt(1, reserva.getUsuario().getCodUsuario());
+		pstmt.setInt(2, reserva.getExemplar().getCodExemplar());
+		
+		java.sql.Date dataReserva = new java.sql.Date(reserva.getDataReserva().getTime()); 
+		
+		pstmt.setDate(3, dataReserva);
+		
+		pstmt.executeUpdate();
+		
+		pstmt.close();
+		conexao.close();
 	}
 
 }

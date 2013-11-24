@@ -2,6 +2,8 @@ package br.com.spei.bibliotecatrm5.mvc.control;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -24,9 +26,29 @@ public class ReservaControl implements ActionListener, InternalFrameListener {
 	}
 	
 	public void actionPerformed(ActionEvent e) {
+		ReservaDAO reservaDAO = new ReservaDAOImpl();
+		
 		switch (e.getActionCommand()) {
 		case "Reservar":
-			// TODO Implementar
+			if(view.validaCamposPreenchidos()) {
+				model = view.getModel();
+				
+				Date dataReserva = new Date();
+				
+				model.setDataReserva(dataReserva);
+				
+				try {
+					reservaDAO.insert(model);
+					view.limpaTela();
+					view.mostraMensagem("Cadastro efetuado com sucesso.");
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+					view.mostraErroSQL(e1);
+				}
+			}
+			else
+				view.mostraMensagem("Há campos não preenchidos.");
 			break;
 		case "Cancelar":
 			view.setVisible(false);

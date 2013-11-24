@@ -272,4 +272,28 @@ public class FrameReserva extends JInternalFrame{
 		
 		model.setExemplar(exemplar);
 	}
+
+	public boolean validaCamposPreenchidos() {
+		return !this.txtUsuario.getText().isEmpty() &&
+				!this.txtObra.getText().isEmpty() &&
+				!this.txtExemplar.getText().isEmpty();
+	}
+
+	public Reserva getModel() {
+		return this.model;
+	}
+
+	public void limpaTela() {
+		this.txtUsuario.setText("");
+		this.txtObra.setText("");
+		this.txtExemplar.setText("");
+	}
+
+	public void mostraMensagem(String mensagem) {
+		JOptionPane.showMessageDialog(null, mensagem);
+	}
+
+	public void mostraErroSQL(SQLException e1) {
+		JOptionPane.showMessageDialog(null, "Ocorreu um erro ao tentar realizar a operação.", "Erro", JOptionPane.ERROR_MESSAGE);
+	}
 }
