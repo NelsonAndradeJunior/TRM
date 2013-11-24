@@ -94,9 +94,6 @@ public class ObraPesquisaControl extends MouseAdapter implements ActionListener,
 									((FrameObra)frame).setModel(model);
 									((FrameObra)frame).preencheInformacoesFrame();
 									((FrameObra)frame).setModoAtualizacao(true);
-								} else if (callerName.equalsIgnoreCase("frmReserva")) {
-									((FrameReserva)frame).setObraModel(model);
-									((FrameReserva)frame).preencheCampoObra();
 								}
 							}
 						}

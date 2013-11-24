@@ -34,7 +34,7 @@ public class ReservaControl implements ActionListener, InternalFrameListener {
 		case "PesquisarUsuario":
 			view.mostraFramePesquisaUsuario();
 			break;
-		case "PesquisarObra":
+		case "PesquisarExemplar":
 			view.mostraFramePesquisaObra();
 			break;
 		default:

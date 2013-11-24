@@ -17,8 +17,10 @@ import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 import javax.swing.event.InternalFrameEvent;
 
+import br.com.spei.bibliotecatrm5.mvc.control.ExemplarPesquisaControl;
 import br.com.spei.bibliotecatrm5.mvc.control.ObraPesquisaControl;
 import br.com.spei.bibliotecatrm5.mvc.control.UsuarioPesquisaControl;
+import br.com.spei.bibliotecatrm5.mvc.model.Exemplar;
 import br.com.spei.bibliotecatrm5.mvc.model.Obra;
 import br.com.spei.bibliotecatrm5.mvc.model.Reserva;
 import br.com.spei.bibliotecatrm5.mvc.model.Usuario;
@@ -30,13 +32,14 @@ public class FrameReserva extends JInternalFrame{
 	private JTextField txtUsuario;
 	private JLabel lblObra;
 	private JTextField txtObra;
+	private JTextField txtExemplar;
 	private JButton btnReservar;
 	private JButton btnCancelar;
 	private JButton btnPesquisarUsuario;
-	private JButton btnPesquisarObra;
+	private JButton btnPesquisarExemplar;
 	private BufferedImage picLupa;
 	private FrameUsuarioPesquisa frameUsuarioPesquisa;
-	private FrameObraPesquisa frameObraPesquisa; 
+	private FrameExemplarPesquisa frameExemplarPesquisa; 
 	private boolean listenersAdicionados;
 	private Reserva model;
 	
@@ -46,21 +49,22 @@ public class FrameReserva extends JInternalFrame{
 	}
 	
 	private void inicializa() {
-		this.setBounds(50, 50, 470, 130);
+		this.setBounds(50, 50, 510, 130);
 		this.setTitle("Reserva de Obra");
 		this.setName("frmReserva");
 		this.setDefaultCloseOperation(JInternalFrame.HIDE_ON_CLOSE);
-			
+		
 		SpringLayout layoutManager = getLayoutManager();
 		
 		lblUsuario = getLabelUsuario();
 		txtUsuario = getTextUsuario();
 		lblObra = getLabelObra();
 		txtObra = getTextObra();
+		txtExemplar = getTextExemplar();
 		btnReservar = getButtonReservar();
 		btnCancelar = getButtonCancelar();
 		btnPesquisarUsuario = getButtonPesquisa("btnPesquisarUsuario", "PesquisarUsuario");
-		btnPesquisarObra = getButtonPesquisa("btnPesquisarObra", "PesquisarObra");
+		btnPesquisarExemplar = getButtonPesquisa("btnPesquisarExemplar", "PesquisarExemplar");
 		
 		layoutManager.putConstraint(SpringLayout.NORTH, lblUsuario, 10, SpringLayout.NORTH, getContentPane());
 		layoutManager.putConstraint(SpringLayout.WEST, lblUsuario, 10, SpringLayout.WEST, getContentPane());
@@ -74,6 +78,9 @@ public class FrameReserva extends JInternalFrame{
 		layoutManager.putConstraint(SpringLayout.SOUTH, txtObra, 0, SpringLayout.SOUTH, lblObra);
 		layoutManager.putConstraint(SpringLayout.WEST, txtObra, 10, SpringLayout.EAST, lblObra);
 		
+		layoutManager.putConstraint(SpringLayout.SOUTH, txtExemplar, 0, SpringLayout.SOUTH, txtObra);
+		layoutManager.putConstraint(SpringLayout.WEST, txtExemplar, 5, SpringLayout.EAST, txtObra);
+		
 		layoutManager.putConstraint(SpringLayout.NORTH, btnReservar, 10, SpringLayout.SOUTH, lblObra);
 		layoutManager.putConstraint(SpringLayout.WEST, btnReservar, 0, SpringLayout.WEST, lblUsuario);
 		
@@ -84,23 +91,30 @@ public class FrameReserva extends JInternalFrame{
 		layoutManager.putConstraint(SpringLayout.NORTH, btnPesquisarUsuario, 0, SpringLayout.NORTH, txtUsuario);
 		layoutManager.putConstraint(SpringLayout.WEST, btnPesquisarUsuario, 5, SpringLayout.EAST, txtUsuario);
 		
-		layoutManager.putConstraint(SpringLayout.SOUTH, btnPesquisarObra, 0, SpringLayout.SOUTH, txtObra);
-		layoutManager.putConstraint(SpringLayout.NORTH, btnPesquisarObra, 0, SpringLayout.NORTH, txtObra);
-		layoutManager.putConstraint(SpringLayout.WEST, btnPesquisarObra, 5, SpringLayout.EAST, txtObra);	
+		layoutManager.putConstraint(SpringLayout.SOUTH, btnPesquisarExemplar, 0, SpringLayout.SOUTH, txtExemplar);
+		layoutManager.putConstraint(SpringLayout.NORTH, btnPesquisarExemplar, 0, SpringLayout.NORTH, txtExemplar);
+		layoutManager.putConstraint(SpringLayout.WEST, btnPesquisarExemplar, 5, SpringLayout.EAST, txtExemplar);	
 		
 		this.setLayout(layoutManager);
-		
 		
 		this.getContentPane().add(lblUsuario);
 		this.getContentPane().add(txtUsuario);
 		this.getContentPane().add(lblObra);
 		this.getContentPane().add(txtObra);
+		this.getContentPane().add(txtExemplar);
 		this.getContentPane().add(btnReservar);
 		this.getContentPane().add(btnCancelar);
 		this.getContentPane().add(btnPesquisarUsuario);
-		this.getContentPane().add(btnPesquisarObra);
+		this.getContentPane().add(btnPesquisarExemplar);
 	}
 	
+	private JTextField getTextExemplar() {
+		JTextField campoTexto = new JTextField(3);
+		campoTexto.setEditable(false);
+		campoTexto.setName("txtExemplar");
+		return campoTexto;
+	}
+
 	@Override
 	public void setVisible(boolean b) {
 		super.setVisible(b);
@@ -174,7 +188,7 @@ public class FrameReserva extends JInternalFrame{
 	public void configuraOuvinteAcao(ActionListener actionListener) {
 		btnCancelar.addActionListener(actionListener);
 		btnReservar.addActionListener(actionListener);
-		btnPesquisarObra.addActionListener(actionListener);
+		btnPesquisarExemplar.addActionListener(actionListener);
 		btnPesquisarUsuario.addActionListener(actionListener);
 	}
 
@@ -223,12 +237,12 @@ public class FrameReserva extends JInternalFrame{
 	}
 
 	public void mostraFramePesquisaObra() {
-		boolean adicionaListeners = frameObraPesquisa == null;
+		boolean adicionaListeners = frameExemplarPesquisa == null;
 		
-		if(frameObraPesquisa == null) {
+		if(frameExemplarPesquisa == null) {
 			try {
-				frameObraPesquisa = getFrameObraPesquisa();
-				((JDesktopPane)this.getParent()).add(frameObraPesquisa);
+				frameExemplarPesquisa = getFrameExemplarPesquisa();
+				((JDesktopPane)this.getParent()).add(frameExemplarPesquisa);
 			} catch (SQLException e) {
 				JOptionPane.showMessageDialog(null, "Ocorreu um erro ao carregar o formulárlio de pesquisa.", "Erro", JOptionPane.ERROR_MESSAGE);
 				// TODO Remover
@@ -237,24 +251,25 @@ public class FrameReserva extends JInternalFrame{
 			}
 		}
 		
-		ObraPesquisaControl controladorObraPesquisa = new ObraPesquisaControl(frameObraPesquisa, this.getName());
-		controladorObraPesquisa.inicia(adicionaListeners);
+		ExemplarPesquisaControl controladorExemplarPesquisa = new ExemplarPesquisaControl(frameExemplarPesquisa, this.getName());
+		controladorExemplarPesquisa.inicia(adicionaListeners);
 		
-		controladorObraPesquisa.carregaInformacoes();
+		controladorExemplarPesquisa.carregaInformacoes();
 	}
 
-	private FrameObraPesquisa getFrameObraPesquisa() throws SQLException {
-		return new FrameObraPesquisa();
+	private FrameExemplarPesquisa getFrameExemplarPesquisa() throws SQLException {
+		return new FrameExemplarPesquisa();
 	}
 
-	public void setObraModel(Obra obra) {
+	public void preencheInformacoesExemplar() {
+		this.txtObra.setText(model.getExemplar().getObra().getNomeObra());
+		this.txtExemplar.setText(((Integer)model.getExemplar().getNumeroExemplar()).toString());
+	}
+
+	public void setExemplarModel(Exemplar exemplar) {
 		if(this.model == null)
-			this.model = new Reserva();
+			model = new Reserva();
 		
-		this.model.setObra(obra);
-	}
-
-	public void preencheCampoObra() {
-		this.txtObra.setText(model.getObra().getNomeObra());
+		model.setExemplar(exemplar);
 	}
 }

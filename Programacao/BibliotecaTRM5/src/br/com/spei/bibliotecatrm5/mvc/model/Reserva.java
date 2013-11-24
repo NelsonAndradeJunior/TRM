@@ -3,7 +3,7 @@ package br.com.spei.bibliotecatrm5.mvc.model;
 public class Reserva {
 	
 	private Usuario usuario;
-	private Obra obra;
+	private Exemplar exemplar;
 	
 	public Usuario getUsuario() {
 		return usuario;
@@ -11,11 +11,11 @@ public class Reserva {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
-	public Obra getObra() {
-		return obra;
+	public Exemplar getExemplar() {
+		return exemplar;
 	}
-	public void setObra(Obra obra) {
-		this.obra = obra;
+	public void setExemplar(Exemplar exemplar) {
+		this.exemplar = exemplar;
 	}
 	
 }
