@@ -51,7 +51,8 @@ public class ExemplarDAOImpl implements ExemplarDAO {
 		
 		String query = "SELECT O.ID_OBRA, O.DS_OBRA, O.DT_ANO, O.SN_CLASSICO, A.ID_AUTOR, A.NM_AUTOR, " +
 						"ED.ID_EDITORA, ED.DS_EDITORA, T.ID_TIPO_OBRA, T.DS_TIPO_OBRA, " +
-						"E.ID_EXEMPLAR, E.NR_EXEMPLAR FROM EXEMPLAR E " +
+						"E.ID_EXEMPLAR, E.NR_EXEMPLAR, E.SN_RESERVADO, E.SN_EMPRESTADO, " +
+						"T.SN_DICIONARIO, T.SN_ENCICLOPEDIA, T.SN_PERIODICO FROM EXEMPLAR E " +
 						"INNER JOIN OBRA O ON O.ID_OBRA = E.ID_OBRA " +
 						"INNER JOIN AUTOR A ON A.ID_AUTOR = O.ID_AUTOR " +
 						"INNER JOIN EDITORA ED ON ED.ID_EDITORA = O.ID_EDITORA " +
@@ -68,6 +69,10 @@ public class ExemplarDAOImpl implements ExemplarDAO {
 			exemplar.setCodExemplar(codExemplar);
 			int nrExemplar = rs.getInt("NR_EXEMPLAR");
 			exemplar.setNumeroExemplar(nrExemplar);
+			boolean isReservado = rs.getBoolean("SN_RESERVADO");
+			exemplar.setReservado(isReservado);
+			boolean isEmprestado = rs.getBoolean("SN_EMPRESTADO");
+			exemplar.setEmprestado(isEmprestado);
 			
 			Obra obra = new Obra();
 			int idObra = rs.getInt("ID_OBRA");
@@ -96,6 +101,12 @@ public class ExemplarDAOImpl implements ExemplarDAO {
 			tipoObra.setCodTipoObra(codTipoObra);
 			String descricaoTipoObra = rs.getString("DS_TIPO_OBRA");
 			tipoObra.setDescricaoTipoObra(descricaoTipoObra);
+			boolean isDicionario = rs.getBoolean("SN_DICIONARIO");
+			tipoObra.setDicionario(isDicionario);
+			boolean isEnciclopedia = rs.getBoolean("SN_ENCICLOPEDIA");
+			tipoObra.setEnciclopedia(isEnciclopedia);
+			boolean isPeriodico = rs.getBoolean("SN_PERIODICO");
+			tipoObra.setPeriodico(isPeriodico);
 			
 			obra.setAutor(autor);
 			obra.setEditora(editora);
@@ -120,7 +131,8 @@ public class ExemplarDAOImpl implements ExemplarDAO {
 		
 		String query = "SELECT O.ID_OBRA, O.DS_OBRA, O.DT_ANO, O.SN_CLASSICO, A.ID_AUTOR, A.NM_AUTOR, " +
 				"ED.ID_EDITORA, ED.DS_EDITORA, T.ID_TIPO_OBRA, T.DS_TIPO_OBRA, " +
-				"E.ID_EXEMPLAR, E.NR_EXEMPLAR FROM EXEMPLAR E " +
+				"E.ID_EXEMPLAR, E.NR_EXEMPLAR, E.SN_RESERVADO, E.SN_EMPRESTADO, " +
+				"T.SN_DICIONARIO, T.SN_ENCICLOPEDIA, T.SN_PERIODICO FROM EXEMPLAR E " +
 				"INNER JOIN OBRA O ON O.ID_OBRA = E.ID_OBRA " +
 				"INNER JOIN AUTOR A ON A.ID_AUTOR = O.ID_AUTOR " +
 				"INNER JOIN EDITORA ED ON ED.ID_EDITORA = O.ID_EDITORA " +
@@ -140,6 +152,10 @@ public class ExemplarDAOImpl implements ExemplarDAO {
 			exemplar.setCodExemplar(codExemplar);
 			int nrExemplar = rs.getInt("NR_EXEMPLAR");
 			exemplar.setNumeroExemplar(nrExemplar);
+			boolean isReservado = rs.getBoolean("SN_RESERVADO");
+			exemplar.setReservado(isReservado);
+			boolean isEmprestado = rs.getBoolean("SN_EMPRESTADO");
+			exemplar.setEmprestado(isEmprestado);
 			
 			Obra obra = new Obra();
 			int idObra = rs.getInt("ID_OBRA");
@@ -168,6 +184,12 @@ public class ExemplarDAOImpl implements ExemplarDAO {
 			tipoObra.setCodTipoObra(codTipoObra);
 			String descricaoTipoObra = rs.getString("DS_TIPO_OBRA");
 			tipoObra.setDescricaoTipoObra(descricaoTipoObra);
+			boolean isDicionario = rs.getBoolean("SN_DICIONARIO");
+			tipoObra.setDicionario(isDicionario);
+			boolean isEnciclopedia = rs.getBoolean("SN_ENCICLOPEDIA");
+			tipoObra.setEnciclopedia(isEnciclopedia);
+			boolean isPeriodico = rs.getBoolean("SN_PERIODICO");
+			tipoObra.setPeriodico(isPeriodico);
 			
 			obra.setAutor(autor);
 			obra.setEditora(editora);
@@ -190,7 +212,8 @@ public class ExemplarDAOImpl implements ExemplarDAO {
 		
 		String query = "SELECT O.ID_OBRA, O.DS_OBRA, O.DT_ANO, O.SN_CLASSICO, A.ID_AUTOR, A.NM_AUTOR, " +
 				"ED.ID_EDITORA, ED.DS_EDITORA, T.ID_TIPO_OBRA, T.DS_TIPO_OBRA, " +
-				"E.ID_EXEMPLAR, E.NR_EXEMPLAR FROM EXEMPLAR E " +
+				"E.ID_EXEMPLAR, E.NR_EXEMPLAR, E.SN_RESERVADO, E.SN_EMPRESTADO, " +
+				"T.SN_DICIONARIO, T.SN_ENCICLOPEDIA, T.SN_PERIODICO FROM EXEMPLAR E " +
 				"INNER JOIN OBRA O ON O.ID_OBRA = E.ID_OBRA " +
 				"INNER JOIN AUTOR A ON A.ID_AUTOR = O.ID_AUTOR " +
 				"INNER JOIN EDITORA ED ON ED.ID_EDITORA = O.ID_EDITORA " +
@@ -212,6 +235,10 @@ public class ExemplarDAOImpl implements ExemplarDAO {
 			exemplarRetorno.setCodExemplar(codExemplar);
 			int nrExemplar = rs.getInt("NR_EXEMPLAR");
 			exemplarRetorno.setNumeroExemplar(nrExemplar);
+			boolean isReservado = rs.getBoolean("SN_RESERVADO");
+			exemplarRetorno.setReservado(isReservado);
+			boolean isEmprestado = rs.getBoolean("SN_EMPRESTADO");
+			exemplarRetorno.setEmprestado(isEmprestado);
 			
 			Obra obra = new Obra();
 			int idObra = rs.getInt("ID_OBRA");
@@ -240,6 +267,12 @@ public class ExemplarDAOImpl implements ExemplarDAO {
 			tipoObra.setCodTipoObra(codTipoObra);
 			String descricaoTipoObra = rs.getString("DS_TIPO_OBRA");
 			tipoObra.setDescricaoTipoObra(descricaoTipoObra);
+			boolean isDicionario = rs.getBoolean("SN_DICIONARIO");
+			tipoObra.setDicionario(isDicionario);
+			boolean isEnciclopedia = rs.getBoolean("SN_ENCICLOPEDIA");
+			tipoObra.setEnciclopedia(isEnciclopedia);
+			boolean isPeriodico = rs.getBoolean("SN_PERIODICO");
+			tipoObra.setPeriodico(isPeriodico);
 			
 			obra.setAutor(autor);
 			obra.setEditora(editora);
@@ -263,12 +296,14 @@ public class ExemplarDAOImpl implements ExemplarDAO {
 		
 		String query = "SELECT O.ID_OBRA, O.DS_OBRA, O.DT_ANO, O.SN_CLASSICO, A.ID_AUTOR, A.NM_AUTOR, " +
 				"ED.ID_EDITORA, ED.DS_EDITORA, T.ID_TIPO_OBRA, T.DS_TIPO_OBRA, " +
-				"E.ID_EXEMPLAR, E.NR_EXEMPLAR FROM EXEMPLAR E " +
+				"E.ID_EXEMPLAR, E.NR_EXEMPLAR, E.SN_RESERVADO, E.SN_EMPRESTADO, " +
+				"T.SN_DICIONARIO, T.SN_ENCICLOPEDIA, T.SN_PERIODICO FROM EXEMPLAR E " +
 				"INNER JOIN OBRA O ON O.ID_OBRA = E.ID_OBRA " +
 				"INNER JOIN AUTOR A ON A.ID_AUTOR = O.ID_AUTOR " +
 				"INNER JOIN EDITORA ED ON ED.ID_EDITORA = O.ID_EDITORA " +
 				"INNER JOIN TIPO_OBRA T ON T.ID_TIPO_OBRA = O.ID_TIPO_OBRA " +
-				"WHERE O.DS_OBRA LIKE ? AND T.SN_DICIONARIO = 0 AND T.SN_ENCICLOPEDIA = 0 AND T.SN_PERIODICO = 0";
+				"WHERE O.DS_OBRA LIKE ? AND T.SN_DICIONARIO = 0 AND T.SN_ENCICLOPEDIA = 0 AND T.SN_PERIODICO = 0" +
+				"AND E.SN_RESERVADO = 0 AND E.SN_EMPRESTADO = 1";
 		
 		PreparedStatement preparedStatement = conexao.prepareStatement(query);
 		
@@ -283,6 +318,10 @@ public class ExemplarDAOImpl implements ExemplarDAO {
 			exemplar.setCodExemplar(codExemplar);
 			int nrExemplar = rs.getInt("NR_EXEMPLAR");
 			exemplar.setNumeroExemplar(nrExemplar);
+			boolean isReservado = rs.getBoolean("SN_RESERVADO");
+			exemplar.setReservado(isReservado);
+			boolean isEmprestado = rs.getBoolean("SN_EMPRESTADO");
+			exemplar.setEmprestado(isEmprestado);
 			
 			Obra obra = new Obra();
 			int idObra = rs.getInt("ID_OBRA");
@@ -311,6 +350,12 @@ public class ExemplarDAOImpl implements ExemplarDAO {
 			tipoObra.setCodTipoObra(codTipoObra);
 			String descricaoTipoObra = rs.getString("DS_TIPO_OBRA");
 			tipoObra.setDescricaoTipoObra(descricaoTipoObra);
+			boolean isDicionario = rs.getBoolean("SN_DICIONARIO");
+			tipoObra.setDicionario(isDicionario);
+			boolean isEnciclopedia = rs.getBoolean("SN_ENCICLOPEDIA");
+			tipoObra.setEnciclopedia(isEnciclopedia);
+			boolean isPeriodico = rs.getBoolean("SN_PERIODICO");
+			tipoObra.setPeriodico(isPeriodico);
 			
 			obra.setAutor(autor);
 			obra.setEditora(editora);
@@ -335,12 +380,14 @@ public class ExemplarDAOImpl implements ExemplarDAO {
 		
 		String query = "SELECT O.ID_OBRA, O.DS_OBRA, O.DT_ANO, O.SN_CLASSICO, A.ID_AUTOR, A.NM_AUTOR, " +
 						"ED.ID_EDITORA, ED.DS_EDITORA, T.ID_TIPO_OBRA, T.DS_TIPO_OBRA, " +
-						"E.ID_EXEMPLAR, E.NR_EXEMPLAR FROM EXEMPLAR E " +
+						"E.ID_EXEMPLAR, E.NR_EXEMPLAR, E.SN_RESERVADO, E.SN_EMPRESTADO, " +
+						"T.SN_DICIONARIO, T.SN_ENCICLOPEDIA, T.SN_PERIODICO FROM EXEMPLAR E " +
 						"INNER JOIN OBRA O ON O.ID_OBRA = E.ID_OBRA " +
 						"INNER JOIN AUTOR A ON A.ID_AUTOR = O.ID_AUTOR " +
 						"INNER JOIN EDITORA ED ON ED.ID_EDITORA = O.ID_EDITORA " +
 						"INNER JOIN TIPO_OBRA T ON T.ID_TIPO_OBRA = O.ID_TIPO_OBRA " +
-						"WHERE T.SN_DICIONARIO = 0 AND T.SN_ENCICLOPEDIA = 0 AND T.SN_PERIODICO = 0";
+						"WHERE T.SN_DICIONARIO = 0 AND T.SN_ENCICLOPEDIA = 0 AND T.SN_PERIODICO = 0 " +
+						"AND E.SN_RESERVADO = 0 AND E.SN_EMPRESTADO = 1";
 		
 		Statement stmt = conexao.createStatement();
 		
@@ -353,6 +400,10 @@ public class ExemplarDAOImpl implements ExemplarDAO {
 			exemplar.setCodExemplar(codExemplar);
 			int nrExemplar = rs.getInt("NR_EXEMPLAR");
 			exemplar.setNumeroExemplar(nrExemplar);
+			boolean isReservado = rs.getBoolean("SN_RESERVADO");
+			exemplar.setReservado(isReservado);
+			boolean isEmprestado = rs.getBoolean("SN_EMPRESTADO");
+			exemplar.setEmprestado(isEmprestado);
 			
 			Obra obra = new Obra();
 			int idObra = rs.getInt("ID_OBRA");
@@ -381,6 +432,12 @@ public class ExemplarDAOImpl implements ExemplarDAO {
 			tipoObra.setCodTipoObra(codTipoObra);
 			String descricaoTipoObra = rs.getString("DS_TIPO_OBRA");
 			tipoObra.setDescricaoTipoObra(descricaoTipoObra);
+			boolean isDicionario = rs.getBoolean("SN_DICIONARIO");
+			tipoObra.setDicionario(isDicionario);
+			boolean isEnciclopedia = rs.getBoolean("SN_ENCICLOPEDIA");
+			tipoObra.setEnciclopedia(isEnciclopedia);
+			boolean isPeriodico = rs.getBoolean("SN_PERIODICO");
+			tipoObra.setPeriodico(isPeriodico);
 			
 			obra.setAutor(autor);
 			obra.setEditora(editora);
@@ -395,6 +452,25 @@ public class ExemplarDAOImpl implements ExemplarDAO {
 		conexao.close();
 		
 		return listaExemplar;
+	}
+
+	@Override
+	public void update(Exemplar exemplar) throws SQLException {
+		Connection conexao = Conexao.getInstance().getConnection();
+		
+		String query = "UPDATE EXEMPLAR SET NR_EXEMPLAR = ?, ID_OBRA = ?, SN_RESERVADO = ?, SN_EMPRESTADO = ? WHERE ID_EXEMPLAR = ?";
+		
+		PreparedStatement pstmt = conexao.prepareStatement(query);
+		pstmt.setInt(1, exemplar.getNumeroExemplar());
+		pstmt.setInt(2, exemplar.getObra().getIdObra());
+		pstmt.setBoolean(3, exemplar.isReservado());
+		pstmt.setBoolean(4, exemplar.isEmprestado());
+		pstmt.setInt(5, exemplar.getCodExemplar());
+		
+		pstmt.executeUpdate();
+		
+		pstmt.close();
+		conexao.close();
 	}
 
 }

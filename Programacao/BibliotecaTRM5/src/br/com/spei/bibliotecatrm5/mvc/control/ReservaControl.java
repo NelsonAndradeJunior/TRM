@@ -36,6 +36,7 @@ public class ReservaControl implements ActionListener, InternalFrameListener {
 				Date dataReserva = new Date();
 				
 				model.setDataReserva(dataReserva);
+				model.getExemplar().setReservado(true);
 				
 				try {
 					reservaDAO.insert(model);

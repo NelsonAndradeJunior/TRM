@@ -21,4 +21,6 @@ public interface ExemplarDAO {
 
 	List<Exemplar> listAllLocaveis() throws SQLException;
 
+	void update(Exemplar exemplar)  throws SQLException;
+
 }

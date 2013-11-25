@@ -5,6 +5,8 @@ public class Exemplar {
 	private int codExemplar;
 	private Obra obra;
 	private int numeroExemplar;
+	private boolean reservado;
+	private boolean emprestado;
 	
 	public int getCodExemplar() {
 		return codExemplar;
@@ -24,4 +26,17 @@ public class Exemplar {
 	public void setNumeroExemplar(int numeroExemplar) {
 		this.numeroExemplar = numeroExemplar;
 	}
+	public boolean isReservado() {
+		return reservado;
+	}
+	public void setReservado(boolean reservado) {
+		this.reservado = reservado;
+	}
+	public boolean isEmprestado() {
+		return emprestado;
+	}
+	public void setEmprestado(boolean emprestado) {
+		this.emprestado = emprestado;
+	}
+	
 }

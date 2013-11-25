@@ -50,6 +50,8 @@ public class ReservaDAOImpl implements ReservaDAO {
 	@Override
 	public void insert(Reserva reserva) throws SQLException {
 		Connection conexao = Conexao.getInstance().getConnection();
+
+		conexao.setAutoCommit(false);
 		
 		String query = "INSERT INTO RESERVA (ID_USUARIO, ID_EXEMPLAR, DT_RESERVA) VALUES (?, ?, ?)";
 		
@@ -62,6 +64,11 @@ public class ReservaDAOImpl implements ReservaDAO {
 		pstmt.setDate(3, dataReserva);
 		
 		pstmt.executeUpdate();
+		
+		ExemplarDAO exemplarDAO = new ExemplarDAOImpl();
+		exemplarDAO.update(reserva.getExemplar());
+		
+		conexao.commit();
 		
 		pstmt.close();
 		conexao.close();
