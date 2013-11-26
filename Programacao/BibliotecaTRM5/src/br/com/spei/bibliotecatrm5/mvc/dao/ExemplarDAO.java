@@ -23,4 +23,12 @@ public interface ExemplarDAO {
 
 	void update(Exemplar exemplar)  throws SQLException;
 
+	List<Exemplar> getReservaveisByName(String textoPesquisa) throws SQLException;
+
+	List<Exemplar> listAllReservaveis() throws SQLException;
+
+	List<Exemplar> getExceptId(List<Integer> listaCodigosFiltro) throws SQLException;
+
+	List<Exemplar> getByIds(List<Integer> listaCodRemovidosTabelaExemplares) throws SQLException;
+
 }

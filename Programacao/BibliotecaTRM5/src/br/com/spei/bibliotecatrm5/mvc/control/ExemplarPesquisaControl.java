@@ -88,7 +88,7 @@ public class ExemplarPesquisaControl extends MouseAdapter implements ActionListe
 		String textoPesquisa = view.getTextoPesquisa();
 		ExemplarDAO exemplarDAO = new ExemplarDAOImpl();
 		try {
-			List<Exemplar> listaExemplar = exemplarDAO.getLocaveisByName(textoPesquisa);
+			List<Exemplar> listaExemplar = exemplarDAO.getReservaveisByName(textoPesquisa);
 			view.atualizaTabela(listaExemplar);
 		} catch (SQLException e1) {
 			// TODO remover
@@ -100,7 +100,7 @@ public class ExemplarPesquisaControl extends MouseAdapter implements ActionListe
 	public void carregaInformacoes() {
 		ExemplarDAO exemplarDAO = new ExemplarDAOImpl();
 		try {
-			List<Exemplar> listaExemplares = exemplarDAO.listAllLocaveis();
+			List<Exemplar> listaExemplares = exemplarDAO.listAllReservaveis();
 			view.atualizaTabela(listaExemplares);
 		} catch (SQLException e1) {
 			// TODO remover

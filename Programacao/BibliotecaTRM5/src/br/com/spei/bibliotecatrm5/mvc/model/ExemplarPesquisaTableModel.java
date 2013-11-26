@@ -83,7 +83,10 @@ public class ExemplarPesquisaTableModel extends AbstractTableModel {
 	}
 	
 	public void setRowCount(int rowCount) {
-		Object[][] copiaConteudo = new Object[rowCount][this.getColumnCount()];
+		
+		int columnCount = rowCount > 0 ? nomeColunas.length : getColumnCount();
+		
+		Object[][] copiaConteudo = new Object[rowCount][columnCount];
 		
 		for (int i = 0; i < copiaConteudo.length; i++) {
 			if(i >= conteudo.length)
@@ -92,7 +95,7 @@ public class ExemplarPesquisaTableModel extends AbstractTableModel {
 		}
 		
 		conteudo = copiaConteudo;
+		
 		fireTableDataChanged();
 	}
-
 }

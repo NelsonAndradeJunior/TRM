@@ -16,6 +16,7 @@ import br.com.spei.bibliotecatrm5.mvc.dao.UsuarioDAO;
 import br.com.spei.bibliotecatrm5.mvc.dao.UsuarioDAOImpl;
 import br.com.spei.bibliotecatrm5.mvc.model.Autor;
 import br.com.spei.bibliotecatrm5.mvc.model.Usuario;
+import br.com.spei.bibliotecatrm5.mvc.view.FrameEmprestimo;
 import br.com.spei.bibliotecatrm5.mvc.view.FrameObra;
 import br.com.spei.bibliotecatrm5.mvc.view.FrameReserva;
 import br.com.spei.bibliotecatrm5.mvc.view.FrameUsuarioPesquisa;
@@ -24,9 +25,11 @@ public class UsuarioPesquisaControl extends MouseAdapter implements ActionListen
 
 	private FrameUsuarioPesquisa view;
 	private Usuario model;
+	private String callerName; 
 	
-	public UsuarioPesquisaControl(FrameUsuarioPesquisa view) {
+	public UsuarioPesquisaControl(FrameUsuarioPesquisa view, String callerName) {
 		this.view = view;
+		this.callerName = callerName;
 	}
 
 	public void inicia(boolean adicionaListeners) {
@@ -133,11 +136,21 @@ public class UsuarioPesquisaControl extends MouseAdapter implements ActionListen
 				}
 				try {
 					for (JInternalFrame frame : view.getDesktopPane().getAllFrames()) {
-						if(frame.getName() != null && frame.getName().equalsIgnoreCase("frmReserva")) {
-							frame.setSelected(true);
-							// TODO Criar Frame Abstrato
-							((FrameReserva)frame).setUsuarioModel(model);
-							((FrameReserva)frame).preencheCampoUsuario();
+						if(frame.getName() != null){ 
+							if(frame.getName().equalsIgnoreCase(callerName)) {
+								frame.setSelected(true);
+								if(callerName.equalsIgnoreCase("frmReserva")) {
+									// TODO Criar Frame Abstrato
+									((FrameReserva)frame).setUsuarioModel(model);
+									((FrameReserva)frame).preencheCampoUsuario();
+									break;
+								} else if (callerName.equalsIgnoreCase("frmEmprestimo")) {
+									// TODO Criar Frame Abstrato
+									((FrameEmprestimo)frame).setUsuarioModel(model);
+									((FrameEmprestimo)frame).preencheCampoUsuario();
+									break;
+								}
+							}
 						}
 					}
 					view.setVisible(false);

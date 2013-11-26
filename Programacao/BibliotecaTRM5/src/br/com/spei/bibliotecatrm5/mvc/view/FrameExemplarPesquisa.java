@@ -30,7 +30,7 @@ public class FrameExemplarPesquisa extends JInternalFrame {
 	}
 
 	private void inicializa() throws SQLException {
-		this.setBounds(100, 100, 400, 200);
+		this.setBounds(100, 100, 422, 200);
 		this.setTitle("Pesquisa de Exemplar");
 		this.setName("frmObraExemplar");
 		this.setDefaultCloseOperation(JInternalFrame.HIDE_ON_CLOSE);
@@ -113,7 +113,7 @@ public class FrameExemplarPesquisa extends JInternalFrame {
 	}
 
 	private JTextField getTextPesquisar() {
-		JTextField campoTexto = new JTextField(30);
+		JTextField campoTexto = new JTextField(20);
 		campoTexto.setName("txtPesquisa");
 		return campoTexto;
 	}

@@ -26,8 +26,9 @@ public class FramePrincipal extends JFrame {
 	private JDesktopPane desktopPane;
 	private JMenuBar barraMenu;
 	private JMenu menuCadastro;
-	private JMenu reserva;
-	private JMenu devolucao;
+	private JMenu menuEmprestimo;
+	private JMenu menuReserva;
+	private JMenu menuDevolucao;
 	private JMenuItem itemMenuReservaObra;
 	private JMenuItem itemMenuPesquisaReserva;
 	private JMenuItem itemMenuCadObra;
@@ -39,6 +40,8 @@ public class FramePrincipal extends JFrame {
 	private FrameEmprestimo frameEmprestimo;
 	private FrameReserva frameReserva;
 	private FrameDevolucao frameDevolucao;
+
+	private JMenuItem itemMenuPesquisaEmprestimo;
 
 	/**
 	 * Create the frame.
@@ -61,7 +64,7 @@ public class FramePrincipal extends JFrame {
 		desktopPane.add(getFrameTipoObra());
 		desktopPane.add(getFrameObra());
 		desktopPane.add(getFrameEmprestimo());
-		desktopPane.add(getFrameReservaO());
+		desktopPane.add(getFrameReserva());
 		desktopPane.add(getFrameDevolucao());
 	}
 
@@ -83,7 +86,7 @@ public class FramePrincipal extends JFrame {
 		return frameEmprestimo;
 	}
 	
-	private FrameReserva getFrameReservaO(){
+	private FrameReserva getFrameReserva(){
 		frameReserva = new FrameReserva();
 		
 		return frameReserva;
@@ -93,14 +96,13 @@ public class FramePrincipal extends JFrame {
 		frameDevolucao = new FrameDevolucao();
 		
 		return frameDevolucao;
-	}
-	
-	
+	}	
 
 	private JMenuBar getBarraMenu() {
 		barraMenu = new JMenuBar();
 		barraMenu.add(getMenuCadastro());
-		barraMenu.add(getFrameReserva());
+		barraMenu.add(getMenuReserva());
+		barraMenu.add(getMenuEmprestimo());
 		barraMenu.add(getFrameDevolucaoObra());
 
 		return barraMenu;
@@ -111,26 +113,34 @@ public class FramePrincipal extends JFrame {
 		menuCadastro.setMnemonic(KeyEvent.VK_C);		
 		menuCadastro.add(getItemMenuCadastroObra());
 		menuCadastro.add(getItemMenuCadastroTipoObra());
-		menuCadastro.add(getItemMenuCadastroEmprestimo());
 		
 		return menuCadastro;
 	}
 	
-	private JMenu getFrameReserva(){
-		reserva = new JMenu("Reserva");
-		reserva.setMnemonic(KeyEvent.VK_R);
-		reserva.add(getItemMenuCadastroReserva());
-		reserva.add(getItemMenuPesquisaReserva());
+	private JMenu getMenuReserva(){
+		menuReserva = new JMenu("Reserva");
+		menuReserva.setMnemonic(KeyEvent.VK_R);
+		menuReserva.add(getItemMenuCadastroReserva());
+		menuReserva.add(getItemMenuPesquisaReserva());
 		
-		return reserva;
+		return menuReserva;
+	}
+	
+	private JMenu getMenuEmprestimo(){
+		menuEmprestimo = new JMenu("Emprestimo");
+		menuEmprestimo.setMnemonic(KeyEvent.VK_M);
+		menuEmprestimo.add(getItemMenuCadastroEmprestimo());
+		menuEmprestimo.add(getItemMenuPesquisaEmprestimo());
+		
+		return menuEmprestimo;
 	}
 	
 	private JMenu getFrameDevolucaoObra(){
-		devolucao = new JMenu("Devolucao");
-		devolucao.setMnemonic(KeyEvent.VK_D);
-		devolucao.add(getItemMenuCadastroDevolucao());
+		menuDevolucao = new JMenu("Devolucao");
+		menuDevolucao.setMnemonic(KeyEvent.VK_D);
+		menuDevolucao.add(getItemMenuCadastroDevolucao());
 		
-		return devolucao;
+		return menuDevolucao;
 		
 	}
 	
@@ -175,11 +185,19 @@ public class FramePrincipal extends JFrame {
 	}
 	
 	private JMenuItem getItemMenuCadastroEmprestimo() {
-		itemMenuCadEmprestimo = new JMenuItem("Emprestimo", KeyEvent.VK_T);
+		itemMenuCadEmprestimo = new JMenuItem("Cadastro de Empréstimo", KeyEvent.VK_T);
 		
 		itemMenuCadEmprestimo.setActionCommand("MenuCadastroEmprestimo");
 		
 		return itemMenuCadEmprestimo;
+	}
+	
+	private JMenuItem getItemMenuPesquisaEmprestimo() {
+		itemMenuPesquisaEmprestimo = new JMenuItem("Pesquisa de Empréstimo", KeyEvent.VK_I);
+		
+		itemMenuPesquisaEmprestimo.setActionCommand("MenuPesquisaEmprestimo");
+		
+		return itemMenuPesquisaEmprestimo;
 	}
 
 	public void configuraOuvinte(ActionListener actionListener) {
@@ -203,7 +221,7 @@ public class FramePrincipal extends JFrame {
 	
 	public void mostraFormCadastroEmprestimo() {	
 		EmprestimoControl controladorEmprestimo = new EmprestimoControl(frameEmprestimo);
-		controladorEmprestimo.inicia();
+		controladorEmprestimo.inicia(!frameObra.adicionouListeners());
 	}
 	
 	public void mostraFormReserva(){

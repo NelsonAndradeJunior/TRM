@@ -207,7 +207,7 @@ public class FrameReserva extends JInternalFrame{
 			}
 		}
 		
-		UsuarioPesquisaControl controladorUsuarioPesquisa = new UsuarioPesquisaControl(frameUsuarioPesquisa);
+		UsuarioPesquisaControl controladorUsuarioPesquisa = new UsuarioPesquisaControl(frameUsuarioPesquisa, this.getName());
 		controladorUsuarioPesquisa.inicia(adicionaListeners);
 		
 		controladorUsuarioPesquisa.carregaInformacoes();
