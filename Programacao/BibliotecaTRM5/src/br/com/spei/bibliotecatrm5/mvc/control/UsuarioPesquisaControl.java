@@ -3,6 +3,7 @@ package br.com.spei.bibliotecatrm5.mvc.control;
 import java.awt.event.*;
 import java.beans.PropertyVetoException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JInternalFrame;
@@ -15,6 +16,7 @@ import br.com.spei.bibliotecatrm5.mvc.dao.AutorDAOImpl;
 import br.com.spei.bibliotecatrm5.mvc.dao.UsuarioDAO;
 import br.com.spei.bibliotecatrm5.mvc.dao.UsuarioDAOImpl;
 import br.com.spei.bibliotecatrm5.mvc.model.Autor;
+import br.com.spei.bibliotecatrm5.mvc.model.Exemplar;
 import br.com.spei.bibliotecatrm5.mvc.model.Usuario;
 import br.com.spei.bibliotecatrm5.mvc.view.FrameEmprestimo;
 import br.com.spei.bibliotecatrm5.mvc.view.FrameObra;
@@ -147,7 +149,10 @@ public class UsuarioPesquisaControl extends MouseAdapter implements ActionListen
 								} else if (callerName.equalsIgnoreCase("frmEmprestimo")) {
 									// TODO Criar Frame Abstrato
 									((FrameEmprestimo)frame).setUsuarioModel(model);
+									((FrameEmprestimo)frame).limpaTela(new ArrayList<Exemplar>());
 									((FrameEmprestimo)frame).preencheCampoUsuario();
+									((FrameEmprestimo)frame).listaItensTabelaExemplaresDisponiveis();
+									((FrameEmprestimo)frame).habiltaTabelas();
 									break;
 								}
 							}

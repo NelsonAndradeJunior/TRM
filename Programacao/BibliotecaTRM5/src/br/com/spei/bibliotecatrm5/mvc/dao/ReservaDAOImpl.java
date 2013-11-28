@@ -8,7 +8,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.spei.bibliotecatrm5.mvc.model.Exemplar;
 import br.com.spei.bibliotecatrm5.mvc.model.Reserva;
+import br.com.spei.bibliotecatrm5.mvc.model.Usuario;
 
 public class ReservaDAOImpl implements ReservaDAO {
 	
@@ -72,6 +74,31 @@ public class ReservaDAOImpl implements ReservaDAO {
 		
 		pstmt.close();
 		conexao.close();
+	}
+
+	@Override
+	public int getCodUsuarioReservaParaExemplar(Exemplar exemplar)
+			throws SQLException {
+		Connection conexao = Conexao.getInstance().getConnection();
+
+		conexao.setAutoCommit(false);
+		
+		String query = "SELECT U.ID_USUARIO FROM USUARIO U INNER JOIN RESERVA R " +
+						"ON R.ID_USUARIO = U.ID_USUARIO INNER JOIN EXEMPLAR E " +
+						"ON E.ID_EXEMPLAR = R.ID_EXEMPLAR WHERE  E.ID_EXEMPLAR = ?";
+		
+		PreparedStatement pstmt = conexao.prepareStatement(query);
+		pstmt.setInt(1, exemplar.getCodExemplar());
+		
+		
+		ResultSet rs = pstmt.executeQuery();
+		
+		if(rs.next()) {
+			int codigoRetorno = rs.getInt("ID_USUARIO");
+			return codigoRetorno;
+		}
+		
+		return 0;
 	}
 
 }

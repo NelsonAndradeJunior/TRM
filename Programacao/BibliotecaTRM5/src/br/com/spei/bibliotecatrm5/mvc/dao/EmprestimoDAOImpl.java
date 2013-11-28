@@ -76,6 +76,7 @@ public class EmprestimoDAOImpl implements EmprestimoDAO {
 			itemEmprestimoDAO.insert(conexao, codEmprestimo, exemplar);
 			
 			exemplar.setEmprestado(true);
+			exemplar.setReservado(false);
 			
 			ExemplarDAO exemplarDAO = new ExemplarDAOImpl();
 			exemplarDAO.update(exemplar);

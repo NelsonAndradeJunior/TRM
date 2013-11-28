@@ -4,16 +4,20 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.TextEvent;
+import java.awt.event.TextListener;
 import java.beans.PropertyVetoException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.naming.ConfigurationException;
 import javax.swing.DefaultRowSorter;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.RowFilter;
 import javax.swing.RowFilter.ComparisonType;
 import javax.swing.RowSorter;
@@ -22,13 +26,8 @@ import javax.swing.event.InternalFrameListener;
 
 import org.omg.PortableServer.ID_ASSIGNMENT_POLICY_ID;
 
-import br.com.spei.bibliotecatrm5.mvc.dao.EmprestimoDAO;
-import br.com.spei.bibliotecatrm5.mvc.dao.EmprestimoDAOImpl;
-import br.com.spei.bibliotecatrm5.mvc.dao.ExemplarDAO;
-import br.com.spei.bibliotecatrm5.mvc.dao.ExemplarDAOImpl;
-import br.com.spei.bibliotecatrm5.mvc.model.Emprestimo;
-import br.com.spei.bibliotecatrm5.mvc.model.Exemplar;
-import br.com.spei.bibliotecatrm5.mvc.model.ExemplarPesquisaTableModel;
+import br.com.spei.bibliotecatrm5.mvc.dao.*;
+import br.com.spei.bibliotecatrm5.mvc.model.*;
 import br.com.spei.bibliotecatrm5.mvc.view.FrameEmprestimo;
 import br.com.spei.bibliotecatrm5.mvc.view.FrameReserva;
 
@@ -41,6 +40,11 @@ public class EmprestimoControl extends MouseAdapter implements ActionListener, I
 	public EmprestimoControl(FrameEmprestimo view) {
 		this.view = view;
 		//view.configuraOuvinteAcao(this);
+	}
+	
+	public EmprestimoControl(FrameEmprestimo view, Emprestimo model) {
+		this.view = view;
+		this.model = model;
 	}
 	
 	public void actionPerformed(ActionEvent e) {
@@ -93,6 +97,7 @@ public class EmprestimoControl extends MouseAdapter implements ActionListener, I
 			view.setVisible(false);
 			break;
 		case "PesquisarUsuario":
+			listaCodRemovidosTabelaExemplares = new ArrayList<>();
 			view.mostraFramePesquisaUsuario();
 			break;
 		default:
@@ -122,8 +127,8 @@ public class EmprestimoControl extends MouseAdapter implements ActionListener, I
 
 	@Override
 	public void internalFrameClosed(InternalFrameEvent arg0) {
-		// TODO Auto-generated method stub
-		
+		view.limpaTela(new ArrayList<Exemplar>());
+		view.setModel(null);
 	}
 
 	@Override
@@ -151,19 +156,8 @@ public class EmprestimoControl extends MouseAdapter implements ActionListener, I
 	}
 
 	@Override
-	public void internalFrameOpened(InternalFrameEvent arg0) {
-		ExemplarDAO exemplarDAO = new ExemplarDAOImpl();
-		List<Exemplar> listaExemplares = null;
-		
-		try {
-			listaExemplares = exemplarDAO.listAllLocaveis();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			view.mostraErroSQL(e);
-		}
-		
-		view.atualizaTabelaExemplaresDisponiveis(listaExemplares);
+	public void internalFrameOpened(InternalFrameEvent arg0) {		
+		view.atualizaTabelaExemplaresDisponiveis(new ArrayList<Exemplar>());
 		view.atualizaTabelaItensEmprestimo(new ArrayList<Exemplar>());
 	}
 	
@@ -173,85 +167,124 @@ public class EmprestimoControl extends MouseAdapter implements ActionListener, I
 			if(e.getClickCount() == 2) {
 				JTable fonte = (JTable)e.getSource();
 				int codigo = (int)fonte.getModel().getValueAt(fonte.getSelectedRow(), 0);
-				if(fonte.getName().equalsIgnoreCase("tblExemplaresDisponiveis")) {
-					if(listaCodRemovidosTabelaExemplares == null)
-						listaCodRemovidosTabelaExemplares = new ArrayList<>();
-						
-					listaCodRemovidosTabelaExemplares.add(codigo);					
-					
-					List<Exemplar> exemplaresDisponiveis = new ArrayList<>();
-					try {
-						exemplaresDisponiveis = obtemListaExemplaresDisponiveis();
-					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-						view.mostraErroSQL(e1);
-						return;
-					}
-					
-					List<Exemplar> itensEmprestimo = new ArrayList<>();
-					
-					try {
-						itensEmprestimo = obtemListaItensEmprestimo();
-					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-						view.mostraErroSQL(e1);
-						return;
-					}
- 					
-					view.atualizaTabela(exemplaresDisponiveis, fonte);
-					view.atualizaTabelaItensEmprestimo(itensEmprestimo);
-				} else if (fonte.getName().equalsIgnoreCase("tblItensEmprestimo")) {
-					if(listaCodRemovidosTabelaExemplares == null)
-						listaCodRemovidosTabelaExemplares = new ArrayList<>();
-						
-					listaCodRemovidosTabelaExemplares.remove((Object)codigo);					
-					
-					List<Exemplar> exemplaresDisponiveis = new ArrayList<>();
-					try {
-						exemplaresDisponiveis = obtemListaExemplaresDisponiveis();
-					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-						view.mostraErroSQL(e1);
-						return;
-					}
-					
-					List<Exemplar> itensEmprestimo = new ArrayList<>();
-					
-					try {
-						itensEmprestimo = obtemListaItensEmprestimo();
-					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-						view.mostraErroSQL(e1);
-						return;
-					}
- 					
-					view.atualizaTabela(itensEmprestimo, fonte);
-					view.atualizaTabelaExemplaresDisponiveis(exemplaresDisponiveis);
+				ExemplarDAO exemplarDAO = new ExemplarDAOImpl();
+				
+				List<Exemplar> listaExemplares  = null; 
+				
+				try {
+					listaExemplares = exemplarDAO.listAllLocaveis();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+					view.mostraErroSQL(e1);
+					return;
 				}
+				
+				if(listaCodRemovidosTabelaExemplares == null)
+					listaCodRemovidosTabelaExemplares = new ArrayList<>();
+					
+				if(fonte.getName().equalsIgnoreCase("tblExemplaresDisponiveis")) {
+					listaCodRemovidosTabelaExemplares.add(codigo);
+				} else if (fonte.getName().equalsIgnoreCase("tblItensEmprestimo")) {
+					listaCodRemovidosTabelaExemplares.remove((Object)codigo);
+				}
+				
+				List<Exemplar> exemplaresDisponiveis = new ArrayList<>();
+				List<Exemplar> itensEmprestimo = new ArrayList<>();
+				
+				boolean achou = false;
+				
+				for (int i = 0; i < listaExemplares.size(); i++) {
+					achou = false;
+					for (int j = 0; j < listaCodRemovidosTabelaExemplares.size(); j++) {
+						if(listaCodRemovidosTabelaExemplares.indexOf(listaExemplares.get(i).getCodExemplar()) > -1) {
+							itensEmprestimo.add(listaExemplares.get(i));
+							achou = true;
+							break;
+						}
+					}
+					if(!achou) {
+						Exemplar exemplar = listaExemplares.get(i);
+						try {
+							if(podeLocar(exemplar))
+								exemplaresDisponiveis.add(exemplar);
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+							view.mostraErroSQL(e1);
+							return;
+						} catch (Exception e2) {
+							e2.printStackTrace();
+							view.mostraMensagemErro(e2.getMessage());
+							return;
+						}
+					}
+				}
+				
+				view.atualizaTabelaExemplaresDisponiveis(exemplaresDisponiveis);
+				view.atualizaTabelaItensEmprestimo(itensEmprestimo);
 			}
 		}
 	}
 	
-	private List<Exemplar> obtemListaItensEmprestimo() throws SQLException {
-		List<Exemplar> exemplaresDisponiveis = new ArrayList<>();
-		ExemplarDAO exemplarDAO = new ExemplarDAOImpl();
+	private boolean podeLocar(Exemplar exemplar) throws SQLException, Exception {
 		
-		exemplaresDisponiveis = exemplarDAO.getByIds(listaCodRemovidosTabelaExemplares);
+		if(!exemplar.isReservado())
+			return true;
+			
+		if(model == null)
+			model = view.getModel();
 		
-		return exemplaresDisponiveis;
+		if(model == null) 
+			throw new Exception("Nenhum usuário selecionado.");
+		
+		Usuario usuario = model.getUsuario();
+		
+		ReservaDAO reservaDAO = new ReservaDAOImpl();
+		
+		int codUsuarioReserva = reservaDAO.getCodUsuarioReservaParaExemplar(exemplar);
+		
+		if(codUsuarioReserva <= 0)
+			return true;
+		
+		if(codUsuarioReserva == usuario.getCodUsuario())
+			return true;
+		
+		return false;
 	}
 
-	private List<Exemplar> obtemListaExemplaresDisponiveis() throws SQLException {
-		List<Exemplar> exemplaresDisponiveis = new ArrayList<>();
+	public List<Exemplar> getListaTabelaExemplaresDisponiveis() {
 		ExemplarDAO exemplarDAO = new ExemplarDAOImpl();
 		
-		exemplaresDisponiveis = exemplarDAO.getExceptId(listaCodRemovidosTabelaExemplares);
+		List<Exemplar> listaExemplares  = null; 
 		
-		return exemplaresDisponiveis;
+		try {
+			listaExemplares = exemplarDAO.listAllLocaveis();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			view.mostraErroSQL(e1);
+			return null;
+		}
+		
+		for (int i = 0; i < listaExemplares.size(); i++) {
+			Exemplar exemplar = listaExemplares.get(i);
+			try {
+				if(!podeLocar(exemplar))
+					listaExemplares.remove(exemplar);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+				view.mostraErroSQL(e1);
+				return null;
+			} catch (Exception e2) {
+				e2.printStackTrace();
+				view.mostraMensagemErro(e2.getMessage());
+				return null;
+			}
+		}
+		
+		return listaExemplares;
 	}
 }
 	

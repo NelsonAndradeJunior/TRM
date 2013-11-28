@@ -6,6 +6,7 @@ import java.util.List;
 import br.com.spei.bibliotecatrm5.mvc.model.Autor;
 import br.com.spei.bibliotecatrm5.mvc.model.Exemplar;
 import br.com.spei.bibliotecatrm5.mvc.model.Obra;
+import br.com.spei.bibliotecatrm5.mvc.model.Usuario;
 
 public interface ExemplarDAO {
 
@@ -29,6 +30,13 @@ public interface ExemplarDAO {
 
 	List<Exemplar> getExceptId(List<Integer> listaCodigosFiltro) throws SQLException;
 
-	List<Exemplar> getByIds(List<Integer> listaCodRemovidosTabelaExemplares) throws SQLException;
+	List<Exemplar> getByIds(List<Integer> listaCodigosFiltro) throws SQLException;
+
+	List<Exemplar> getLocaveisByIds(List<Integer> listaCodigosFiltro,
+			Usuario usuario) throws SQLException;
+
+	List<Integer> getCodigoExemplaresDisponivelReservadoPara(Usuario usuario) throws SQLException;
+
+	List<Integer> getCodigoExemplaresDisponiveis() throws SQLException;
 
 }

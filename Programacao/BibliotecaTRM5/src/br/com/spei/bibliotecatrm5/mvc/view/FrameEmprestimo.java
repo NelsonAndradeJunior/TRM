@@ -21,10 +21,12 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.SpringLayout;
+import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
+import br.com.spei.bibliotecatrm5.mvc.control.EmprestimoControl;
 import br.com.spei.bibliotecatrm5.mvc.control.UsuarioPesquisaControl;
 import br.com.spei.bibliotecatrm5.mvc.model.Emprestimo;
 import br.com.spei.bibliotecatrm5.mvc.model.Exemplar;
@@ -127,6 +129,14 @@ public class FrameEmprestimo extends JInternalFrame{
 		this.getContentPane().add(btnPesquisarUsuario);
 	}
 	
+	@Override
+	public void setVisible(boolean b) {
+		if(!b)
+			this.fireInternalFrameEvent(InternalFrameEvent.INTERNAL_FRAME_CLOSED);
+		
+		super.setVisible(b);
+	}
+	
 	private JTable getTableItensEmprestimo() throws SQLException {
 		TableModel model = getTableModel();
 		
@@ -139,6 +149,9 @@ public class FrameEmprestimo extends JInternalFrame{
 		
 		tabela.setName("tblItensEmprestimo");
 		ajustaColunas(tabela);
+		
+		tabela.setEnabled(false);
+		
 		return tabela;
 	}
 
@@ -158,6 +171,9 @@ public class FrameEmprestimo extends JInternalFrame{
 		
 		tabela.setName("tblExemplaresDisponiveis");
 		ajustaColunas(tabela);
+		
+		tabela.setEnabled(false);
+		
 		return tabela;
 	}
 
@@ -342,5 +358,25 @@ public class FrameEmprestimo extends JInternalFrame{
 		this.txtUsuario.setText("");
 		this.atualizaTabela(exemplaresDisponiveis, tblExemplaresDisponiveis);
 		this.atualizaTabela(new ArrayList<Exemplar>(), tblItensEmprestimo);
+	}
+
+	public void mostraMensagemErro(String message) {
+		JOptionPane.showMessageDialog(null, message, "Erro", JOptionPane.ERROR_MESSAGE);
+	}
+
+	public void habiltaTabelas() {
+		tblExemplaresDisponiveis.setEnabled(true);
+		tblItensEmprestimo.setEnabled(true);
+	}
+
+	public void listaItensTabelaExemplaresDisponiveis() {
+		EmprestimoControl controladorEmprestimo = new EmprestimoControl(this, this.model);
+		List<Exemplar> exemplares = controladorEmprestimo.getListaTabelaExemplaresDisponiveis();
+		
+		this.atualizaTabelaExemplaresDisponiveis(exemplares);
+	}
+
+	public void setModel(Emprestimo model) {
+		this.model = model;
 	}
 }
