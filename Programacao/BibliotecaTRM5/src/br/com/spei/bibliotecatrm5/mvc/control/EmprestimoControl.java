@@ -53,8 +53,6 @@ public class EmprestimoControl extends MouseAdapter implements ActionListener, I
 			if(!view.validaEmprestimo())
 				return;
 			
-			model = new Emprestimo();
-			
 			model = view.getModel();
 			
 			ExemplarDAO exemplarDAO = new ExemplarDAOImpl();

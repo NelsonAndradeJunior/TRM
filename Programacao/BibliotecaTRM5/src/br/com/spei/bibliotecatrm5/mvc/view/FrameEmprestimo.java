@@ -379,4 +379,8 @@ public class FrameEmprestimo extends JInternalFrame{
 	public void setModel(Emprestimo model) {
 		this.model = model;
 	}
+
+	public boolean adicionouListeners() {
+		return listenersAdicionados;
+	}
 }

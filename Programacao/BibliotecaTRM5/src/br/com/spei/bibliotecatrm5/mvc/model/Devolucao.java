@@ -1,37 +1,34 @@
 package br.com.spei.bibliotecatrm5.mvc.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Devolucao {
 	
-	private int idUsuario;
-	private String matUsuario;
-	private String catUsuario;
-	private String dtDevolucao;
-	public int getIdUsuario() {
-		return idUsuario;
-	}
-	public void setIdUsuario(int idUsuario) {
-		this.idUsuario = idUsuario;
-	}
-	public String getMatUsuario() {
-		return matUsuario;
-	}
-	public void setMatUsuario(String matUsuario) {
-		this.matUsuario = matUsuario;
-	}
-	public String getCatUsuario() {
-		return catUsuario;
-	}
-	public void setCatUsuario(String catUsuario) {
-		this.catUsuario = catUsuario;
-	}
-	public String getDtDevolucao() {
-		return dtDevolucao;
-	}
-	public void setDtDevolucao(String dtDevolucao) {
-		this.dtDevolucao = dtDevolucao;
+	private int codDevolucao;
+	private Usuario usuario;
+	private List<Exemplar> exemplares;
+	
+	public Devolucao() {
+		this.exemplares = new ArrayList<>();
 	}
 	
-	
-	
-
+	public int getCodDevolucao() {
+		return codDevolucao;
+	}
+	public void setCodDevolucao(int codDevolucao) {
+		this.codDevolucao = codDevolucao;
+	}
+	public Usuario getUsuario() {
+		return usuario;
+	}
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+	public List<Exemplar> getExemplares() {
+		return exemplares;
+	}
+	public void setExemplares(List<Exemplar> exemplares) {
+		this.exemplares = exemplares;
+	}
 }

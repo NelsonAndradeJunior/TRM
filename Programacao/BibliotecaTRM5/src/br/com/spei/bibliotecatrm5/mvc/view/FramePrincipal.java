@@ -121,7 +121,7 @@ public class FramePrincipal extends JFrame {
 		menuReserva = new JMenu("Reserva");
 		menuReserva.setMnemonic(KeyEvent.VK_R);
 		menuReserva.add(getItemMenuCadastroReserva());
-		menuReserva.add(getItemMenuPesquisaReserva());
+//		menuReserva.add(getItemMenuPesquisaReserva());
 		
 		return menuReserva;
 	}
@@ -130,7 +130,7 @@ public class FramePrincipal extends JFrame {
 		menuEmprestimo = new JMenu("Emprestimo");
 		menuEmprestimo.setMnemonic(KeyEvent.VK_M);
 		menuEmprestimo.add(getItemMenuCadastroEmprestimo());
-		menuEmprestimo.add(getItemMenuPesquisaEmprestimo());
+//		menuEmprestimo.add(getItemMenuPesquisaEmprestimo());
 		
 		return menuEmprestimo;
 	}
@@ -221,7 +221,7 @@ public class FramePrincipal extends JFrame {
 	
 	public void mostraFormCadastroEmprestimo() {	
 		EmprestimoControl controladorEmprestimo = new EmprestimoControl(frameEmprestimo);
-		controladorEmprestimo.inicia(!frameObra.adicionouListeners());
+		controladorEmprestimo.inicia(!frameEmprestimo.adicionouListeners());
 	}
 	
 	public void mostraFormReserva(){
@@ -231,6 +231,6 @@ public class FramePrincipal extends JFrame {
 	
 	public void mostraFormDevolucao(){
 		DevolucaoControl controladorDevolucao = new DevolucaoControl(frameDevolucao);
-		controladorDevolucao.inicia();
+		controladorDevolucao.inicia(!frameDevolucao.adicionouListeners());
 	}
 }

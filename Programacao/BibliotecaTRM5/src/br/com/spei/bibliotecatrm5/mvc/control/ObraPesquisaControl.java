@@ -13,6 +13,7 @@ import javax.swing.event.InternalFrameListener;
 import br.com.spei.bibliotecatrm5.mvc.dao.ObraDAO;
 import br.com.spei.bibliotecatrm5.mvc.dao.ObraDAOImpl;
 import br.com.spei.bibliotecatrm5.mvc.model.Obra;
+import br.com.spei.bibliotecatrm5.mvc.model.ObraPesquisaTableModel;
 import br.com.spei.bibliotecatrm5.mvc.view.FrameObra;
 import br.com.spei.bibliotecatrm5.mvc.view.FrameObraPesquisa;
 import br.com.spei.bibliotecatrm5.mvc.view.FrameReserva;
@@ -117,8 +118,7 @@ public class ObraPesquisaControl extends MouseAdapter implements ActionListener,
 
 	@Override
 	public void internalFrameClosed(InternalFrameEvent e) {
-		// TODO Auto-generated method stub
-		
+		view.limpaTela();
 	}
 
 	@Override
@@ -129,7 +129,7 @@ public class ObraPesquisaControl extends MouseAdapter implements ActionListener,
 
 	@Override
 	public void internalFrameDeactivated(InternalFrameEvent e) {
-		view.limpaTela();
+		
 	}
 
 	@Override
@@ -146,7 +146,6 @@ public class ObraPesquisaControl extends MouseAdapter implements ActionListener,
 
 	@Override
 	public void internalFrameOpened(InternalFrameEvent e) {
-		// TODO Auto-generated method stub
-		
+		view.iniciaTabela();
 	}
 }

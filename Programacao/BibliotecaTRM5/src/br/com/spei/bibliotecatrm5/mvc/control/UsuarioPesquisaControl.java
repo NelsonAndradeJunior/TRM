@@ -16,8 +16,10 @@ import br.com.spei.bibliotecatrm5.mvc.dao.AutorDAOImpl;
 import br.com.spei.bibliotecatrm5.mvc.dao.UsuarioDAO;
 import br.com.spei.bibliotecatrm5.mvc.dao.UsuarioDAOImpl;
 import br.com.spei.bibliotecatrm5.mvc.model.Autor;
+import br.com.spei.bibliotecatrm5.mvc.model.Emprestimo;
 import br.com.spei.bibliotecatrm5.mvc.model.Exemplar;
 import br.com.spei.bibliotecatrm5.mvc.model.Usuario;
+import br.com.spei.bibliotecatrm5.mvc.view.FrameDevolucao;
 import br.com.spei.bibliotecatrm5.mvc.view.FrameEmprestimo;
 import br.com.spei.bibliotecatrm5.mvc.view.FrameObra;
 import br.com.spei.bibliotecatrm5.mvc.view.FrameReserva;
@@ -154,6 +156,11 @@ public class UsuarioPesquisaControl extends MouseAdapter implements ActionListen
 									((FrameEmprestimo)frame).listaItensTabelaExemplaresDisponiveis();
 									((FrameEmprestimo)frame).habiltaTabelas();
 									break;
+								} else if (callerName.equalsIgnoreCase("frmDevolucao")) {
+									((FrameDevolucao)frame).setUsuarioModel(model);
+									((FrameDevolucao)frame).limpaTela(new ArrayList<Emprestimo>());
+									((FrameDevolucao)frame).preencheCampoUsuario();
+									((FrameDevolucao)frame).listaItensTabelaEmprestimos();
 								}
 							}
 						}

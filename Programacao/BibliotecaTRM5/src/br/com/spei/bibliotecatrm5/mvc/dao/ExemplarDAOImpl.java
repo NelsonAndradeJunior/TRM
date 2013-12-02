@@ -362,6 +362,60 @@ public class ExemplarDAOImpl implements ExemplarDAO {
 	}
 
 	@Override
+	public List<Exemplar> getEmprestadosById(
+			List<Integer> listaCodigosFiltro)
+			throws SQLException {
+		List<Exemplar> listaExemplar = new ArrayList<>();
+		
+		if(listaCodigosFiltro.size() <= 0)
+			return listaExemplar;
+		
+		Connection conexao = Conexao.getInstance().getConnection();
+		
+		String query = "SELECT O.ID_OBRA, O.DS_OBRA, O.DT_ANO, O.SN_CLASSICO, A.ID_AUTOR, A.NM_AUTOR, " +
+						"ED.ID_EDITORA, ED.DS_EDITORA, T.ID_TIPO_OBRA, T.DS_TIPO_OBRA, " +
+						"E.ID_EXEMPLAR, E.NR_EXEMPLAR, E.SN_RESERVADO, E.SN_EMPRESTADO, " +
+						"T.SN_DICIONARIO, T.SN_ENCICLOPEDIA, T.SN_PERIODICO FROM EXEMPLAR E " +
+						"INNER JOIN OBRA O ON O.ID_OBRA = E.ID_OBRA " +
+						"INNER JOIN AUTOR A ON A.ID_AUTOR = O.ID_AUTOR " +
+						"INNER JOIN EDITORA ED ON ED.ID_EDITORA = O.ID_EDITORA " +
+						"INNER JOIN TIPO_OBRA T ON T.ID_TIPO_OBRA = O.ID_TIPO_OBRA " +
+						"WHERE T.SN_DICIONARIO = 0 AND T.SN_ENCICLOPEDIA = 0 AND T.SN_PERIODICO = 0 " +
+						"AND E.SN_EMPRESTADO = 1"; 
+		
+		query += " AND E.ID_EXEMPLAR IN (";
+		
+		for (int i = 0; i < listaCodigosFiltro.size(); i++) {
+			if(i == 0)
+				query += "?";
+			else
+				query += ", ?";
+		}
+		
+		query = query + ")";
+		
+		PreparedStatement pstmt = conexao.prepareStatement(query);
+		
+		for (int i = 0; i < listaCodigosFiltro.size(); i++) {
+			pstmt.setInt(i + 1, listaCodigosFiltro.get(i));
+		}
+		
+		ResultSet rs = pstmt.executeQuery();
+		
+		while (rs.next()) {
+			Exemplar exemplar = obtemExemplarDeResultSet(rs);			
+			
+			listaExemplar.add(exemplar);
+		}
+		
+		pstmt.close();
+		rs.close();
+		conexao.close();
+		
+		return listaExemplar;
+	}
+	
+	@Override
 	public List<Exemplar> getByIds(
 			List<Integer> listaCodigosFiltro)
 			throws SQLException {

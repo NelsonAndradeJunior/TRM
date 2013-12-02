@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import javax.swing.*;
+import javax.swing.event.InternalFrameEvent;
 import javax.swing.table.TableModel;
 
 import br.com.spei.bibliotecatrm5.mvc.model.Obra;
@@ -72,6 +73,16 @@ public class FrameObraPesquisa extends JInternalFrame {
 
 	}
 
+	@Override
+	public void setVisible(boolean b) {
+		if(!b)
+			this.fireInternalFrameEvent(InternalFrameEvent.INTERNAL_FRAME_CLOSED);
+		else
+			this.fireInternalFrameEvent(InternalFrameEvent.INTERNAL_FRAME_OPENED);
+		
+		super.setVisible(b);
+	}
+	
 	private JTable getTableDados() throws SQLException {
 		TableModel model = getTableModel();
 		
@@ -163,5 +174,15 @@ public class FrameObraPesquisa extends JInternalFrame {
 
 	public String getTextoPesquisa() {
 		return txtPesquisar.getText();
+	}
+
+	public void iniciaTabela() {
+		try {
+			this.tblDados = getTableDados();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Ocorreu um erro ao carregar a tabela de dados.", "Erro", JOptionPane.ERROR_MESSAGE);
+		}
 	}
 }

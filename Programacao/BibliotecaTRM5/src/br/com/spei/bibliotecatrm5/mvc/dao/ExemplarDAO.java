@@ -39,4 +39,7 @@ public interface ExemplarDAO {
 
 	List<Integer> getCodigoExemplaresDisponiveis() throws SQLException;
 
+	List<Exemplar> getEmprestadosById(List<Integer> listaCodigosFiltro)
+			throws SQLException;
+
 }
